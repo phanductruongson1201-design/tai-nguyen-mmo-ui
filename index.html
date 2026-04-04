@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TàiNguyênMMO - Chợ Tài Khoản & Tool Marketing</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
   :root {
     --red: #e8192c;
@@ -18,7 +19,7 @@
     --accent: #ea580c;     
     --green: #22c55e;
     --blue: #3b82f6;
-    --blue-dark: #1e293b; /* Màu nền header bảng */
+    --blue-dark: #1e293b;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,38 +34,23 @@
 
   /* HEADER */
   .header {
-    background: var(--dark2);
-    border-bottom: 1px solid var(--border);
-    padding: 0 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: var(--dark2); border-bottom: 1px solid var(--border); padding: 0 16px;
+    display: flex; align-items: center; justify-content: space-between; height: 56px;
+    position: sticky; top: 0; z-index: 100;
   }
 
   .header-left { display: flex; align-items: center; gap: 12px; }
 
   .menu-btn {
-    background: none; border: none; cursor: pointer;
-    color: var(--text); padding: 6px; display: flex; flex-direction: column; gap: 4px;
+    background: none; border: none; cursor: pointer; color: var(--text);
+    padding: 6px; display: flex; flex-direction: column; gap: 4px;
   }
   .menu-btn span { display: block; width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
 
   .wallet-btn {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 7px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    display: flex; align-items: center; gap: 6px;
-    transition: 0.2s;
+    background: var(--dark3); border: 1px solid var(--border); color: var(--text);
+    padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: inherit;
+    font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: 0.2s;
   }
   .wallet-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
   .wallet-btn.danger { background: var(--red); color: #fff; border-color: var(--red); padding: 7px 10px; }
@@ -73,96 +59,38 @@
 
   .header-right { display: flex; align-items: center; gap: 12px; }
 
-  .theme-toggle {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 4px;
-    display: flex; gap: 2px;
-  }
-  .theme-btn {
-    background: none; border: none; cursor: pointer;
-    padding: 4px 8px; border-radius: 14px; font-size: 14px;
-    transition: background 0.2s;
-  }
+  .theme-toggle { background: var(--dark3); border: 1px solid var(--border); border-radius: 20px; padding: 4px; display: flex; gap: 2px; }
+  .theme-btn { background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 14px; font-size: 14px; transition: background 0.2s; }
   .theme-btn.active { background: var(--dark); }
 
-  .notif-btn {
-    background: none; border: none; cursor: pointer;
-    color: var(--text); font-size: 18px; position: relative; padding: 4px;
-  }
+  .notif-btn { background: none; border: none; cursor: pointer; color: var(--text); font-size: 18px; position: relative; padding: 4px; }
 
   .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-  .avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, #f97316, #ef4444);
-    display: flex; align-items: center; justify-content: center; font-size: 18px;
-  }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ef4444); display: flex; align-items: center; justify-content: center; font-size: 18px; }
   .username { font-weight: 600; font-size: 13px; }
 
-  /* NOTICE BANNER */
-  .notice-banner {
-    border: 1px solid #3b82f6;
-    border-radius: 8px;
-    margin: 12px 16px;
-    padding: 10px 14px;
-    background: rgba(59,130,246,0.05);
-    color: #e8192c;
-    font-size: 12px;
-    line-height: 1.5;
-  }
-
-  /* WARNING BAR */
-  .warning-bar {
-    background: var(--red);
-    padding: 10px 16px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.3px;
-    color: #fff;
-    text-transform: uppercase;
-  }
+  /* BANNERS */
+  .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59,130,246,0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
+  .warning-bar { background: var(--red); padding: 10px 16px; text-align: center; font-weight: 700; font-size: 13px; letter-spacing: 0.3px; color: #fff; text-transform: uppercase; }
 
   /* CATEGORY GRID */
   .categories {
-    padding: 20px 16px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 12px;
-    max-height: 380px;
-    overflow-y: auto;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 8px;
+    padding: 20px 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px; max-height: 380px; overflow-y: auto; border-bottom: 1px solid var(--border); margin-bottom: 8px;
   }
   .categories::-webkit-scrollbar { width: 5px; }
   .categories::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
 
   .cat-btn {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 16px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-align: left;
-    transition: border-color 0.2s, background 0.2s, transform 0.1s;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
+    background: var(--dark3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 16px; cursor: pointer; font-family: inherit; font-size: 12.5px;
+    font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px;
+    text-align: left; transition: border-color 0.2s, background 0.2s, transform 0.1s;
+    letter-spacing: 0.2px; text-transform: uppercase;
   }
   .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
   .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
-  .cat-btn .icon {
-    width: 26px; height: 26px; border-radius: 5px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; flex-shrink: 0; color: #fff;
-  }
+  .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
 
   /* icon colors */
   .icon-cart { background: transparent; color: var(--blue) !important; font-size: 18px !important; }
@@ -187,18 +115,9 @@
 
   /* SEARCH BAR */
   .search-wrap { padding: 12px 16px; }
-  .search-bar {
-    background: var(--dark2); border: 1px solid var(--border);
-    border-radius: 8px; display: flex; align-items: center;
-    padding: 0 12px; gap: 8px;
-  }
-  .search-bar input {
-    background: none; border: none; outline: none;
-    color: var(--text); font-family: inherit; font-size: 13px;
-    padding: 10px 0; flex: 1;
-  }
+  .search-bar { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
+  .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
   .search-bar input::placeholder { color: var(--text-muted); }
-  .search-bar .search-icon { color: var(--text-muted); font-size: 15px; }
 
   /* BẢNG SẢN PHẨM */
   .products-section { padding: 0 16px 16px; }
@@ -207,22 +126,15 @@
   .products-title { font-weight: 800; font-size: 16px; text-transform: uppercase; color: var(--text); }
   .products-count { color: var(--text-muted); font-size: 12px; }
 
-  .table-responsive {
-    width: 100%; overflow-x: auto; margin-bottom: 24px;
-    border: 1px solid var(--border); background: var(--dark2);
-  }
+  .table-responsive { width: 100%; overflow-x: auto; margin-bottom: 24px; border: 1px solid var(--border); background: var(--dark2); }
   .table-responsive::-webkit-scrollbar { height: 6px; }
   .table-responsive::-webkit-scrollbar-track { background: var(--dark); }
   .table-responsive::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
   .category-group { min-width: 900px; }
-  .grid-row {
-    display: grid; grid-template-columns: minmax(350px, 1fr) 90px 100px 100px 120px 120px; align-items: center;
-  }
+  .grid-row { display: grid; grid-template-columns: minmax(350px, 1fr) 90px 100px 100px 120px 120px; align-items: center; }
 
-  .cat-header-row {
-    background: var(--blue-dark); color: #fff; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--blue-dark);
-  }
+  .cat-header-row { background: var(--blue-dark); color: #fff; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--blue-dark); }
   .cat-header-row > div { padding: 14px 12px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
   .cat-header-row > div:last-child { border-right: none; }
   
@@ -246,43 +158,24 @@
   .stat-box.stock { border-color: #0ea5e9; }
   .stat-box.stock span { color: var(--text-muted); }
   .stat-box.stock strong { color: var(--text); display: block; font-size: 13px; }
-  
   .stat-box.sold { border-color: #14b8a6; }
   .stat-box.sold span { color: var(--text-muted); }
   .stat-box.sold strong { color: var(--text); display: block; font-size: 13px; }
-
   .stat-box.price { border-color: var(--red); color: var(--red); padding: 8px 0; }
   .stat-box.price strong { display: block; font-size: 14px; font-weight: 800; margin-top: 2px;}
 
   .btn-buy { background: #4f46e5; color: #fff; border: none; border-radius: 4px; width: 100%; padding: 10px 0; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: opacity 0.2s, background 0.2s; }
   .btn-buy:hover { background: #4338ca; opacity: 0.9; }
 
-  /* =========================================
-     MODALS (ĐĂNG NHẬP, ĐĂNG KÝ, MUA HÀNG)
-     ========================================= */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px);
-    z-index: 200; display: none; align-items: center; justify-content: center;
-  }
+  /* MODALS */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 200; display: none; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--dark2); border: 1px solid var(--border); border-radius: 14px;
-    padding: 24px; max-width: 400px; width: 90%; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-  }
+  .modal { background: var(--dark2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; max-width: 400px; width: 90%; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
   .modal-title { font-weight: 800; font-size: 18px; margin-bottom: 16px; color: var(--text); text-align: center; text-transform: uppercase; }
   
-  .auth-input {
-    background: var(--dark3); border: 1px solid var(--border); color: var(--text);
-    font-family: inherit; font-size: 14px; padding: 12px 14px; border-radius: 8px;
-    width: 100%; margin-bottom: 12px; outline: none;
-  }
+  .auth-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 12px 14px; border-radius: 8px; width: 100%; margin-bottom: 12px; outline: none; }
   .auth-input:focus { border-color: var(--blue); }
-  
-  .auth-btn {
-    width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none;
-    border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700;
-    cursor: pointer; text-transform: uppercase; transition: 0.2s; margin-top: 8px;
-  }
+  .auth-btn { width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s; margin-top: 8px; }
   .auth-btn:hover { background: #2563eb; }
 
   .modal-price { color: var(--accent); font-size: 22px; font-weight: 800; margin-bottom: 12px; }
@@ -309,14 +202,8 @@
   .luu-y-link { color: #e8192c; font-weight: 700; text-decoration: none; }
   .luu-y-link:hover { text-decoration: underline; }
 
-  /* LIÊN HỆ HỖ TRỢ FLOAT */
-  .support-float {
-    position: fixed; bottom: 20px; right: 20px; background: #e8192c; color: #fff; border: none; border-radius: 24px;
-    padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex;
-    align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(232,25,44,0.4); z-index: 150; animation: pulse 2s infinite;
-  }
+  .support-float { position: fixed; bottom: 20px; right: 20px; background: #e8192c; color: #fff; border: none; border-radius: 24px; padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(232,25,44,0.4); z-index: 150; animation: pulse 2s infinite; }
   @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
-
   .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
   .footer a { color: var(--blue); text-decoration: none; }
 </style>
@@ -334,7 +221,7 @@
   </div>
   
   <div class="header-right" id="auth-section">
-    </div>
+  </div>
 </header>
 
 <div class="notice-banner">
@@ -593,6 +480,9 @@
     <div class="modal-title">ĐĂNG NHẬP</div>
     <input type="text" id="login-user" class="auth-input" placeholder="Tên đăng nhập">
     <input type="password" id="login-pass" class="auth-input" placeholder="Mật khẩu">
+    <div style="text-align: right; margin-bottom: 12px; margin-top: -6px; font-size: 13px;">
+      <a href="#" onclick="switchAuthModal('forgot')" style="color: var(--blue); text-decoration: none;">Quên mật khẩu?</a>
+    </div>
     <button class="auth-btn" onclick="submitLogin()">Đăng nhập</button>
     <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
       Chưa có tài khoản? <a href="#" onclick="switchAuthModal('register')" style="color: var(--blue); font-weight: bold;">Đăng ký ngay</a>
@@ -605,11 +495,33 @@
     <button class="modal-close" onclick="closeAuthModal('register')">✕</button>
     <div class="modal-title">ĐĂNG KÝ TÀI KHOẢN</div>
     <input type="text" id="reg-user" class="auth-input" placeholder="Tên đăng nhập (viết liền không dấu)">
+    <input type="email" id="reg-email" class="auth-input" placeholder="Địa chỉ Email (Dùng để khôi phục mật khẩu)">
     <input type="password" id="reg-pass" class="auth-input" placeholder="Mật khẩu">
     <input type="password" id="reg-pass-confirm" class="auth-input" placeholder="Nhập lại mật khẩu">
     <button class="auth-btn" onclick="submitRegister()">Đăng ký</button>
     <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
       Đã có tài khoản? <a href="#" onclick="switchAuthModal('login')" style="color: var(--blue); font-weight: bold;">Đăng nhập</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="forgot-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuthModal('forgot')">✕</button>
+    <div class="modal-title">QUÊN MẬT KHẨU</div>
+    <div id="forgot-step-1">
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; text-align: center;">Nhập tên đăng nhập để nhận mã khôi phục.</p>
+      <input type="text" id="forgot-user" class="auth-input" placeholder="Tên đăng nhập">
+      <button class="auth-btn" onclick="sendResetCode()">Nhận mã qua Email</button>
+    </div>
+    <div id="forgot-step-2" style="display: none;">
+      <p style="font-size: 13px; color: var(--green); margin-bottom: 12px; text-align: center;">Mã xác thực 6 số đã được gửi đến email của bạn!</p>
+      <input type="text" id="forgot-code" class="auth-input" placeholder="Nhập mã xác thực">
+      <input type="password" id="forgot-new-pass" class="auth-input" placeholder="Mật khẩu mới">
+      <button class="auth-btn" onclick="resetPassword()">Cập nhật mật khẩu</button>
+    </div>
+    <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+      Nhớ mật khẩu? <a href="#" onclick="switchAuthModal('login')" style="color: var(--blue); font-weight: bold;">Đăng nhập</a>
     </div>
   </div>
 </div>
@@ -790,7 +702,7 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
 });
 
 /* =========================================
-   XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ
+   XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ / QUÊN MẬT KHẨU
    ========================================= */
 
 function updateHeaderUI() {
@@ -799,7 +711,6 @@ function updateHeaderUI() {
   const currentUser = localStorage.getItem("currentUser");
 
   if (currentUser) {
-    // Trạng thái: Đã đăng nhập
     authSection.innerHTML = `
       <div class="theme-toggle">
         <button class="theme-btn active">☀️</button>
@@ -812,15 +723,11 @@ function updateHeaderUI() {
       </div>
       <button class="wallet-btn danger no-icon" onclick="submitLogout()">Thoát</button>
     `;
-    
-    // Lấy số dư
     const users = JSON.parse(localStorage.getItem("users")) || {};
     const balance = users[currentUser]?.balance || 0;
     document.getElementById("user-balance").textContent = balance.toLocaleString('vi-VN');
     walletBtn.style.display = "flex";
-
   } else {
-    // Trạng thái: Chưa đăng nhập
     authSection.innerHTML = `
       <div class="theme-toggle">
         <button class="theme-btn active">☀️</button>
@@ -838,21 +745,32 @@ function closeAuthModal(type) { document.getElementById(`${type}-modal`).classLi
 function switchAuthModal(to) {
   closeAuthModal('login');
   closeAuthModal('register');
+  closeAuthModal('buy');
+  closeAuthModal('forgot');
+  
+  if(to === 'forgot') {
+    document.getElementById("forgot-step-1").style.display = "block";
+    document.getElementById("forgot-step-2").style.display = "none";
+    document.getElementById("forgot-user").value = "";
+    document.getElementById("forgot-code").value = "";
+    document.getElementById("forgot-new-pass").value = "";
+  }
   openAuthModal(to);
 }
 
 function submitRegister() {
   const user = document.getElementById("reg-user").value.trim();
+  const email = document.getElementById("reg-email").value.trim();
   const pass = document.getElementById("reg-pass").value;
   const passConfirm = document.getElementById("reg-pass-confirm").value;
 
-  if(!user || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
+  if(!user || !email || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
   if(pass !== passConfirm) return alert("Mật khẩu nhập lại không khớp!");
 
   const users = JSON.parse(localStorage.getItem("users")) || {};
   if(users[user]) return alert("Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.");
 
-  users[user] = { password: pass, balance: 0 };
+  users[user] = { email: email, password: pass, balance: 0 };
   localStorage.setItem("users", JSON.stringify(users));
 
   alert("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
@@ -862,7 +780,6 @@ function submitRegister() {
 function submitLogin() {
   const user = document.getElementById("login-user").value.trim();
   const pass = document.getElementById("login-pass").value;
-
   const users = JSON.parse(localStorage.getItem("users")) || {};
   
   if(!users[user] || users[user].password !== pass) {
@@ -879,8 +796,73 @@ function submitLogout() {
   updateHeaderUI();
 }
 
+let resetTargetUser = "";
+let generatedResetCode = "";
+
+// BƯỚC QUAN TRỌNG: ĐIỀN API KEY CỦA EMAILJS VÀO ĐÂY
+(function(){
+   emailjs.init("YOUR_PUBLIC_KEY"); 
+})();
+
+function sendResetCode() {
+  const inputUser = document.getElementById("forgot-user").value.trim();
+  if(!inputUser) return alert("Vui lòng nhập tên đăng nhập!");
+  
+  const users = JSON.parse(localStorage.getItem("users")) || {};
+  if(!users[inputUser]) {
+    return alert("Không tìm thấy tài khoản này trong hệ thống!");
+  }
+  
+  const targetEmail = users[inputUser].email;
+  if(!targetEmail) {
+    return alert("Tài khoản này chưa được liên kết Email nên không thể khôi phục!");
+  }
+
+  resetTargetUser = inputUser;
+  generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
+  
+  const btnSend = document.querySelector("#forgot-step-1 .auth-btn");
+  btnSend.textContent = "Đang gửi email...";
+  btnSend.disabled = true;
+
+  // ĐIỀN SERVICE ID VÀ TEMPLATE ID VÀO ĐÂY
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+      to_email: targetEmail,
+      user_name: inputUser,
+      reset_code: generatedResetCode
+  })
+  .then(function(response) {
+      btnSend.textContent = "Nhận mã qua Email";
+      btnSend.disabled = false;
+
+      document.getElementById("forgot-step-1").style.display = "none";
+      document.getElementById("forgot-step-2").style.display = "block";
+      alert(`Đã gửi mã xác thực đến email: ${targetEmail}`);
+  }, function(error) {
+      btnSend.textContent = "Nhận mã qua Email";
+      btnSend.disabled = false;
+      alert("Gửi email thất bại. Vui lòng kiểm tra lại cấu hình EmailJS: " + JSON.stringify(error));
+  });
+}
+
+function resetPassword() {
+  const inputCode = document.getElementById("forgot-code").value.trim();
+  const newPass = document.getElementById("forgot-new-pass").value;
+  
+  if(inputCode !== generatedResetCode) return alert("Mã xác thực không chính xác!");
+  if(!newPass) return alert("Vui lòng nhập mật khẩu mới!");
+  
+  const users = JSON.parse(localStorage.getItem("users")) || {};
+  if(users[resetTargetUser]) {
+    users[resetTargetUser].password = newPass;
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("Đổi mật khẩu thành công! Hãy đăng nhập lại với mật khẩu mới.");
+    switchAuthModal('login');
+  }
+}
+
 /* =========================================
-   RENDER & XỬ LÝ SẢN PHẨM
+   RENDER SẢN PHẨM VÀ BỘ LỌC
    ========================================= */
 
 let currentCat = "all";
@@ -917,17 +899,9 @@ function renderProducts(catFilter, searchQuery = "") {
     html += `
       <div class="category-group">
         <div class="grid-row cat-header-row">
-          <div class="cat-header-info">
-            <div class="cat-header-icon">${catInfo.icon}</div>
-            ${catInfo.name}
-          </div>
-          <div>Xem trước</div>
-          <div>Hiện có</div>
-          <div>Đã bán</div>
-          <div>Giá</div>
-          <div>Thao tác</div>
+          <div class="cat-header-info"><div class="cat-header-icon">${catInfo.icon}</div>${catInfo.name}</div>
+          <div>Xem trước</div><div>Hiện có</div><div>Đã bán</div><div>Giá</div><div>Thao tác</div>
         </div>
-        
         <div class="cat-products-list">
           ${catProducts.map(p => {
             const randomSold = (p.id * 7 + 15) % 800 + 10;
@@ -941,75 +915,50 @@ function renderProducts(catFilter, searchQuery = "") {
                 </div>
               </div>
               <div class="col-preview"></div>
-              <div class="col-stock">
-                <div class="stat-box stock">
-                  <span>Còn lại:</span>
-                  <strong>${p.stock}</strong>
-                </div>
-              </div>
-              <div class="col-sold">
-                <div class="stat-box sold">
-                  <span>Đã bán:</span>
-                  <strong>${randomSold}</strong>
-                </div>
-              </div>
-              <div class="col-price">
-                <div class="stat-box price">
-                  <span>💵</span>
-                  <strong>${p.price}</strong>
-                </div>
-              </div>
+              <div class="col-stock"><div class="stat-box stock"><span>Còn lại:</span><strong>${p.stock}</strong></div></div>
+              <div class="col-sold"><div class="stat-box sold"><span>Đã bán:</span><strong>${randomSold}</strong></div></div>
+              <div class="col-price"><div class="stat-box price"><span class="icon-money">💵</span><strong>${p.price}</strong></div></div>
               <div class="col-action">
                 <button class="btn-buy" onclick="openModal(${p.id})">
-                  <span style="font-size:14px">🛒 MUA NGAY</span>
+                  <span style="font-size:14px">🛒 MUA</span>
+                  <span style="font-size:12px">NGAY</span>
                 </button>
               </div>
-            </div>
-            `;
+            </div>`;
           }).join('')}
         </div>
-      </div>
-    `;
+      </div>`;
   });
 
-  if (totalCount === 0) {
-    grid.innerHTML = `<div style="text-align:center;padding:48px;color:var(--text-muted)">Không tìm thấy sản phẩm phù hợp</div>`;
-  } else {
-    grid.innerHTML = html;
-  }
+  grid.innerHTML = totalCount === 0 ? `<div style="text-align:center;padding:48px;color:var(--text-muted)">Không tìm thấy sản phẩm phù hợp</div>` : html;
   countDisplay.textContent = `${totalCount} sản phẩm`;
 }
 
-// Lọc Category
+// Event Lọc Category
 document.querySelectorAll('.cat-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentCat = btn.dataset.cat;
     document.querySelector('.search-bar input').value = '';
-    renderProducts(currentCat, "");
+    renderProducts(btn.dataset.cat, "");
   });
 });
 
-// Tìm kiếm
+// Event Tìm kiếm
 document.querySelector('.search-bar input').addEventListener('input', function() {
-  const q = this.value.toLowerCase();
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('[data-cat="all"]').classList.add('active');
-  currentCat = "all";
-  renderProducts("all", q);
+  renderProducts("all", this.value.toLowerCase());
 });
 
-// Modal Mua Hàng Xử lý
+// Xử lý Mua Hàng
 let currentProduct = null;
 function openModal(id) {
-  // KIỂM TRA ĐĂNG NHẬP TRƯỚC KHI MUA
   if (!localStorage.getItem("currentUser")) {
     alert("⚠️ Bạn cần Đăng nhập tài khoản để mua hàng!");
     openAuthModal('login');
     return;
   }
-
   currentProduct = products.find(p => p.id === id);
   document.getElementById("modal-name").textContent = currentProduct.name;
   document.getElementById("modal-price").textContent = currentProduct.price;
@@ -1024,15 +973,7 @@ function handleBuy() {
   closeAuthModal('buy');
 }
 
-// Theme toggle
-document.querySelectorAll('.theme-btn').forEach((btn, i) => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
-
-// Khởi tạo
+// Khởi tạo giao diện
 updateHeaderUI();
 renderProducts("all", "");
 </script>
