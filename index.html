@@ -8,16 +8,17 @@
 <style>
   :root {
     --red: #e8192c;
-    /* Đã đổi các biến màu tối thành bảng màu sáng (Light Theme) */
-    --dark: #f0f2f5;       /* Nền trang web (xám nhạt) */
-    --dark2: #ffffff;      /* Nền các thẻ sản phẩm, header (trắng tinh) */
-    --dark3: #e4e6eb;      /* Nền nút bấm, ô tìm kiếm (xám vừa) */
-    --border: #ced0d4;     /* Màu viền */
-    --text: #050505;       /* Màu chữ chính (đen) */
-    --text-muted: #65676b; /* Màu chữ phụ (xám) */
-    --accent: #ea580c;     /* Vàng cam (chỉnh đậm hơn chút để dễ đọc trên nền sáng) */
+    /* Giao diện Sáng (Light Theme) */
+    --dark: #f0f2f5;       
+    --dark2: #ffffff;      
+    --dark3: #e4e6eb;      
+    --border: #ced0d4;     
+    --text: #050505;       
+    --text-muted: #65676b; 
+    --accent: #ea580c;     
     --green: #22c55e;
-    --blue: #1877f2;       /* Xanh dương sáng hơn */
+    --blue: #3b82f6;
+    --blue-dark: #1e293b; /* Màu nền header bảng như trong ảnh */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -119,13 +120,19 @@
     text-transform: uppercase;
   }
 
-  /* CATEGORY GRID */
+  /* CATEGORY GRID (Thêm thanh cuộn để tối ưu) */
   .categories {
     padding: 16px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
   }
+  .categories::-webkit-scrollbar { width: 4px; }
+  .categories::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
 
   .cat-btn {
     background: var(--dark3);
@@ -145,25 +152,12 @@
     letter-spacing: 0.2px;
     text-transform: uppercase;
   }
-
-  .cat-btn:hover {
-    border-color: var(--blue);
-    background: #f0f2f5;
-    transform: translateY(-1px);
-  }
-
-  .cat-btn.active {
-    background: #e7f3ff;
-    border-color: var(--blue);
-    color: var(--blue);
-  }
-
+  .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
+  .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
   .cat-btn .icon {
-    width: 24px; height: 24px;
-    border-radius: 5px;
+    width: 24px; height: 24px; border-radius: 5px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 14px; flex-shrink: 0;
-    color: #fff; /* Đảm bảo icon bên trong có màu trắng */
+    font-size: 14px; flex-shrink: 0; color: #fff;
   }
 
   /* icon colors */
@@ -187,27 +181,11 @@
   .icon-ms { background: #0078d4; }
   .icon-canva { background: #00c4cc; }
 
-  /* SECTION DIVIDER */
-  .section-title {
-    padding: 20px 16px 8px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    border-top: 1px solid var(--border);
-    margin-top: 8px;
-  }
-
   /* SEARCH BAR */
-  .search-wrap {
-    padding: 12px 16px;
-  }
+  .search-wrap { padding: 12px 16px; }
   .search-bar {
-    background: var(--dark2); /* Ô tìm kiếm trắng trên nền sáng */
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    display: flex; align-items: center;
+    background: var(--dark2); border: 1px solid var(--border);
+    border-radius: 8px; display: flex; align-items: center;
     padding: 0 12px; gap: 8px;
   }
   .search-bar input {
@@ -218,90 +196,143 @@
   .search-bar input::placeholder { color: var(--text-muted); }
   .search-bar .search-icon { color: var(--text-muted); font-size: 15px; }
 
-  /* PRODUCTS GRID */
-  .products-section {
-    padding: 0 16px 16px;
-  }
-  .products-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 12px;
-  }
-  .products-title { font-weight: 700; font-size: 14px; }
+  /* =========================================
+     BẢNG SẢN PHẨM MỚI (NEW TABLE LAYOUT)
+     ========================================= */
+  .products-section { padding: 0 16px 16px; }
+  .products-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .products-title { font-weight: 700; font-size: 14px; text-transform: uppercase; color: var(--text); }
   .products-count { color: var(--text-muted); font-size: 12px; }
 
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
-  }
-
-  .product-card {
-    background: var(--dark2);
+  /* Responsive wrapper cho bảng ngang */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 24px;
     border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
-  }
-  .product-card:hover {
-    border-color: var(--blue);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08); /* Đổ bóng nhạt cho Light Mode */
+    background: var(--dark2);
   }
 
-  .product-img {
-    height: 120px;
-    background: linear-gradient(135deg, var(--dark3), #f0f2f5);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px; position: relative;
+  .table-responsive::-webkit-scrollbar { height: 6px; }
+  .table-responsive::-webkit-scrollbar-track { background: var(--dark); }
+  .table-responsive::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .category-group {
+    min-width: 900px; /* Đảm bảo các cột không bị bóp méo */
   }
 
-  .product-badge {
-    position: absolute; top: 8px; right: 8px;
-    background: var(--red); color: #fff;
-    font-size: 10px; font-weight: 700;
-    padding: 2px 7px; border-radius: 4px;
+  /* Định nghĩa các cột dùng CSS Grid */
+  .grid-row {
+    display: grid;
+    grid-template-columns: minmax(350px, 1fr) 90px 100px 100px 120px 120px;
+    align-items: center;
+  }
+
+  /* Header danh mục màu xanh đen */
+  .cat-header-row {
+    background: var(--blue-dark);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    border-bottom: 1px solid var(--blue-dark);
+  }
+
+  .cat-header-row > div {
+    padding: 14px 12px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .cat-header-row > div:last-child { border-right: none; }
+  
+  .cat-header-info {
+    display: flex; align-items: center; gap: 10px;
+    text-align: left !important;
     text-transform: uppercase;
   }
-
-  .product-badge.new { background: var(--green); }
-  .product-badge.hot { background: #f97316; }
-
-  .product-info { padding: 12px; }
-  .product-name {
-    font-weight: 700; font-size: 12px; margin-bottom: 4px;
-    text-transform: uppercase; letter-spacing: 0.3px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  .cat-header-icon {
+    background: rgba(255,255,255,0.1);
+    width: 24px; height: 24px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
   }
-  .product-desc {
-    color: var(--text-muted); font-size: 11px; margin-bottom: 10px;
-    line-height: 1.4;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  }
-  .product-footer { display: flex; align-items: center; justify-content: space-between; }
-  .product-price { color: var(--accent); font-weight: 800; font-size: 14px; }
-  .product-stock { color: var(--text-muted); font-size: 11px; }
-  .buy-btn {
-    background: var(--red); color: #fff;
-    border: none; border-radius: 6px;
-    padding: 6px 14px; font-family: inherit;
-    font-size: 11px; font-weight: 700;
-    cursor: pointer; text-transform: uppercase;
-    transition: opacity 0.2s;
-  }
-  .buy-btn:hover { opacity: 0.85; }
 
-  /* FOOTER */
-  .footer {
-    border-top: 1px solid var(--border);
-    padding: 24px 16px;
-    color: var(--text-muted);
-    font-size: 12px;
+  /* Row Sản phẩm */
+  .product-row {
+    background: var(--dark2);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  .product-row:hover { background: #f8fafc; }
+  .product-row:last-child { border-bottom: none; }
+
+  .product-row > div {
+    padding: 16px 12px;
     text-align: center;
+    border-right: 1px solid var(--border);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-  .footer a { color: var(--blue); text-decoration: none; }
+  .product-row > div:last-child { border-right: none; }
 
-  /* SCROLLBAR */
+  /* Cột 1: Thông tin */
+  .col-info {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    gap: 16px;
+  }
+  
+  .prod-icon-wrap {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: #eef2ff; color: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+
+  .prod-details { flex: 1; }
+  .prod-name {
+    color: var(--blue); font-weight: 700; font-size: 13px;
+    margin-bottom: 6px; line-height: 1.4; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .prod-name:hover { text-decoration: underline; }
+  .prod-desc {
+    color: var(--text); font-size: 11.5px; line-height: 1.5;
+  }
+
+  /* Các box thông số (Hiện có, Đã bán, Giá) */
+  .stat-box {
+    border: 1px solid var(--border);
+    border-radius: 4px; padding: 6px 0;
+    width: 100%; background: #fff;
+    font-size: 12px; line-height: 1.4;
+  }
+  .stat-box.stock { border-color: #0ea5e9; }
+  .stat-box.stock span { color: var(--text-muted); }
+  .stat-box.stock strong { color: var(--text); display: block; font-size: 13px; }
+  
+  .stat-box.sold { border-color: #14b8a6; }
+  .stat-box.sold span { color: var(--text-muted); }
+  .stat-box.sold strong { color: var(--text); display: block; font-size: 13px; }
+
+  .stat-box.price { border-color: var(--red); color: var(--red); padding: 8px 0; }
+  .stat-box.price strong { display: block; font-size: 14px; font-weight: 800; margin-top: 2px;}
+
+  /* Nút Mua Ngay */
+  .btn-buy {
+    background: #4f46e5; color: #fff;
+    border: none; border-radius: 4px;
+    width: 100%; padding: 10px 0;
+    font-family: inherit; font-size: 12px; font-weight: 700;
+    cursor: pointer; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    transition: opacity 0.2s, background 0.2s;
+  }
+  .btn-buy:hover { background: #4338ca; opacity: 0.9; }
+
+  /* SCROLLBAR GENERAL */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--dark); }
   ::-webkit-scrollbar-thumb { background: #a8b0c0; border-radius: 3px; }
@@ -316,8 +347,7 @@
   .modal {
     background: var(--dark2); border: 1px solid var(--border);
     border-radius: 14px; padding: 24px; max-width: 400px; width: 90%;
-    position: relative;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
   }
   .modal-title { font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--text); }
   .modal-price { color: var(--accent); font-size: 22px; font-weight: 800; margin-bottom: 12px; }
@@ -345,111 +375,29 @@
   }
 
   /* LƯU Ý SECTION */
-  .luu-y-section {
-    margin: 12px 16px;
-    border: 2px solid #3b5bdb;
-    border-radius: 10px;
-    padding: 20px;
-    background: rgba(59, 91, 219, 0.04);
-  }
-
-  .luu-y-title {
-    text-align: center;
-    font-size: 22px;
-    font-weight: 800;
-    color: #e8192c;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-    font-style: italic;
-  }
-
-  .luu-y-boxes {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 18px;
-  }
-
-  .luu-y-box {
-    border: 1px solid #3b5bdb;
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #e8192c;
-    text-align: center;
-    line-height: 1.5;
-    background: rgba(232,25,44,0.04);
-  }
-
-  .luu-y-list {
-    margin-bottom: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .luu-y-item {
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--text);
-  }
-
+  .luu-y-section { margin: 12px 16px; border: 2px solid #3b5bdb; border-radius: 10px; padding: 20px; background: rgba(59, 91, 219, 0.04); }
+  .luu-y-title { text-align: center; font-size: 22px; font-weight: 800; color: #e8192c; letter-spacing: 2px; margin-bottom: 16px; font-style: italic; }
+  .luu-y-boxes { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+  .luu-y-box { border: 1px solid #3b5bdb; border-radius: 6px; padding: 10px 14px; font-size: 13px; font-weight: 600; color: #e8192c; text-align: center; line-height: 1.5; background: rgba(232,25,44,0.04); }
+  .luu-y-list { margin-bottom: 14px; display: flex; flex-direction: column; gap: 7px; }
+  .luu-y-item { font-size: 13px; line-height: 1.6; color: var(--text); }
   .luu-y-item.red { color: #e8192c; font-weight: 600; }
   .red-text { color: #e8192c; }
-
-  .luu-y-check-list {
-    border-top: 1px solid var(--border);
-    padding-top: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .check-item {
-    font-size: 12.5px;
-    line-height: 1.6;
-    color: var(--text-muted);
-  }
-
-  .luu-y-link {
-    color: #e8192c;
-    font-weight: 700;
-    text-decoration: none;
-  }
+  .luu-y-check-list { border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .check-item { font-size: 12.5px; line-height: 1.6; color: var(--text-muted); }
+  .luu-y-link { color: #e8192c; font-weight: 700; text-decoration: none; }
   .luu-y-link:hover { text-decoration: underline; }
 
   /* LIÊN HỆ HỖ TRỢ FLOAT */
   .support-float {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #e8192c;
-    color: #fff;
-    border: none;
-    border-radius: 24px;
-    padding: 10px 18px;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 20px rgba(232,25,44,0.4);
-    z-index: 150;
-    animation: pulse 2s infinite;
+    position: fixed; bottom: 20px; right: 20px; background: #e8192c; color: #fff; border: none; border-radius: 24px;
+    padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex;
+    align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(232,25,44,0.4); z-index: 150; animation: pulse 2s infinite;
   }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
 
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); }
-    50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); }
-  }
-
-  @media (max-width: 600px) {
-    .categories { grid-template-columns: repeat(2, 1fr); }
-    .products-grid { grid-template-columns: 1fr 1fr; }
-  }
+  .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
+  .footer a { color: var(--blue); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -505,7 +453,7 @@
   </div>
 
   <div class="luu-y-check-list">
-    <p class="check-item">✅ Lưu ý đối với những clone via dưới 1.000đ, hàng VER chỉ thích hợp chạy tool vì chỉ live time ngắn không nên mua dùng hay ngâm.</p>
+    <p class="check-item">✅ Lưu đối với những clone via dưới 1.000đ, hàng VER chỉ thích hợp chạy tool vì chỉ live time ngắn không nên mua dùng hay ngâm.</p>
     <p class="check-item">✅ Không bảo hành trường hợp acc Facebook dính WhatsApp anh em nên mua loại có 2FA để xác thực khi login.</p>
     <p class="check-item">✅ NICK FB MỚI KHÔNG CHO BẬT 2FA, CHO NÊN NGÂM SẼ KHÔNG LOGIN BẰNG PASS ĐƯỢC VUI LÒNG DÙNG COOKIE.</p>
     <p class="check-item">✅ <strong>ĐIỀU KHOẢN:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
@@ -689,13 +637,17 @@
   <button class="cat-btn" data-cat="thiet-ke-sang-tao"><span class="icon">🎭</span> THIẾT KẾ - SÁNG TẠO</button>
   <button class="cat-btn" data-cat="ca-nhan-tien-ich"><span class="icon">📱</span> CÁ NHÂN - TIỆN ÍCH</button>
 </div>
+
 <div class="section-title">SẢN PHẨM NỔI BẬT</div>
 <div class="products-section">
   <div class="products-header">
-    <span class="products-title">Tất cả sản phẩm</span>
+    <span class="products-title" id="display-title">Tất cả sản phẩm</span>
     <span class="products-count" id="count">Đang tải...</span>
   </div>
-  <div class="products-grid" id="products-grid"></div>
+  
+  <div class="table-responsive">
+    <div id="products-grid"></div>
+  </div>
 </div>
 
 <div class="footer">
@@ -722,244 +674,303 @@
 
 <script>
 const products = [
-  { id: 1, name: "TÍCH XANH FACEBOOK", cat: "tich-xanh", icon: "✅", price: "299,000đ", stock: 12, badge: "hot", desc: "Tài khoản Facebook đã được tích xanh xác minh. Độ uy tín cao, phù hợp chạy quảng cáo và marketing." },
-  { id: 2, name: "FANPAGE REG MỚI", cat: "fanpage-reg", icon: "📄", price: "15,000đ", stock: 142, badge: "new", desc: "Fanpage mới reg, chưa vi phạm. Phù hợp nuôi và dùng chạy ads." },
-  { id: 3, name: "PAGE KHÁNG BILL", cat: "page-khang", icon: "🛡️", price: "89,000đ", stock: 34, badge: "", desc: "Page kháng bill mạnh, đã test qua. Không cần xác minh thêm." },
-  { id: 4, name: "PAGE SCAN NGOẠI CỔ", cat: "page-scan-ngoai-co", icon: "🌐", price: "45,000đ", stock: 60, badge: "", desc: "Page scan ngoại cổ, phù hợp chạy ads quốc tế." },
-  { id: 5, name: "PAGE LƯỢT MUA", cat: "page-luot-mua", icon: "💫", price: "55,000đ", stock: 28, badge: "hot", desc: "Page đã có lượt mua, tăng uy tín shop online hiệu quả." },
-  { id: 6, name: "BM CẦM PAGE", cat: "bm-cam-page", icon: "📊", price: "70,000đ", stock: 40, badge: "", desc: "Business Manager cầm page, dùng để điều hành quảng cáo dễ dàng." },
-  { id: 7, name: "PAGE CẦN VPCS", cat: "page-can-vpcs", icon: "📋", price: "60,000đ", stock: 22, badge: "", desc: "Page cần VPCS để chạy ads, đã qua kiểm duyệt." },
-  { id: 8, name: "PAGE SCAN NGOẠI NHIỀU FOLLOW", cat: "page-scan-nhieu-follow", icon: "👥", price: "120,000đ", stock: 15, badge: "hot", desc: "Page ngoại scan nhiều followers, uy tín cao để chạy ads mạnh." },
-  { id: 9, name: "CÔNG CỤ HỖ TRỢ MARKETING", cat: "cong-cu", icon: "🔧", price: "99,000đ", stock: 50, badge: "new", desc: "Bộ công cụ hỗ trợ marketing Facebook đầy đủ, tăng hiệu quả chiến dịch." },
-  { id: 10, name: "PAGE REG NHÉT VÀO D1 BM", cat: "page-reg-nhet", icon: "📌", price: "35,000đ", stock: 75, badge: "new", desc: "Page reg sẵn sàng nhét vào D1 BM để chạy quảng cáo ngay." },
-  { id: 11, name: "PROXY V4 ĐA QUỐC GIA", cat: "proxy", icon: "🌍", price: "35,000đ", stock: 1000, badge: "new", desc: "Proxy IPv4 đa quốc gia tốc độ cao, rotate linh hoạt, hỗ trợ SOCKS5." },
-  { id: 12, name: "PAGE LIVESTREAM ADS", cat: "page-livestream", icon: "📹", price: "110,000đ", stock: 20, badge: "hot", desc: "Page đã bật tính năng livestream + quảng cáo. Phù hợp bán hàng live." },
-  { id: 13, name: "PAGE BÀI ĐĂNG VIỆT NHIỀU FOLLOW", cat: "page-bai-dang-follow", icon: "📢", price: "80,000đ", stock: 18, badge: "", desc: "Page Việt Nam nhiều bài đăng và followers, phù hợp seeding." },
-  { id: 14, name: "PAGE CÁC LOẠI CHẠY ADS", cat: "page-ads", icon: "🎯", price: "55,000đ", stock: 90, badge: "", desc: "Page các loại đã được xác minh dùng để chạy quảng cáo." },
-  { id: 15, name: "BM ĐÃ TẠO TKQC", cat: "bm-da-tao", icon: "💼", price: "120,000đ", stock: 25, badge: "hot", desc: "Business Manager đã tạo tài khoản quảng cáo. Sẵn sàng chạy ngay." },
-  { id: 16, name: "BM CHƯA TẠO TKQC", cat: "bm-chua-tao", icon: "📁", price: "85,000đ", stock: 45, badge: "", desc: "Business Manager chưa tạo TKQC, phù hợp để tự cấu hình." },
-  { id: 17, name: "TKBM SHARE ĐỐI TÁC", cat: "tkbm", icon: "🤝", price: "95,000đ", stock: 30, badge: "", desc: "Tài khoản BM share đối tác, hỗ trợ quản lý quảng cáo nhóm." },
-  { id: 18, name: "BM XMDN", cat: "bm-xmdn", icon: "✨", price: "150,000đ", stock: 18, badge: "hot", desc: "Business Manager xác minh doanh nghiệp thật, giới hạn chi tiêu cao." },
-  { id: 19, name: "BM KHÁNG", cat: "bm-khang", icon: "🛡️", price: "200,000đ", stock: 8, badge: "hot", desc: "Business Manager kháng bill mạnh nhất, không bị vô hiệu hoá." },
-  { id: 20, name: "BM CHẠY QUẢNG CÁO", cat: "bm-chay-qc", icon: "💰", price: "130,000đ", stock: 22, badge: "", desc: "BM chuyên chạy quảng cáo, đã được cấu hình sẵn sàng dùng ngay." },
-  { id: 21, name: "BM XMDN (XÁC MINH DOANH NGHIỆP)", cat: "bm-xmdn2", icon: "🏢", price: "180,000đ", stock: 10, badge: "hot", desc: "BM xác minh doanh nghiệp chính hãng, giới hạn chi tiêu cao nhất." },
-  { id: 22, name: "BM NĂM TẠO 2016-2023", cat: "bm-nam-tao", icon: "📅", price: "160,000đ", stock: 14, badge: "", desc: "BM cổ năm tạo từ 2016-2023, scan + reg, uy tín cao." },
-  { id: 23, name: "TÀI KHOẢN QUẢNG CÁO CÁ NHÂN", cat: "tkqc-ca-nhan", icon: "👤", price: "110,000đ", stock: 35, badge: "", desc: "TKQC cá nhân đã được xác minh, dùng chạy ads cá nhân hiệu quả." },
-  { id: 24, name: "BM", cat: "bm-general", icon: "📦", price: "75,000đ", stock: 80, badge: "new", desc: "Business Manager đa dạng loại, phù hợp nhiều nhu cầu sử dụng." },
-  { id: 25, name: "INSTAGRAM", cat: "instagram", icon: "📸", price: "20,000đ", stock: 200, badge: "", desc: "Tài khoản Instagram cũ, đã có followers, phù hợp nuôi và marketing." },
-  { id: 26, name: "INSTAGRAM CỔ", cat: "instagram-co", icon: "🖼️", price: "35,000đ", stock: 85, badge: "", desc: "Instagram cổ nhiều năm tuổi, uy tín cao, phù hợp xây dựng thương hiệu." },
-  { id: 27, name: "TWITTER", cat: "twitter", icon: "🐦", price: "25,000đ", stock: 120, badge: "new", desc: "Tài khoản Twitter/X các loại, dùng cho marketing và seeding." },
-  { id: 28, name: "NHÓM CHAT ZALO", cat: "nhom-zalo", icon: "💬", price: "50,000đ", stock: 40, badge: "", desc: "Nhóm chat Zalo nhiều thành viên, phù hợp marketing Zalo." },
-  { id: 29, name: "PROFILE 250$", cat: "profile-250", icon: "💎", price: "350,000đ", stock: 8, badge: "hot", desc: "Profile Facebook có ngưỡng chi tiêu 250$, dùng chạy ads mạnh." },
-  { id: 30, name: "PROFILE CÓ TKQC CỔ", cat: "profile-co-tkqc", icon: "💰", price: "180,000đ", stock: 20, badge: "", desc: "Profile cổ có tài khoản quảng cáo đi kèm, sẵn sàng dùng." },
-  { id: 31, name: "PROFILE CẦM TKQC 50$", cat: "profile-cam", icon: "🔒", price: "120,000đ", stock: 30, badge: "", desc: "Profile cầm TKQC 50$, phù hợp chạy ads nhỏ và test camp." },
-  { id: 32, name: "PROFILE CÓ TKQC CỔ BAO CHANGE ALL", cat: "profile-co-tkqc-bao-change", icon: "🔑", price: "220,000đ", stock: 12, badge: "hot", desc: "Profile TKQC cổ bao đổi toàn bộ thông tin, an toàn tuyệt đối." },
-  { id: 33, name: "PROFILE BAO CHANGE PASS", cat: "profile-bao-change-pass", icon: "🔐", price: "95,000đ", stock: 50, badge: "", desc: "Profile bao đổi mật khẩu thành công, không lo mất tài khoản." },
-  { id: 34, name: "PROFILE BAO SET CAMP", cat: "profile-bao-set-camp", icon: "⚙️", price: "150,000đ", stock: 18, badge: "", desc: "Profile bao set campaign quảng cáo, chạy ổn định lâu dài." },
-  { id: 35, name: "PROFILE XIN TÍCH XANH", cat: "profile-xin-tich-xanh", icon: "⭐", price: "280,000đ", stock: 7, badge: "hot", desc: "Profile đủ điều kiện và đang trong quá trình xin tích xanh Facebook." },
-  { id: 36, name: "PROFILE CHUYÊN ADS", cat: "profile-chuyen-ads", icon: "🎯", price: "130,000đ", stock: 25, badge: "", desc: "Profile chuyên dụng chạy quảng cáo Facebook, đã tối ưu sẵn." },
-  { id: 37, name: "PROFILE XIN TÍCH", cat: "profile-xin-tich", icon: "✨", price: "200,000đ", stock: 15, badge: "", desc: "Profile chuẩn bị xin tích, đầy đủ điều kiện theo yêu cầu Meta." },
-  { id: 38, name: "PROFILE CHAT SUPPORT", cat: "profile-chat-support", icon: "💁", price: "45,000đ", stock: 60, badge: "new", desc: "Profile dùng làm chat support, ổn định và chuyên nghiệp." },
-  { id: 39, name: "CLONE VIỆT NUÔI BẠN BÈ VIỆT", cat: "clone-viet", icon: "🇻🇳", price: "30,000đ", stock: 250, badge: "new", desc: "Clone Việt Nam đã nuôi bạn bè đông, phù hợp seeding và marketing." },
-  { id: 40, name: "CLONE VIỆT NEW - CÓ 2FA", cat: "clone-viet-new-2fa", icon: "🇻🇳", price: "22,000đ", stock: 300, badge: "new", desc: "Clone Việt mới có bảo mật 2FA, an toàn khi đăng nhập lần đầu." },
-  { id: 41, name: "CLONE VIỆT NEW - NO 2FA", cat: "clone-viet-new-no2fa", icon: "🇻🇳", price: "12,000đ", stock: 500, badge: "new", desc: "Clone Việt mới không có 2FA, đăng nhập bằng cookie lần đầu." },
-  { id: 42, name: "CLONE VIỆT NUÔI CÓ 2FA", cat: "clone-viet-nuoi-2fa", icon: "🇻🇳", price: "35,000đ", stock: 180, badge: "", desc: "Clone Việt đã nuôi kỹ, có 2FA bảo mật, ít checkpoint." },
-  { id: 43, name: "PROFILE VIỆT NEW", cat: "profile-viet-new", icon: "🇻🇳", price: "25,000đ", stock: 500, badge: "new", desc: "Profile Việt mới tạo, đầy đủ thông tin, chưa vi phạm. Phù hợp nuôi nick." },
-  { id: 44, name: "PROFILE VIỆT CỔ - CÓ 2FA", cat: "profile-viet-co-2fa", icon: "🇻🇳", price: "75,000đ", stock: 40, badge: "", desc: "Profile Việt cổ có bảo mật 2FA, độ uy tín cao, ít bị checkpoint." },
-  { id: 45, name: "PROFILE VIỆT SIÊU CỔ", cat: "profile-viet-sieu-co", icon: "🇻🇳", price: "95,000đ", stock: 20, badge: "hot", desc: "Profile Việt siêu cổ nhiều năm tuổi, uy tín tuyệt đối trên nền tảng." },
-  { id: 46, name: "PROFILE VIỆT XMDT", cat: "profile-viet-xmdt", icon: "🇻🇳", price: "55,000đ", stock: 90, badge: "", desc: "Profile Việt xác minh danh tính, giảm thiểu rủi ro checkpoint." },
-  { id: 47, name: "PROFILE VIỆT LỌC NAM", cat: "profile-viet-loc-nam", icon: "🇻🇳", price: "30,000đ", stock: 200, badge: "", desc: "Profile Việt lọc toàn nam, phù hợp target theo giới tính." },
-  { id: 48, name: "PROFILE VIỆT LỌC NỮ", cat: "profile-viet-loc-nu", icon: "🇻🇳", price: "30,000đ", stock: 180, badge: "", desc: "Profile Việt lọc toàn nữ, phù hợp sản phẩm thời trang và làm đẹp." },
-  { id: 49, name: "PROFILE VIỆT NHIỀU BÀI ĐĂNG", cat: "profile-viet-nhieu-bai", icon: "🇻🇳", price: "45,000đ", stock: 120, badge: "", desc: "Profile Việt có nhiều bài đăng, trông tự nhiên và uy tín." },
-  { id: 50, name: "PROFILE VIỆT SPAM", cat: "profile-viet-spam", icon: "🇻🇳", price: "8,000đ", stock: 600, badge: "new", desc: "Profile Việt giá rẻ dùng cho mục đích spam tool, live time ngắn." },
-  { id: 51, name: "PROFILE VIỆT CỔ NO 2FA", cat: "profile-viet-co-no2fa", icon: "🇻🇳", price: "50,000đ", stock: 65, badge: "", desc: "Profile Việt cổ không có 2FA, đăng nhập bằng cookie." },
-  { id: 52, name: "PROFILE 902 NEW", cat: "profile-902-new", icon: "9️⃣", price: "45,000đ", stock: 87, badge: "", desc: "Profile bị 902 mới, còn khả năng khôi phục cao. Kèm mail/sdt." },
-  { id: 53, name: "PROFILE 902 CỔ", cat: "profile-902-co", icon: "🔢", price: "60,000đ", stock: 40, badge: "", desc: "Profile 902 cổ, có lịch sử lâu dài trên Facebook." },
-  { id: 54, name: "PROFILE 902", cat: "profile-902", icon: "🔟", price: "35,000đ", stock: 100, badge: "", desc: "Profile 902 các loại, phù hợp nhiều mục đích khác nhau." },
-  { id: 55, name: "CLONE VIỆT + USA NUÔI NHIỀU BÀI VIẾT", cat: "clone-viet-usa-nhieu-bai", icon: "🇻🇳", price: "40,000đ", stock: 150, badge: "new", desc: "Clone Việt và USA đã nuôi nhiều bài viết, tự nhiên và uy tín." },
-  { id: 56, name: "CLONE SPAM", cat: "clone-spam", icon: "📤", price: "5,000đ", stock: 1000, badge: "new", desc: "Clone giá rẻ dành cho mục đích spam, số lượng lớn." },
-  { id: 57, name: "XU TƯƠNG TÁC", cat: "xu-tuong-tac", icon: "💠", price: "10,000đ", stock: 999, badge: "new", desc: "Xu tương tác Facebook, dùng trao đổi like/comment/share." },
-  { id: 58, name: "CLONE USA", cat: "clone-usa", icon: "🇺🇸", price: "28,000đ", stock: 220, badge: "", desc: "Clone USA chính gốc, phù hợp target thị trường Mỹ và quốc tế." },
-  { id: 59, name: "CLONE NGOẠI NO 2FA VER 1", cat: "clone-ngoai-no2fa-v1", icon: "🌐", price: "8,000đ", stock: 800, badge: "new", desc: "Clone ngoại không có 2FA phiên bản 1, giá rẻ số lượng lớn." },
-  { id: 60, name: "CLONE NGOẠI NO 2FA VER 2", cat: "clone-ngoai-no2fa-v2", icon: "🌐", price: "10,000đ", stock: 700, badge: "", desc: "Clone ngoại không có 2FA phiên bản 2, chất lượng hơn ver 1." },
-  { id: 61, name: "CLONE NGOẠI NO 2FA VER 3", cat: "clone-ngoai-no2fa-v3", icon: "🌐", price: "12,000đ", stock: 500, badge: "", desc: "Clone ngoại không có 2FA phiên bản 3, live time tốt hơn." },
-  { id: 62, name: "CLONE NGOẠI NO 2FA VER 4", cat: "clone-ngoai-no2fa-v4", icon: "🌐", price: "15,000đ", stock: 400, badge: "new", desc: "Clone ngoại không có 2FA phiên bản 4, chất lượng cao nhất." },
-  { id: 63, name: "CLONE NGOẠI CÓ 2FA", cat: "clone-ngoai-co2fa", icon: "🌐", price: "25,000đ", stock: 300, badge: "", desc: "Clone ngoại có bảo mật 2FA, an toàn và ổn định hơn." },
-  { id: 64, name: "CLONE NGOẠI NUÔI - CÓ 2FA", cat: "clone-ngoai-nuoi-co2fa", icon: "🌐", price: "35,000đ", stock: 200, badge: "hot", desc: "Clone ngoại đã nuôi kỹ có 2FA, phù hợp chạy ads và seeding lâu dài." },
-  { id: 65, name: "CLONE NGOẠI NUÔI - NO 2FA", cat: "clone-ngoai-nuoi-no2fa", icon: "🌐", price: "22,000đ", stock: 250, badge: "", desc: "Clone ngoại đã nuôi không có 2FA, đăng nhập bằng cookie." },
-  { id: 66, name: "CLONE KHÁNG 282", cat: "clone-khang-282", icon: "🛡️", price: "45,000đ", stock: 80, badge: "", desc: "Clone kháng lỗi 282, ổn định cho các chiến dịch quảng cáo." },
-  { id: 67, name: "CLONE QUA SỬ DỤNG", cat: "clone-qua-su-dung", icon: "♻️", price: "5,000đ", stock: 500, badge: "", desc: "Clone đã qua sử dụng, giá siêu rẻ, phù hợp test và spam." },
-  { id: 68, name: "CLONE CÁC NƯỚC", cat: "clone-cac-nuoc", icon: "🗺️", price: "18,000đ", stock: 400, badge: "new", desc: "Clone nhiều quốc gia khác nhau, phù hợp đa dạng chiến dịch." },
-  { id: 69, name: "CLONE NGOẠI VER MAIL", cat: "clone-ngoai-ver-mail", icon: "📧", price: "20,000đ", stock: 300, badge: "", desc: "Clone ngoại đã verify qua mail fviainboxes.com, ổn định hơn." },
-  { id: 70, name: "CLONE 2024 NUÔI TRUST CHUYÊN SPAM", cat: "clone-2024-nuoi-trust", icon: "🔋", price: "15,000đ", stock: 450, badge: "new", desc: "Clone 2024 đã nuôi trust chuyên dùng cho spam, live time tốt." },
-  { id: 71, name: "CLONE INSTAGRAM", cat: "clone-instagram", icon: "📷", price: "18,000đ", stock: 200, badge: "", desc: "Clone Instagram đã nuôi, phù hợp marketing và tăng follow." },
-  { id: 72, name: "CLONE TIKTOK", cat: "clone-tiktok", icon: "🎵", price: "20,000đ", stock: 180, badge: "new", desc: "Clone TikTok đã nuôi, phù hợp tăng follow và seeding TikTok." },
-  { id: 73, name: "CLONE CHUYÊN DÙNG ADS - REG BM", cat: "clone-chuan-ads", icon: "📣", price: "35,000đ", stock: 120, badge: "", desc: "Clone chuyên dụng để chạy ads và reg Business Manager." },
-  { id: 74, name: "FAKEBOOK CHUYÊN SEEDING SPAM NUÔI", cat: "fakebook-seeding", icon: "🎭", price: "8,000đ", stock: 800, badge: "new", desc: "Fakebook chuyên seeding, spam và nuôi, số lượng lớn giá rẻ." },
-  { id: 75, name: "ACC 1000X - TẠO PROFILE PHỤ+FAN PAGE", cat: "acc-1000x", icon: "💯", price: "50,000đ", stock: 90, badge: "", desc: "Acc 1000X dùng để tạo profile phụ và fanpage hàng loạt." },
-  { id: 76, name: "FACEBOOK VIP 1000XX", cat: "fb-vip-1000", icon: "👑", price: "280,000đ", stock: 5, badge: "hot", desc: "Facebook VIP 1000XX, tài khoản siêu uy tín với hàng nghìn bạn bè." },
-  { id: 77, name: "ACC HOST CỔ", cat: "acc-host-co", icon: "🖥️", price: "65,000đ", stock: 35, badge: "", desc: "Acc host cổ có lịch sử dài, phù hợp làm tài khoản chính." },
-  { id: 78, name: "Acc Name Việt", cat: "acc-name-viet", icon: "🇻🇳", price: "20,000đ", stock: 350, badge: "new", desc: "Acc tên Việt Nam chuẩn, phù hợp xây dựng shop và page." },
-  { id: 79, name: "Acc Name Ngoại", cat: "acc-name-ngoai", icon: "🌐", price: "18,000đ", stock: 400, badge: "new", desc: "Acc tên ngoại chuẩn, phù hợp target thị trường quốc tế." },
-  { id: 80, name: "ACC NAME USA NHIỀU BÀI VIẾT", cat: "acc-name-usa-nhieu-bai", icon: "🇺🇸", price: "35,000đ", stock: 150, badge: "", desc: "Acc tên USA đã có nhiều bài viết, tự nhiên và đáng tin cậy." },
-  { id: 81, name: "Acc USA", cat: "acc-usa", icon: "🇺🇸", price: "25,000đ", stock: 280, badge: "", desc: "Tài khoản Facebook USA chính gốc, phù hợp target Mỹ." },
-  { id: 82, name: "Acc Ngoại", cat: "acc-ngoai", icon: "🌍", price: "15,000đ", stock: 500, badge: "new", desc: "Tài khoản ngoại các loại, đa dạng quốc gia." },
-  { id: 83, name: "Acc Việt", cat: "acc-viet", icon: "🇻🇳", price: "12,000đ", stock: 600, badge: "new", desc: "Tài khoản Việt Nam đa dạng, phù hợp nhiều mục đích." },
-  { id: 84, name: "Acc Ấn Độ, Pakistan, Bangladet", cat: "acc-in-pk-bd", icon: "🌏", price: "8,000đ", stock: 700, badge: "new", desc: "Tài khoản IN/PK/BD giá rẻ, phù hợp target Nam Á." },
-  { id: 85, name: "PROFILE NGOẠI XMDT", cat: "profile-ngoai-xmdt", icon: "🌐", price: "55,000đ", stock: 70, badge: "", desc: "Profile ngoại đã xác minh danh tính, ổn định và ít checkpoint." },
-  { id: 86, name: "PROFILE NGOẠI NEW NO 2FA", cat: "profile-ngoai-new-no2fa", icon: "🌐", price: "15,000đ", stock: 400, badge: "new", desc: "Profile ngoại mới không có 2FA, đăng nhập bằng cookie lần đầu." },
-  { id: 87, name: "PROFILE NGOẠI CỔ - CÓ 2FA", cat: "profile-ngoai-co-co2fa", icon: "🌐", price: "65,000đ", stock: 55, badge: "", desc: "Profile ngoại cổ có 2FA, uy tín cao và ổn định lâu dài." },
-  { id: 88, name: "PROFILE NGOẠI CỔ NO 2FA", cat: "profile-ngoai-co-no2fa", icon: "🌐", price: "45,000đ", stock: 80, badge: "", desc: "Profile ngoại cổ không có 2FA, login bằng cookie." },
-  { id: 89, name: "PROFILE NGOẠI NEW CÓ 2FA", cat: "profile-ngoai-new-co2fa", icon: "🌐", price: "25,000đ", stock: 300, badge: "new", desc: "Profile ngoại mới có 2FA, an toàn cho lần đăng nhập đầu." },
-  { id: 90, name: "PROFILE NGOẠI SPAM", cat: "profile-ngoai-spam", icon: "📤", price: "6,000đ", stock: 900, badge: "new", desc: "Profile ngoại giá rẻ dùng spam tool, live time ngắn." },
-  { id: 91, name: "PROFILE NGOẠI NHIỀU FOLLOW", cat: "profile-ngoai-nhieu-follow", icon: "👥", price: "85,000đ", stock: 40, badge: "hot", desc: "Profile ngoại nhiều followers, phù hợp page scan và marketing." },
-  { id: 92, name: "PROFILE NGOẠI NHIỀU BẠN BÈ", cat: "profile-ngoai-nhieu-ban", icon: "👫", price: "70,000đ", stock: 55, badge: "", desc: "Profile ngoại đã add nhiều bạn bè, tự nhiên và uy tín." },
-  { id: 93, name: "PROFILE NGOẠI 1000+ BẠN BÈ", cat: "profile-ngoai-1000-ban", icon: "👥", price: "90,000đ", stock: 30, badge: "hot", desc: "Profile ngoại trên 1000 bạn bè, siêu uy tín." },
-  { id: 94, name: "PROFILE NGOẠI NHIỀU BÀI ĐĂNG", cat: "profile-ngoai-nhieu-bai", icon: "📝", price: "60,000đ", stock: 70, badge: "", desc: "Profile ngoại có nhiều bài đăng tự nhiên, tránh bị phát hiện." },
-  { id: 95, name: "PROFILE NGOẠI 1 HOTMAIL", cat: "profile-ngoai-1-hotmail", icon: "📧", price: "40,000đ", stock: 100, badge: "", desc: "Profile ngoại kèm 1 hotmail, dễ khôi phục khi cần." },
-  { id: 96, name: "PROFILE NGOẠI ĐÃ TẠO SẴN 1 FANPAGE", cat: "profile-ngoai-co-fanpage", icon: "📄", price: "55,000đ", stock: 45, badge: "", desc: "Profile ngoại đã tạo sẵn fanpage, tiết kiệm thời gian setup." },
-  { id: 97, name: "PROFILE RANDOM QUỐC GIA", cat: "profile-random-quocgia", icon: "🎲", price: "12,000đ", stock: 600, badge: "new", desc: "Profile random nhiều quốc gia, giá rẻ đa dạng." },
-  { id: 98, name: "PROFILE RANDOM QUỐC GIA SPAM", cat: "profile-random-spam", icon: "🎲", price: "5,000đ", stock: 1000, badge: "new", desc: "Profile random dùng spam, giá cực rẻ số lượng lớn." },
-  { id: 99, name: "PROFILE CHÂU PHI RANDOM", cat: "profile-chau-phi-random", icon: "🌍", price: "6,000đ", stock: 800, badge: "", desc: "Profile Châu Phi random các nước, phù hợp target thị trường Châu Phi." },
-  { id: 100, name: "PROFILE NAM MỸ", cat: "profile-nam-my", icon: "🌎", price: "10,000đ", stock: 500, badge: "", desc: "Profile Nam Mỹ các nước, phù hợp target thị trường Châu Mỹ." },
-  { id: 101, name: "PROFILE CÁC NƯỚC", cat: "profile-cac-nuoc", icon: "🗺️", price: "10,000đ", stock: 700, badge: "new", desc: "Profile đa dạng các nước trên thế giới." },
-  { id: 102, name: "PROFILE PHI NEW", cat: "profile-phi-new", icon: "🇵🇭", price: "18,000đ", stock: 300, badge: "new", desc: "Profile Philippines mới tạo. Phù hợp target thị trường Đông Nam Á." },
-  { id: 103, name: "PROFILE PHI CỔ", cat: "profile-phi-co", icon: "🇵🇭", price: "28,000đ", stock: 150, badge: "", desc: "Profile Philippines cổ có lịch sử, uy tín cao hơn." },
-  { id: 104, name: "PROFILE PHI XMDT", cat: "profile-phi-xmdt", icon: "🇵🇭", price: "35,000đ", stock: 80, badge: "", desc: "Profile Philippines đã xác minh danh tính." },
-  { id: 105, name: "PROFILE INDO NEW", cat: "profile-indo-new", icon: "🇮🇩", price: "15,000đ", stock: 350, badge: "new", desc: "Profile Indonesia mới, phù hợp target thị trường Indonesia." },
-  { id: 106, name: "PROFILE INDO CỔ", cat: "profile-indo-co", icon: "🇮🇩", price: "22,000đ", stock: 200, badge: "", desc: "Profile Indonesia cũ có lịch sử, uy tín cho thị trường Indo." },
-  { id: 107, name: "PROFILE INDO XMDT", cat: "profile-indo-xmdt", icon: "🇮🇩", price: "30,000đ", stock: 100, badge: "", desc: "Profile Indonesia xác minh danh tính, ổn định." },
-  { id: 108, name: "PROFILE THAILAND NEW", cat: "profile-thai-new", icon: "🇹🇭", price: "20,000đ", stock: 250, badge: "new", desc: "Profile Thailand mới tạo, dùng target thị trường Thái Lan." },
-  { id: 109, name: "PROFILE THAILAND CỔ", cat: "profile-thai-co", icon: "🇹🇭", price: "30,000đ", stock: 120, badge: "", desc: "Profile Thailand cổ có lịch sử, uy tín cho thị trường Thái." },
-  { id: 110, name: "PROFILE BRAZlL", cat: "profile-brazil", icon: "🇧🇷", price: "12,000đ", stock: 400, badge: "", desc: "Profile Brazil, phù hợp target thị trường Nam Mỹ." },
-  { id: 111, name: "PROFILE BANGLADESH", cat: "profile-bangladesh", icon: "🇧🇩", price: "8,000đ", stock: 500, badge: "new", desc: "Profile Bangladesh giá rẻ, dùng target và spam Nam Á." },
-  { id: 112, name: "PROFILE PAKISTAN", cat: "profile-pakistan", icon: "🇵🇰", price: "8,000đ", stock: 500, badge: "new", desc: "Profile Pakistan giá rẻ, phù hợp target Nam Á." },
-  { id: 113, name: "PROFILE MYANMAR", cat: "profile-myanmar", icon: "🇲🇲", price: "10,000đ", stock: 300, badge: "", desc: "Profile Myanmar, thị trường tiềm năng Đông Nam Á." },
-  { id: 114, name: "PROFILE CANADA", cat: "profile-canada", icon: "🇨🇦", price: "20,000đ", stock: 200, badge: "", desc: "Profile Canada, target thị trường Bắc Mỹ uy tín cao." },
-  { id: 115, name: "PROFILE COLOMBIA", cat: "profile-colombia", icon: "🇨🇴", price: "10,000đ", stock: 350, badge: "", desc: "Profile Colombia, phù hợp target thị trường Nam Mỹ." },
-  { id: 116, name: "PROFILE INDIA", cat: "profile-india", icon: "🇮🇳", price: "6,000đ", stock: 800, badge: "new", desc: "Profile India giá rẻ, thị trường tỷ dân cực tiềm năng." },
-  { id: 117, name: "PROFILE GERMANY", cat: "profile-germany", icon: "🇩🇪", price: "25,000đ", stock: 150, badge: "", desc: "Profile Đức, thị trường Tây Âu uy tín và giá trị cao." },
-  { id: 118, name: "PROFILE ITALIA", cat: "profile-italia", icon: "🇮🇹", price: "20,000đ", stock: 180, badge: "", desc: "Profile Ý, phù hợp target thị trường Nam Âu." },
-  { id: 119, name: "PROFILE EGYPT", cat: "profile-egypt", icon: "🇪🇬", price: "8,000đ", stock: 400, badge: "", desc: "Profile Ai Cập, target thị trường Trung Đông và Bắc Phi." },
-  { id: 120, name: "PROFILE AUSTRALIA", cat: "profile-australia", icon: "🇦🇺", price: "22,000đ", stock: 160, badge: "", desc: "Profile Úc, thị trường phát triển với ngân sách quảng cáo cao." },
-  { id: 121, name: "PROFILE UK", cat: "profile-uk", icon: "🇬🇧", price: "25,000đ", stock: 140, badge: "", desc: "Profile Anh Quốc, thị trường châu Âu uy tín hàng đầu." },
-  { id: 122, name: "PROFILE MEXICO", cat: "profile-mexico", icon: "🇲🇽", price: "10,000đ", stock: 300, badge: "", desc: "Profile Mexico, target thị trường Trung Mỹ và Hispanic." },
-  { id: 123, name: "PROFILE MALAYSIA", cat: "profile-malaysia", icon: "🇲🇾", price: "15,000đ", stock: 250, badge: "", desc: "Profile Malaysia, target Đông Nam Á và thị trường Hồi giáo." },
-  { id: 124, name: "PROFILE EU", cat: "profile-eu", icon: "🇪🇺", price: "20,000đ", stock: 200, badge: "", desc: "Profile châu Âu đa dạng, target toàn EU ngân sách cao." },
-  { id: 125, name: "PROFILE SRILANKA", cat: "profile-srilanka", icon: "🇱🇰", price: "8,000đ", stock: 350, badge: "", desc: "Profile Sri Lanka, thị trường Nam Á giá rẻ." },
-  { id: 126, name: "PROFILE NEPAL", cat: "profile-nepal", icon: "🇳🇵", price: "6,000đ", stock: 400, badge: "", desc: "Profile Nepal giá cực rẻ, phù hợp spam và test." },
-  { id: 127, name: "PROFILE BALAN", cat: "profile-balan", icon: "🇵🇱", price: "18,000đ", stock: 200, badge: "", desc: "Profile Ba Lan, target Đông Âu với ngân sách quảng cáo tốt." },
-  { id: 128, name: "PROFILE GUATEMALA", cat: "profile-guatemala", icon: "🇬🇹", price: "8,000đ", stock: 350, badge: "", desc: "Profile Guatemala, target Trung Mỹ giá rẻ." },
-  { id: 129, name: "PROFILE IRAN", cat: "profile-iran", icon: "🇮🇷", price: "8,000đ", stock: 300, badge: "", desc: "Profile Iran, target thị trường Trung Đông." },
-  { id: 130, name: "PROFILE VENEZUELA", cat: "profile-venezuela", icon: "🇻🇪", price: "6,000đ", stock: 400, badge: "", desc: "Profile Venezuela, Nam Mỹ giá rẻ." },
-  { id: 131, name: "PROFILE MADAGASCAR", cat: "profile-madagascar", icon: "🇲🇬", price: "6,000đ", stock: 350, badge: "", desc: "Profile Madagascar, Châu Phi giá siêu rẻ." },
-  { id: 132, name: "PROFILE USA CỔ", cat: "profile-usa-co", icon: "🇺🇸", price: "45,000đ", stock: 80, badge: "hot", desc: "Profile USA cổ nhiều năm tuổi, uy tín cao nhất thị trường Mỹ." },
-  { id: 133, name: "TIKTOK NGOẠI MỞ SẴN LIVE - LIVESTUDIO", cat: "tiktok-ngoai-live", icon: "🎵", price: "85,000đ", stock: 30, badge: "hot", desc: "Tài khoản TikTok ngoại đã mở sẵn tính năng Live và LiveStudio." },
-  { id: 134, name: "TIKTOK VIỆT NAM", cat: "tiktok-viet", icon: "🎵", price: "25,000đ", stock: 200, badge: "new", desc: "Tài khoản TikTok Việt Nam, phù hợp xây dựng kênh và bán hàng." },
-  { id: 135, name: "TIKTOK NGOẠI", cat: "tiktok-ngoai", icon: "🎵", price: "20,000đ", stock: 250, badge: "", desc: "Tài khoản TikTok ngoại các nước, phù hợp target quốc tế." },
-  { id: 136, name: "TKCN Tiktok Ads", cat: "tkcn-tiktok-ads", icon: "📣", price: "120,000đ", stock: 25, badge: "hot", desc: "Tài khoản cá nhân TikTok Ads, chạy quảng cáo trực tiếp." },
-  { id: 137, name: "BC3 - Phí nạp 0%", cat: "bc3-tiktok", icon: "💳", price: "100,000đ", stock: 40, badge: "hot", desc: "BC3 TikTok Ads phí nạp 0%, tiết kiệm chi phí quảng cáo tối đa." },
-  { id: 138, name: "BC Tiktok Ads", cat: "bc-tiktok-ads", icon: "📊", price: "90,000đ", stock: 50, badge: "", desc: "Business Center TikTok Ads, quản lý quảng cáo chuyên nghiệp." },
-  { id: 139, name: "Tài Khoản Chi Tiêu TikTok", cat: "tiktok-chi-tieu", icon: "💸", price: "80,000đ", stock: 35, badge: "", desc: "Tài khoản chi tiêu TikTok Ads, giới hạn cao ổn định." },
-  { id: 140, name: "Tiktok Ads Thailand", cat: "tiktok-thailand", icon: "🇹🇭", price: "75,000đ", stock: 30, badge: "", desc: "TikTok Ads Thailand, target thị trường Thái Lan hiệu quả." },
-  { id: 141, name: "Tiktok Ads Brazil", cat: "tiktok-brazil", icon: "🇧🇷", price: "70,000đ", stock: 28, badge: "", desc: "TikTok Ads Brazil, target thị trường Nam Mỹ lớn nhất." },
-  { id: 142, name: "Tiktok Ads US/UK", cat: "tiktok-us-uk", icon: "🇺🇸", price: "130,000đ", stock: 15, badge: "hot", desc: "TikTok Ads US/UK, thị trường cao cấp ngân sách quảng cáo lớn." },
-  { id: 143, name: "GMAIL", cat: "gmail", icon: "📩", price: "8,000đ", stock: 800, badge: "new", desc: "Tài khoản Gmail các loại, dùng để xác minh và bảo mật tài khoản." },
-  { id: 144, name: "GMAIL EDU", cat: "gmail-edu", icon: "🎓", price: "15,000đ", stock: 300, badge: "", desc: "Gmail Edu (.edu), truy cập nhiều ưu đãi phần mềm miễn phí." },
-  { id: 145, name: "HOTMAIL", cat: "hotmail", icon: "📧", price: "6,000đ", stock: 600, badge: "new", desc: "Tài khoản Hotmail/Outlook, dùng verify và bảo mật tài khoản." },
-  { id: 146, name: "OUTLOOK", cat: "outlook", icon: "📮", price: "6,000đ", stock: 500, badge: "new", desc: "Tài khoản Outlook Microsoft, đa mục đích xác minh." },
-  { id: 147, name: "COOKIE", cat: "cookie", icon: "🍪", price: "12,000đ", stock: 400, badge: "", desc: "Cookie Facebook các loại, dùng đăng nhập tài khoản không có 2FA." },
-  { id: 148, name: "CHAT GPT PLUS", cat: "chatgpt", icon: "🤖", price: "55,000đ", stock: 60, badge: "hot", desc: "Tài khoản ChatGPT Plus chính hãng, truy cập GPT-4 không giới hạn." },
-  { id: 149, name: "GEMINI PRO", cat: "gemini", icon: "✨", price: "40,000đ", stock: 90, badge: "new", desc: "Tài khoản Gemini Pro Google, AI mạnh mẽ không giới hạn." },
-  { id: 150, name: "GROK", cat: "grok", icon: "🧠", price: "45,000đ", stock: 70, badge: "new", desc: "Tài khoản Grok AI của X (Twitter), AI tiên tiến mới nhất." },
-  { id: 151, name: "VEO 3", cat: "veo3", icon: "🎬", price: "80,000đ", stock: 25, badge: "hot", desc: "Tài khoản VEO 3 Google, tạo video AI chất lượng cực cao." },
-  { id: 152, name: "KLING", cat: "kling", icon: "🎥", price: "60,000đ", stock: 40, badge: "new", desc: "Tài khoản Kling AI, tạo video và ảnh AI chất lượng cao." },
-  { id: 153, name: "CÔNG CỤ AI", cat: "cong-cu-ai", icon: "🦾", price: "50,000đ", stock: 100, badge: "new", desc: "Bộ công cụ AI tổng hợp, hỗ trợ sáng tạo nội dung và marketing." },
-  { id: 154, name: "CAPCUT PRO", cat: "capcut", icon: "✂️", price: "28,000đ", stock: 200, badge: "new", desc: "Tài khoản CapCut Pro quốc tế, đầy đủ template và hiệu ứng cao cấp." },
-  { id: 155, name: "CANVA PRO", cat: "canva", icon: "🎨", price: "30,000đ", stock: 150, badge: "new", desc: "Tài khoản Canva Pro đầy đủ tính năng thiết kế, xuất không giới hạn." },
-  { id: 156, name: "ADOBE CREATIVE CLOUD", cat: "adobe", icon: "🖌️", price: "75,000đ", stock: 45, badge: "hot", desc: "Tài khoản Adobe Creative Cloud, đầy đủ Photoshop, Illustrator, Premiere." },
-  { id: 157, name: "MICROSOFT 365", cat: "microsoft", icon: "🪟", price: "35,000đ", stock: 120, badge: "", desc: "Tài khoản Microsoft 365 cá nhân, đầy đủ Word, Excel, Outlook, Teams." },
-  { id: 158, name: "HMA VPN", cat: "hma", icon: "🔒", price: "40,000đ", stock: 80, badge: "", desc: "HMA VPN tốc độ cao, bảo mật toàn diện đa thiết bị." },
-  { id: 159, name: "APP LÀM ĐẸP PRO", cat: "app-lam-dep", icon: "💅", price: "25,000đ", stock: 150, badge: "new", desc: "Tài khoản app làm đẹp Pro, chỉnh ảnh chuyên nghiệp không quảng cáo." },
-  { id: 160, name: "THIẾT KẾ - SÁNG TẠO", cat: "thiet-ke-sang-tao", icon: "🎭", price: "45,000đ", stock: 90, badge: "", desc: "Bộ tài khoản thiết kế và sáng tạo nội dung đa nền tảng." },
-  { id: 161, name: "CÁ NHÂN - TIỆN ÍCH", cat: "ca-nhan-tien-ich", icon: "📱", price: "20,000đ", stock: 200, badge: "new", desc: "Các app cá nhân và tiện ích hữu dụng hàng ngày." },
+  { id: 1, name: "TÍCH XANH FACEBOOK", cat: "tich-xanh", icon: "✅", price: "299.000đ", stock: 12, badge: "hot", desc: "Tài khoản Facebook đã được tích xanh xác minh. Độ uy tín cao, phù hợp chạy quảng cáo và marketing." },
+  { id: 2, name: "FANPAGE REG MỚI", cat: "fanpage-reg", icon: "📄", price: "15.000đ", stock: 142, badge: "new", desc: "Fanpage mới reg, chưa vi phạm. Phù hợp nuôi và dùng chạy ads." },
+  { id: 3, name: "PAGE KHÁNG BILL", cat: "page-khang", icon: "🛡️", price: "89.000đ", stock: 34, badge: "", desc: "Page kháng bill mạnh, đã test qua. Không cần xác minh thêm." },
+  { id: 4, name: "PAGE SCAN NGOẠI CỔ", cat: "page-scan-ngoai-co", icon: "🌐", price: "45.000đ", stock: 60, badge: "", desc: "Page scan ngoại cổ, phù hợp chạy ads quốc tế." },
+  { id: 5, name: "PAGE LƯỢT MUA", cat: "page-luot-mua", icon: "💫", price: "55.000đ", stock: 28, badge: "hot", desc: "Page đã có lượt mua, tăng uy tín shop online hiệu quả." },
+  { id: 6, name: "BM CẦM PAGE", cat: "bm-cam-page", icon: "📊", price: "70.000đ", stock: 40, badge: "", desc: "Business Manager cầm page, dùng để điều hành quảng cáo dễ dàng." },
+  { id: 7, name: "PAGE CẦN VPCS", cat: "page-can-vpcs", icon: "📋", price: "60.000đ", stock: 22, badge: "", desc: "Page cần VPCS để chạy ads, đã qua kiểm duyệt." },
+  { id: 8, name: "PAGE SCAN NGOẠI NHIỀU FOLLOW", cat: "page-scan-nhieu-follow", icon: "👥", price: "120.000đ", stock: 15, badge: "hot", desc: "Page ngoại scan nhiều followers, uy tín cao để chạy ads mạnh." },
+  { id: 9, name: "CÔNG CỤ HỖ TRỢ MARKETING", cat: "cong-cu", icon: "🔧", price: "99.000đ", stock: 50, badge: "new", desc: "Bộ công cụ hỗ trợ marketing Facebook đầy đủ, tăng hiệu quả chiến dịch." },
+  { id: 10, name: "PAGE REG NHÉT VÀO D1 BM", cat: "page-reg-nhet", icon: "📌", price: "35.000đ", stock: 75, badge: "new", desc: "Page reg sẵn sàng nhét vào D1 BM để chạy quảng cáo ngay." },
+  { id: 11, name: "PROXY V4 ĐA QUỐC GIA", cat: "proxy", icon: "🌍", price: "35.000đ", stock: 1000, badge: "new", desc: "Proxy IPv4 đa quốc gia tốc độ cao, rotate linh hoạt, hỗ trợ SOCKS5." },
+  { id: 12, name: "PAGE LIVESTREAM ADS", cat: "page-livestream", icon: "📹", price: "110.000đ", stock: 20, badge: "hot", desc: "Page đã bật tính năng livestream + quảng cáo. Phù hợp bán hàng live." },
+  { id: 13, name: "PAGE BÀI ĐĂNG VIỆT NHIỀU FOLLOW", cat: "page-bai-dang-follow", icon: "📢", price: "80.000đ", stock: 18, badge: "", desc: "Page Việt Nam nhiều bài đăng và followers, phù hợp seeding." },
+  { id: 14, name: "PAGE CÁC LOẠI CHẠY ADS", cat: "page-ads", icon: "🎯", price: "55.000đ", stock: 90, badge: "", desc: "Page các loại đã được xác minh dùng để chạy quảng cáo." },
+  { id: 15, name: "BM ĐÃ TẠO TKQC", cat: "bm-da-tao", icon: "💼", price: "120.000đ", stock: 25, badge: "hot", desc: "Business Manager đã tạo tài khoản quảng cáo. Sẵn sàng chạy ngay." },
+  { id: 16, name: "BM CHƯA TẠO TKQC", cat: "bm-chua-tao", icon: "📁", price: "85.000đ", stock: 45, badge: "", desc: "Business Manager chưa tạo TKQC, phù hợp để tự cấu hình." },
+  { id: 17, name: "TKBM SHARE ĐỐI TÁC", cat: "tkbm", icon: "🤝", price: "95.000đ", stock: 30, badge: "", desc: "Tài khoản BM share đối tác, hỗ trợ quản lý quảng cáo nhóm." },
+  { id: 18, name: "BM XMDN", cat: "bm-xmdn", icon: "✨", price: "150.000đ", stock: 18, badge: "hot", desc: "Business Manager xác minh doanh nghiệp thật, giới hạn chi tiêu cao." },
+  { id: 19, name: "BM KHÁNG", cat: "bm-khang", icon: "🛡️", price: "200.000đ", stock: 8, badge: "hot", desc: "Business Manager kháng bill mạnh nhất, không bị vô hiệu hoá." },
+  { id: 20, name: "BM CHẠY QUẢNG CÁO", cat: "bm-chay-qc", icon: "💰", price: "130.000đ", stock: 22, badge: "", desc: "BM chuyên chạy quảng cáo, đã được cấu hình sẵn sàng dùng ngay." },
+  { id: 21, name: "BM XMDN (XÁC MINH DOANH NGHIỆP)", cat: "bm-xmdn2", icon: "🏢", price: "180.000đ", stock: 10, badge: "hot", desc: "BM xác minh doanh nghiệp chính hãng, giới hạn chi tiêu cao nhất." },
+  { id: 22, name: "BM NĂM TẠO 2016-2023", cat: "bm-nam-tao", icon: "📅", price: "160.000đ", stock: 14, badge: "", desc: "BM cổ năm tạo từ 2016-2023, scan + reg, uy tín cao." },
+  { id: 23, name: "TÀI KHOẢN QUẢNG CÁO CÁ NHÂN", cat: "tkqc-ca-nhan", icon: "👤", price: "110.000đ", stock: 35, badge: "", desc: "TKQC cá nhân đã được xác minh, dùng chạy ads cá nhân hiệu quả." },
+  { id: 24, name: "BM", cat: "bm-general", icon: "📦", price: "75.000đ", stock: 80, badge: "new", desc: "Business Manager đa dạng loại, phù hợp nhiều nhu cầu sử dụng." },
+  { id: 25, name: "INSTAGRAM", cat: "instagram", icon: "📸", price: "20.000đ", stock: 200, badge: "", desc: "Tài khoản Instagram cũ, đã có followers, phù hợp nuôi và marketing." },
+  { id: 26, name: "INSTAGRAM CỔ", cat: "instagram-co", icon: "🖼️", price: "35.000đ", stock: 85, badge: "", desc: "Instagram cổ nhiều năm tuổi, uy tín cao, phù hợp xây dựng thương hiệu." },
+  { id: 27, name: "TWITTER", cat: "twitter", icon: "🐦", price: "25.000đ", stock: 120, badge: "new", desc: "Tài khoản Twitter/X các loại, dùng cho marketing và seeding." },
+  { id: 28, name: "NHÓM CHAT ZALO", cat: "nhom-zalo", icon: "💬", price: "50.000đ", stock: 40, badge: "", desc: "Nhóm chat Zalo nhiều thành viên, phù hợp marketing Zalo." },
+  { id: 29, name: "PROFILE 250$", cat: "profile-250", icon: "💎", price: "350.000đ", stock: 8, badge: "hot", desc: "Profile Facebook có ngưỡng chi tiêu 250$, dùng chạy ads mạnh." },
+  { id: 30, name: "PROFILE CÓ TKQC CỔ", cat: "profile-co-tkqc", icon: "💰", price: "180.000đ", stock: 20, badge: "", desc: "Profile cổ có tài khoản quảng cáo đi kèm, sẵn sàng dùng." },
+  { id: 31, name: "PROFILE CẦM TKQC 50$", cat: "profile-cam", icon: "🔒", price: "120.000đ", stock: 30, badge: "", desc: "Profile cầm TKQC 50$, phù hợp chạy ads nhỏ và test camp." },
+  { id: 32, name: "PROFILE CÓ TKQC CỔ BAO CHANGE ALL", cat: "profile-co-tkqc-bao-change", icon: "🔑", price: "220.000đ", stock: 12, badge: "hot", desc: "Profile TKQC cổ bao đổi toàn bộ thông tin, an toàn tuyệt đối." },
+  { id: 33, name: "PROFILE BAO CHANGE PASS", cat: "profile-bao-change-pass", icon: "🔐", price: "95.000đ", stock: 50, badge: "", desc: "Profile bao đổi mật khẩu thành công, không lo mất tài khoản." },
+  { id: 34, name: "PROFILE BAO SET CAMP", cat: "profile-bao-set-camp", icon: "⚙️", price: "150.000đ", stock: 18, badge: "", desc: "Profile bao set campaign quảng cáo, chạy ổn định lâu dài." },
+  { id: 35, name: "PROFILE XIN TÍCH XANH", cat: "profile-xin-tich-xanh", icon: "⭐", price: "280.000đ", stock: 7, badge: "hot", desc: "Profile đủ điều kiện và đang trong quá trình xin tích xanh Facebook." },
+  { id: 36, name: "PROFILE CHUYÊN ADS", cat: "profile-chuyen-ads", icon: "🎯", price: "130.000đ", stock: 25, badge: "", desc: "Profile chuyên dụng chạy quảng cáo Facebook, đã tối ưu sẵn." },
+  { id: 37, name: "PROFILE XIN TÍCH", cat: "profile-xin-tich", icon: "✨", price: "200.000đ", stock: 15, badge: "", desc: "Profile chuẩn bị xin tích, đầy đủ điều kiện theo yêu cầu Meta." },
+  { id: 38, name: "PROFILE CHAT SUPPORT", cat: "profile-chat-support", icon: "💁", price: "45.000đ", stock: 60, badge: "new", desc: "Profile dùng làm chat support, ổn định và chuyên nghiệp." },
+  { id: 39, name: "CLONE VIỆT NUÔI BẠN BÈ VIỆT", cat: "clone-viet", icon: "🇻🇳", price: "30.000đ", stock: 250, badge: "new", desc: "Clone Việt Nam đã nuôi bạn bè đông, phù hợp seeding và marketing." },
+  { id: 40, name: "CLONE VIỆT NEW - CÓ 2FA", cat: "clone-viet-new-2fa", icon: "🇻🇳", price: "22.000đ", stock: 300, badge: "new", desc: "Clone Việt mới có bảo mật 2FA, an toàn khi đăng nhập lần đầu." },
+  { id: 41, name: "CLONE VIỆT NEW - NO 2FA", cat: "clone-viet-new-no2fa", icon: "🇻🇳", price: "12.000đ", stock: 500, badge: "new", desc: "Clone Việt mới không có 2FA, đăng nhập bằng cookie lần đầu." },
+  { id: 42, name: "CLONE VIỆT NUÔI CÓ 2FA", cat: "clone-viet-nuoi-2fa", icon: "🇻🇳", price: "35.000đ", stock: 180, badge: "", desc: "Clone Việt đã nuôi kỹ, có 2FA bảo mật, ít checkpoint." },
+  { id: 43, name: "PROFILE VIỆT NEW", cat: "profile-viet-new", icon: "🇻🇳", price: "25.000đ", stock: 500, badge: "new", desc: "Profile Việt mới tạo, đầy đủ thông tin, chưa vi phạm. Phù hợp nuôi nick." },
+  { id: 44, name: "PROFILE VIỆT CỔ - CÓ 2FA", cat: "profile-viet-co-2fa", icon: "🇻🇳", price: "75.000đ", stock: 40, badge: "", desc: "Profile Việt cổ có bảo mật 2FA, độ uy tín cao, ít bị checkpoint." },
+  { id: 45, name: "PROFILE VIỆT SIÊU CỔ", cat: "profile-viet-sieu-co", icon: "🇻🇳", price: "95.000đ", stock: 20, badge: "hot", desc: "Profile Việt siêu cổ nhiều năm tuổi, uy tín tuyệt đối trên nền tảng." },
+  { id: 46, name: "PROFILE VIỆT XMDT", cat: "profile-viet-xmdt", icon: "🇻🇳", price: "55.000đ", stock: 90, badge: "", desc: "Profile Việt xác minh danh tính, giảm thiểu rủi ro checkpoint." },
+  { id: 47, name: "PROFILE VIỆT LỌC NAM", cat: "profile-viet-loc-nam", icon: "🇻🇳", price: "30.000đ", stock: 200, badge: "", desc: "Profile Việt lọc toàn nam, phù hợp target theo giới tính." },
+  { id: 48, name: "PROFILE VIỆT LỌC NỮ", cat: "profile-viet-loc-nu", icon: "🇻🇳", price: "30.000đ", stock: 180, badge: "", desc: "Profile Việt lọc toàn nữ, phù hợp sản phẩm thời trang và làm đẹp." },
+  { id: 49, name: "PROFILE VIỆT NHIỀU BÀI ĐĂNG", cat: "profile-viet-nhieu-bai", icon: "🇻🇳", price: "45.000đ", stock: 120, badge: "", desc: "Profile Việt có nhiều bài đăng, trông tự nhiên và uy tín." },
+  { id: 50, name: "PROFILE VIỆT SPAM", cat: "profile-viet-spam", icon: "🇻🇳", price: "8.000đ", stock: 600, badge: "new", desc: "Profile Việt giá rẻ dùng cho mục đích spam tool, live time ngắn." },
+  { id: 51, name: "PROFILE VIỆT CỔ NO 2FA", cat: "profile-viet-co-no2fa", icon: "🇻🇳", price: "50.000đ", stock: 65, badge: "", desc: "Profile Việt cổ không có 2FA, đăng nhập bằng cookie." },
+  { id: 52, name: "PROFILE 902 NEW", cat: "profile-902-new", icon: "9️⃣", price: "45.000đ", stock: 87, badge: "", desc: "Profile bị 902 mới, còn khả năng khôi phục cao. Kèm mail/sdt." },
+  { id: 53, name: "PROFILE 902 CỔ", cat: "profile-902-co", icon: "🔢", price: "60.000đ", stock: 40, badge: "", desc: "Profile 902 cổ, có lịch sử lâu dài trên Facebook." },
+  { id: 54, name: "PROFILE 902", cat: "profile-902", icon: "🔟", price: "35.000đ", stock: 100, badge: "", desc: "Profile 902 các loại, phù hợp nhiều mục đích khác nhau." },
+  { id: 55, name: "CLONE VIỆT + USA NUÔI NHIỀU BÀI VIẾT", cat: "clone-viet-usa-nhieu-bai", icon: "🇻🇳", price: "40.000đ", stock: 150, badge: "new", desc: "Clone Việt và USA đã nuôi nhiều bài viết, tự nhiên và uy tín." },
+  { id: 56, name: "CLONE SPAM", cat: "clone-spam", icon: "📤", price: "5.000đ", stock: 1000, badge: "new", desc: "Clone giá rẻ dành cho mục đích spam, số lượng lớn." },
+  { id: 57, name: "XU TƯƠNG TÁC", cat: "xu-tuong-tac", icon: "💠", price: "10.000đ", stock: 999, badge: "new", desc: "Xu tương tác Facebook, dùng trao đổi like/comment/share." },
+  { id: 58, name: "CLONE USA", cat: "clone-usa", icon: "🇺🇸", price: "28.000đ", stock: 220, badge: "", desc: "Clone USA chính gốc, phù hợp target thị trường Mỹ và quốc tế." },
+  { id: 59, name: "CLONE NGOẠI NO 2FA VER 1", cat: "clone-ngoai-no2fa-v1", icon: "🌐", price: "8.000đ", stock: 800, badge: "new", desc: "Clone ngoại không có 2FA phiên bản 1, giá rẻ số lượng lớn." },
+  { id: 60, name: "CLONE NGOẠI NO 2FA VER 2", cat: "clone-ngoai-no2fa-v2", icon: "🌐", price: "10.000đ", stock: 700, badge: "", desc: "Clone ngoại không có 2FA phiên bản 2, chất lượng hơn ver 1." },
+  { id: 61, name: "CLONE NGOẠI NO 2FA VER 3", cat: "clone-ngoai-no2fa-v3", icon: "🌐", price: "12.000đ", stock: 500, badge: "", desc: "Clone ngoại không có 2FA phiên bản 3, live time tốt hơn." },
+  { id: 62, name: "CLONE NGOẠI NO 2FA VER 4", cat: "clone-ngoai-no2fa-v4", icon: "🌐", price: "15.000đ", stock: 400, badge: "new", desc: "Clone ngoại không có 2FA phiên bản 4, chất lượng cao nhất." },
+  { id: 63, name: "CLONE NGOẠI CÓ 2FA", cat: "clone-ngoai-co2fa", icon: "🌐", price: "25.000đ", stock: 300, badge: "", desc: "Clone ngoại có bảo mật 2FA, an toàn và ổn định hơn." },
+  { id: 64, name: "CLONE NGOẠI NUÔI - CÓ 2FA", cat: "clone-ngoai-nuoi-co2fa", icon: "🌐", price: "35.000đ", stock: 200, badge: "hot", desc: "Clone ngoại đã nuôi kỹ có 2FA, phù hợp chạy ads và seeding lâu dài." },
+  { id: 65, name: "CLONE NGOẠI NUÔI - NO 2FA", cat: "clone-ngoai-nuoi-no2fa", icon: "🌐", price: "22.000đ", stock: 250, badge: "", desc: "Clone ngoại đã nuôi không có 2FA, đăng nhập bằng cookie." },
+  { id: 66, name: "CLONE KHÁNG 282", cat: "clone-khang-282", icon: "🛡️", price: "45.000đ", stock: 80, badge: "", desc: "Clone kháng lỗi 282, ổn định cho các chiến dịch quảng cáo." },
+  { id: 67, name: "CLONE QUA SỬ DỤNG", cat: "clone-qua-su-dung", icon: "♻️", price: "5.000đ", stock: 500, badge: "", desc: "Clone đã qua sử dụng, giá siêu rẻ, phù hợp test và spam." },
+  { id: 68, name: "CLONE CÁC NƯỚC", cat: "clone-cac-nuoc", icon: "🗺️", price: "18.000đ", stock: 400, badge: "new", desc: "Clone nhiều quốc gia khác nhau, phù hợp đa dạng chiến dịch." },
+  { id: 69, name: "CLONE NGOẠI VER MAIL", cat: "clone-ngoai-ver-mail", icon: "📧", price: "20.000đ", stock: 300, badge: "", desc: "Clone ngoại đã verify qua mail fviainboxes.com, ổn định hơn." },
+  { id: 70, name: "CLONE 2024 NUÔI TRUST CHUYÊN SPAM", cat: "clone-2024-nuoi-trust", icon: "🔋", price: "15.000đ", stock: 450, badge: "new", desc: "Clone 2024 đã nuôi trust chuyên dùng cho spam, live time tốt." },
+  { id: 71, name: "CLONE INSTAGRAM", cat: "clone-instagram", icon: "📷", price: "18.000đ", stock: 200, badge: "", desc: "Clone Instagram đã nuôi, phù hợp marketing và tăng follow." },
+  { id: 72, name: "CLONE TIKTOK", cat: "clone-tiktok", icon: "🎵", price: "20.000đ", stock: 180, badge: "new", desc: "Clone TikTok đã nuôi, phù hợp tăng follow và seeding TikTok." },
+  { id: 73, name: "CLONE CHUYÊN DÙNG ADS - REG BM", cat: "clone-chuan-ads", icon: "📣", price: "35.000đ", stock: 120, badge: "", desc: "Clone chuyên dụng để chạy ads và reg Business Manager." },
+  { id: 74, name: "FAKEBOOK CHUYÊN SEEDING SPAM NUÔI", cat: "fakebook-seeding", icon: "🎭", price: "8.000đ", stock: 800, badge: "new", desc: "Fakebook chuyên seeding, spam và nuôi, số lượng lớn giá rẻ." },
+  { id: 75, name: "ACC 1000X - TẠO PROFILE PHỤ+FAN PAGE", cat: "acc-1000x", icon: "💯", price: "50.000đ", stock: 90, badge: "", desc: "Acc 1000X dùng để tạo profile phụ và fanpage hàng loạt." },
+  { id: 76, name: "FACEBOOK VIP 1000XX", cat: "fb-vip-1000", icon: "👑", price: "280.000đ", stock: 5, badge: "hot", desc: "Facebook VIP 1000XX, tài khoản siêu uy tín với hàng nghìn bạn bè." },
+  { id: 77, name: "ACC HOST CỔ", cat: "acc-host-co", icon: "🖥️", price: "65.000đ", stock: 35, badge: "", desc: "Acc host cổ có lịch sử dài, phù hợp làm tài khoản chính." },
+  { id: 78, name: "Acc Name Việt", cat: "acc-name-viet", icon: "🇻🇳", price: "20.000đ", stock: 350, badge: "new", desc: "Acc tên Việt Nam chuẩn, phù hợp xây dựng shop và page." },
+  { id: 79, name: "Acc Name Ngoại", cat: "acc-name-ngoai", icon: "🌐", price: "18.000đ", stock: 400, badge: "new", desc: "Acc tên ngoại chuẩn, phù hợp target thị trường quốc tế." },
+  { id: 80, name: "ACC NAME USA NHIỀU BÀI VIẾT", cat: "acc-name-usa-nhieu-bai", icon: "🇺🇸", price: "35.000đ", stock: 150, badge: "", desc: "Acc tên USA đã có nhiều bài viết, tự nhiên và đáng tin cậy." },
+  { id: 81, name: "Acc USA", cat: "acc-usa", icon: "🇺🇸", price: "25.000đ", stock: 280, badge: "", desc: "Tài khoản Facebook USA chính gốc, phù hợp target Mỹ." },
+  { id: 82, name: "Acc Ngoại", cat: "acc-ngoai", icon: "🌍", price: "15.000đ", stock: 500, badge: "new", desc: "Tài khoản ngoại các loại, đa dạng quốc gia." },
+  { id: 83, name: "Acc Việt", cat: "acc-viet", icon: "🇻🇳", price: "12.000đ", stock: 600, badge: "new", desc: "Tài khoản Việt Nam đa dạng, phù hợp nhiều mục đích." },
+  { id: 84, name: "Acc Ấn Độ, Pakistan, Bangladet", cat: "acc-in-pk-bd", icon: "🌏", price: "8.000đ", stock: 700, badge: "new", desc: "Tài khoản IN/PK/BD giá rẻ, phù hợp target Nam Á." },
+  { id: 85, name: "PROFILE NGOẠI XMDT", cat: "profile-ngoai-xmdt", icon: "🌐", price: "55.000đ", stock: 70, badge: "", desc: "Profile ngoại đã xác minh danh tính, ổn định và ít checkpoint." },
+  { id: 86, name: "PROFILE NGOẠI NEW NO 2FA", cat: "profile-ngoai-new-no2fa", icon: "🌐", price: "15.000đ", stock: 400, badge: "new", desc: "Profile ngoại mới không có 2FA, đăng nhập bằng cookie lần đầu." },
+  { id: 87, name: "PROFILE NGOẠI CỔ - CÓ 2FA", cat: "profile-ngoai-co-co2fa", icon: "🌐", price: "65.000đ", stock: 55, badge: "", desc: "Profile ngoại cổ có 2FA, uy tín cao và ổn định lâu dài." },
+  { id: 88, name: "PROFILE NGOẠI CỔ NO 2FA", cat: "profile-ngoai-co-no2fa", icon: "🌐", price: "45.000đ", stock: 80, badge: "", desc: "Profile ngoại cổ không có 2FA, login bằng cookie." },
+  { id: 89, name: "PROFILE NGOẠI NEW CÓ 2FA", cat: "profile-ngoai-new-co2fa", icon: "🌐", price: "25.000đ", stock: 300, badge: "new", desc: "Profile ngoại mới có 2FA, an toàn cho lần đăng nhập đầu." },
+  { id: 90, name: "PROFILE NGOẠI SPAM", cat: "profile-ngoai-spam", icon: "📤", price: "6.000đ", stock: 900, badge: "new", desc: "Profile ngoại giá rẻ dùng spam tool, live time ngắn." },
+  { id: 91, name: "PROFILE NGOẠI NHIỀU FOLLOW", cat: "profile-ngoai-nhieu-follow", icon: "👥", price: "85.000đ", stock: 40, badge: "hot", desc: "Profile ngoại nhiều followers, phù hợp page scan và marketing." },
+  { id: 92, name: "PROFILE NGOẠI NHIỀU BẠN BÈ", cat: "profile-ngoai-nhieu-ban", icon: "👫", price: "70.000đ", stock: 55, badge: "", desc: "Profile ngoại đã add nhiều bạn bè, tự nhiên và uy tín." },
+  { id: 93, name: "PROFILE NGOẠI 1000+ BẠN BÈ", cat: "profile-ngoai-1000-ban", icon: "👥", price: "90.000đ", stock: 30, badge: "hot", desc: "Profile ngoại trên 1000 bạn bè, siêu uy tín." },
+  { id: 94, name: "PROFILE NGOẠI NHIỀU BÀI ĐĂNG", cat: "profile-ngoai-nhieu-bai", icon: "📝", price: "60.000đ", stock: 70, badge: "", desc: "Profile ngoại có nhiều bài đăng tự nhiên, tránh bị phát hiện." },
+  { id: 95, name: "PROFILE NGOẠI 1 HOTMAIL", cat: "profile-ngoai-1-hotmail", icon: "📧", price: "40.000đ", stock: 100, badge: "", desc: "Profile ngoại kèm 1 hotmail, dễ khôi phục khi cần." },
+  { id: 96, name: "PROFILE NGOẠI ĐÃ TẠO SẴN 1 FANPAGE", cat: "profile-ngoai-co-fanpage", icon: "📄", price: "55.000đ", stock: 45, badge: "", desc: "Profile ngoại đã tạo sẵn fanpage, tiết kiệm thời gian setup." },
+  { id: 97, name: "PROFILE RANDOM QUỐC GIA", cat: "profile-random-quocgia", icon: "🎲", price: "12.000đ", stock: 600, badge: "new", desc: "Profile random nhiều quốc gia, giá rẻ đa dạng." },
+  { id: 98, name: "PROFILE RANDOM QUỐC GIA SPAM", cat: "profile-random-spam", icon: "🎲", price: "5.000đ", stock: 1000, badge: "new", desc: "Profile random dùng spam, giá cực rẻ số lượng lớn." },
+  { id: 99, name: "PROFILE CHÂU PHI RANDOM", cat: "profile-chau-phi-random", icon: "🌍", price: "6.000đ", stock: 800, badge: "", desc: "Profile Châu Phi random các nước, phù hợp target thị trường Châu Phi." },
+  { id: 100, name: "PROFILE NAM MỸ", cat: "profile-nam-my", icon: "🌎", price: "10.000đ", stock: 500, badge: "", desc: "Profile Nam Mỹ các nước, phù hợp target thị trường Châu Mỹ." },
+  { id: 101, name: "PROFILE CÁC NƯỚC", cat: "profile-cac-nuoc", icon: "🗺️", price: "10.000đ", stock: 700, badge: "new", desc: "Profile đa dạng các nước trên thế giới." },
+  { id: 102, name: "PROFILE PHI NEW", cat: "profile-phi-new", icon: "🇵🇭", price: "18.000đ", stock: 300, badge: "new", desc: "Profile Philippines mới tạo. Phù hợp target thị trường Đông Nam Á." },
+  { id: 103, name: "PROFILE PHI CỔ", cat: "profile-phi-co", icon: "🇵🇭", price: "28.000đ", stock: 150, badge: "", desc: "Profile Philippines cổ có lịch sử, uy tín cao hơn." },
+  { id: 104, name: "PROFILE PHI XMDT", cat: "profile-phi-xmdt", icon: "🇵🇭", price: "35.000đ", stock: 80, badge: "", desc: "Profile Philippines đã xác minh danh tính." },
+  { id: 105, name: "PROFILE INDO NEW", cat: "profile-indo-new", icon: "🇮🇩", price: "15.000đ", stock: 350, badge: "new", desc: "Profile Indonesia mới, phù hợp target thị trường Indonesia." },
+  { id: 106, name: "PROFILE INDO CỔ", cat: "profile-indo-co", icon: "🇮🇩", price: "22.000đ", stock: 200, badge: "", desc: "Profile Indonesia cũ có lịch sử, uy tín cho thị trường Indo." },
+  { id: 107, name: "PROFILE INDO XMDT", cat: "profile-indo-xmdt", icon: "🇮🇩", price: "30.000đ", stock: 100, badge: "", desc: "Profile Indonesia xác minh danh tính, ổn định." },
+  { id: 108, name: "PROFILE THAILAND NEW", cat: "profile-thai-new", icon: "🇹🇭", price: "20.000đ", stock: 250, badge: "new", desc: "Profile Thailand mới tạo, dùng target thị trường Thái Lan." },
+  { id: 109, name: "PROFILE THAILAND CỔ", cat: "profile-thai-co", icon: "🇹🇭", price: "30.000đ", stock: 120, badge: "", desc: "Profile Thailand cổ có lịch sử, uy tín cho thị trường Thái." },
+  { id: 110, name: "PROFILE BRAZIL", cat: "profile-brazil", icon: "🇧🇷", price: "12.000đ", stock: 400, badge: "", desc: "Profile Brazil, phù hợp target thị trường Nam Mỹ." },
+  { id: 111, name: "PROFILE BANGLADESH", cat: "profile-bangladesh", icon: "🇧🇩", price: "8.000đ", stock: 500, badge: "new", desc: "Profile Bangladesh giá rẻ, dùng target và spam Nam Á." },
+  { id: 112, name: "PROFILE PAKISTAN", cat: "profile-pakistan", icon: "🇵🇰", price: "8.000đ", stock: 500, badge: "new", desc: "Profile Pakistan giá rẻ, phù hợp target Nam Á." },
+  { id: 113, name: "PROFILE MYANMAR", cat: "profile-myanmar", icon: "🇲🇲", price: "10.000đ", stock: 300, badge: "", desc: "Profile Myanmar, thị trường tiềm năng Đông Nam Á." },
+  { id: 114, name: "PROFILE CANADA", cat: "profile-canada", icon: "🇨🇦", price: "20.000đ", stock: 200, badge: "", desc: "Profile Canada, target thị trường Bắc Mỹ uy tín cao." },
+  { id: 115, name: "PROFILE COLOMBIA", cat: "profile-colombia", icon: "🇨🇴", price: "10.000đ", stock: 350, badge: "", desc: "Profile Colombia, phù hợp target thị trường Nam Mỹ." },
+  { id: 116, name: "PROFILE INDIA", cat: "profile-india", icon: "🇮🇳", price: "6.000đ", stock: 800, badge: "new", desc: "Profile India giá rẻ, thị trường tỷ dân cực tiềm năng." },
+  { id: 117, name: "PROFILE GERMANY", cat: "profile-germany", icon: "🇩🇪", price: "25.000đ", stock: 150, badge: "", desc: "Profile Đức, thị trường Tây Âu uy tín và giá trị cao." },
+  { id: 118, name: "PROFILE ITALIA", cat: "profile-italia", icon: "🇮🇹", price: "20.000đ", stock: 180, badge: "", desc: "Profile Ý, phù hợp target thị trường Nam Âu." },
+  { id: 119, name: "PROFILE EGYPT", cat: "profile-egypt", icon: "🇪🇬", price: "8.000đ", stock: 400, badge: "", desc: "Profile Ai Cập, target thị trường Trung Đông và Bắc Phi." },
+  { id: 120, name: "PROFILE AUSTRALIA", cat: "profile-australia", icon: "🇦🇺", price: "22.000đ", stock: 160, badge: "", desc: "Profile Úc, thị trường phát triển với ngân sách quảng cáo cao." },
+  { id: 121, name: "PROFILE UK", cat: "profile-uk", icon: "🇬🇧", price: "25.000đ", stock: 140, badge: "", desc: "Profile Anh Quốc, thị trường châu Âu uy tín hàng đầu." },
+  { id: 122, name: "PROFILE MEXICO", cat: "profile-mexico", icon: "🇲🇽", price: "10.000đ", stock: 300, badge: "", desc: "Profile Mexico, target thị trường Trung Mỹ và Hispanic." },
+  { id: 123, name: "PROFILE MALAYSIA", cat: "profile-malaysia", icon: "🇲🇾", price: "15.000đ", stock: 250, badge: "", desc: "Profile Malaysia, target Đông Nam Á và thị trường Hồi giáo." },
+  { id: 124, name: "PROFILE EU", cat: "profile-eu", icon: "🇪🇺", price: "20.000đ", stock: 200, badge: "", desc: "Profile châu Âu đa dạng, target toàn EU ngân sách cao." },
+  { id: 125, name: "PROFILE SRILANKA", cat: "profile-srilanka", icon: "🇱🇰", price: "8.000đ", stock: 350, badge: "", desc: "Profile Sri Lanka, thị trường Nam Á giá rẻ." },
+  { id: 126, name: "PROFILE NEPAL", cat: "profile-nepal", icon: "🇳🇵", price: "6.000đ", stock: 400, badge: "", desc: "Profile Nepal giá cực rẻ, phù hợp spam và test." },
+  { id: 127, name: "PROFILE BALAN", cat: "profile-balan", icon: "🇵🇱", price: "18.000đ", stock: 200, badge: "", desc: "Profile Ba Lan, target Đông Âu với ngân sách quảng cáo tốt." },
+  { id: 128, name: "PROFILE GUATEMALA", cat: "profile-guatemala", icon: "🇬🇹", price: "8.000đ", stock: 350, badge: "", desc: "Profile Guatemala, target Trung Mỹ giá rẻ." },
+  { id: 129, name: "PROFILE IRAN", cat: "profile-iran", icon: "🇮🇷", price: "8.000đ", stock: 300, badge: "", desc: "Profile Iran, target thị trường Trung Đông." },
+  { id: 130, name: "PROFILE VENEZUELA", cat: "profile-venezuela", icon: "🇻🇪", price: "6.000đ", stock: 400, badge: "", desc: "Profile Venezuela, Nam Mỹ giá rẻ." },
+  { id: 131, name: "PROFILE MADAGASCAR", cat: "profile-madagascar", icon: "🇲🇬", price: "6.000đ", stock: 350, badge: "", desc: "Profile Madagascar, Châu Phi giá siêu rẻ." },
+  { id: 132, name: "PROFILE USA CỔ", cat: "profile-usa-co", icon: "🇺🇸", price: "45.000đ", stock: 80, badge: "hot", desc: "Profile USA cổ nhiều năm tuổi, uy tín cao nhất thị trường Mỹ." },
+  { id: 133, name: "TIKTOK NGOẠI MỞ SẴN LIVE - LIVESTUDIO", cat: "tiktok-ngoai-live", icon: "🎵", price: "85.000đ", stock: 30, badge: "hot", desc: "Tài khoản TikTok ngoại đã mở sẵn tính năng Live và LiveStudio." },
+  { id: 134, name: "TIKTOK VIỆT NAM", cat: "tiktok-viet", icon: "🎵", price: "25.000đ", stock: 200, badge: "new", desc: "Tài khoản TikTok Việt Nam, phù hợp xây dựng kênh và bán hàng." },
+  { id: 135, name: "TIKTOK NGOẠI", cat: "tiktok-ngoai", icon: "🎵", price: "20.000đ", stock: 250, badge: "", desc: "Tài khoản TikTok ngoại các nước, phù hợp target quốc tế." },
+  { id: 136, name: "TKCN Tiktok Ads", cat: "tkcn-tiktok-ads", icon: "📣", price: "120.000đ", stock: 25, badge: "hot", desc: "Tài khoản cá nhân TikTok Ads, chạy quảng cáo trực tiếp." },
+  { id: 137, name: "BC3 - Phí nạp 0%", cat: "bc3-tiktok", icon: "💳", price: "100.000đ", stock: 40, badge: "hot", desc: "BC3 TikTok Ads phí nạp 0%, tiết kiệm chi phí quảng cáo tối đa." },
+  { id: 138, name: "BC Tiktok Ads", cat: "bc-tiktok-ads", icon: "📊", price: "90.000đ", stock: 50, badge: "", desc: "Business Center TikTok Ads, quản lý quảng cáo chuyên nghiệp." },
+  { id: 139, name: "Tài Khoản Chi Tiêu TikTok", cat: "tiktok-chi-tieu", icon: "💸", price: "80.000đ", stock: 35, badge: "", desc: "Tài khoản chi tiêu TikTok Ads, giới hạn cao ổn định." },
+  { id: 140, name: "Tiktok Ads Thailand", cat: "tiktok-thailand", icon: "🇹🇭", price: "75.000đ", stock: 30, badge: "", desc: "TikTok Ads Thailand, target thị trường Thái Lan hiệu quả." },
+  { id: 141, name: "Tiktok Ads Brazil", cat: "tiktok-brazil", icon: "🇧🇷", price: "70.000đ", stock: 28, badge: "", desc: "TikTok Ads Brazil, target thị trường Nam Mỹ lớn nhất." },
+  { id: 142, name: "Tiktok Ads US/UK", cat: "tiktok-us-uk", icon: "🇺🇸", price: "130.000đ", stock: 15, badge: "hot", desc: "TikTok Ads US/UK, thị trường cao cấp ngân sách quảng cáo lớn." },
+  { id: 143, name: "GMAIL", cat: "gmail", icon: "📩", price: "8.000đ", stock: 800, badge: "new", desc: "Tài khoản Gmail các loại, dùng để xác minh và bảo mật tài khoản." },
+  { id: 144, name: "GMAIL EDU", cat: "gmail-edu", icon: "🎓", price: "15.000đ", stock: 300, badge: "", desc: "Gmail Edu (.edu), truy cập nhiều ưu đãi phần mềm miễn phí." },
+  { id: 145, name: "HOTMAIL", cat: "hotmail", icon: "📧", price: "6.000đ", stock: 600, badge: "new", desc: "Tài khoản Hotmail/Outlook, dùng verify và bảo mật tài khoản." },
+  { id: 146, name: "OUTLOOK", cat: "outlook", icon: "📮", price: "6.000đ", stock: 500, badge: "new", desc: "Tài khoản Outlook Microsoft, đa mục đích xác minh." },
+  { id: 147, name: "COOKIE", cat: "cookie", icon: "🍪", price: "12.000đ", stock: 400, badge: "", desc: "Cookie Facebook các loại, dùng đăng nhập tài khoản không có 2FA." },
+  { id: 148, name: "CHAT GPT PLUS", cat: "chatgpt", icon: "🤖", price: "55.000đ", stock: 60, badge: "hot", desc: "Tài khoản ChatGPT Plus chính hãng, truy cập GPT-4 không giới hạn." },
+  { id: 149, name: "GEMINI PRO", cat: "gemini", icon: "✨", price: "40.000đ", stock: 90, badge: "new", desc: "Tài khoản Gemini Pro Google, AI mạnh mẽ không giới hạn." },
+  { id: 150, name: "GROK", cat: "grok", icon: "🧠", price: "45.000đ", stock: 70, badge: "new", desc: "Tài khoản Grok AI của X (Twitter), AI tiên tiến mới nhất." },
+  { id: 151, name: "VEO 3", cat: "veo3", icon: "🎬", price: "80.000đ", stock: 25, badge: "hot", desc: "Tài khoản VEO 3 Google, tạo video AI chất lượng cực cao." },
+  { id: 152, name: "KLING", cat: "kling", icon: "🎥", price: "60.000đ", stock: 40, badge: "new", desc: "Tài khoản Kling AI, tạo video và ảnh AI chất lượng cao." },
+  { id: 153, name: "CÔNG CỤ AI", cat: "cong-cu-ai", icon: "🦾", price: "50.000đ", stock: 100, badge: "new", desc: "Bộ công cụ AI tổng hợp, hỗ trợ sáng tạo nội dung và marketing." },
+  { id: 154, name: "CAPCUT PRO", cat: "capcut", icon: "✂️", price: "28.000đ", stock: 200, badge: "new", desc: "Tài khoản CapCut Pro quốc tế, đầy đủ template và hiệu ứng cao cấp." },
+  { id: 155, name: "CANVA PRO", cat: "canva", icon: "🎨", price: "30.000đ", stock: 150, badge: "new", desc: "Tài khoản Canva Pro đầy đủ tính năng thiết kế, xuất không giới hạn." },
+  { id: 156, name: "ADOBE CREATIVE CLOUD", cat: "adobe", icon: "🖌️", price: "75.000đ", stock: 45, badge: "hot", desc: "Tài khoản Adobe Creative Cloud, đầy đủ Photoshop, Illustrator, Premiere." },
+  { id: 157, name: "MICROSOFT 365", cat: "microsoft", icon: "🪟", price: "35.000đ", stock: 120, badge: "", desc: "Tài khoản Microsoft 365 cá nhân, đầy đủ Word, Excel, Outlook, Teams." },
+  { id: 158, name: "HMA VPN", cat: "hma", icon: "🔒", price: "40.000đ", stock: 80, badge: "", desc: "HMA VPN tốc độ cao, bảo mật toàn diện đa thiết bị." },
+  { id: 159, name: "APP LÀM ĐẸP PRO", cat: "app-lam-dep", icon: "💅", price: "25.000đ", stock: 150, badge: "new", desc: "Tài khoản app làm đẹp Pro, chỉnh ảnh chuyên nghiệp không quảng cáo." },
+  { id: 160, name: "THIẾT KẾ - SÁNG TẠO", cat: "thiet-ke-sang-tao", icon: "🎭", price: "45.000đ", stock: 90, badge: "", desc: "Bộ tài khoản thiết kế và sáng tạo nội dung đa nền tảng." },
+  { id: 161, name: "CÁ NHÂN - TIỆN ÍCH", cat: "ca-nhan-tien-ich", icon: "📱", price: "20.000đ", stock: 200, badge: "new", desc: "Các app cá nhân và tiện ích hữu dụng hàng ngày." },
 ];
+
+// Lấy mapping tên và icon danh mục từ HTML
+const catMap = {};
+document.querySelectorAll('.cat-btn').forEach(btn => {
+  const catId = btn.dataset.cat;
+  if (catId !== 'all') {
+    const icon = btn.querySelector('.icon').textContent.trim();
+    const name = btn.textContent.replace(icon, '').trim();
+    catMap[catId] = { name, icon };
+  }
+});
 
 let currentCat = "all";
 
-function renderProducts(cat) {
+function renderProducts(catFilter, searchQuery = "") {
   const grid = document.getElementById("products-grid");
-  const count = document.getElementById("count");
-  const filtered = cat === "all" ? products : products.filter(p => p.cat === cat);
-  count.textContent = `${filtered.length} sản phẩm`;
+  const countDisplay = document.getElementById("count");
+  const titleDisplay = document.getElementById("display-title");
+  
+  let html = '';
+  let totalCount = 0;
 
-  if (filtered.length === 0) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-muted)">Không có sản phẩm trong danh mục này</div>`;
-    return;
+  // Nếu tìm kiếm
+  let sourceProducts = products;
+  if (searchQuery) {
+    sourceProducts = products.filter(p => 
+      p.name.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery)
+    );
+    titleDisplay.textContent = 'Kết quả tìm kiếm';
+  } else {
+    titleDisplay.textContent = catFilter === 'all' ? 'Tất cả sản phẩm' : catMap[catFilter].name;
   }
 
-  grid.innerHTML = filtered.map(p => `
-    <div class="product-card" onclick="openModal(${p.id})">
-      <div class="product-img">
-        <span style="font-size:42px">${p.icon}</span>
-        ${p.badge ? `<span class="product-badge ${p.badge}">${p.badge === 'new' ? 'MỚI' : p.badge === 'hot' ? 'HOT' : p.badge}</span>` : ''}
-      </div>
-      <div class="product-info">
-        <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
-        <div class="product-footer">
-          <div>
-            <div class="product-price">${p.price}</div>
-            <div class="product-stock">Còn ${p.stock} sp</div>
+  // Quyết định render danh mục nào
+  const catsToRender = catFilter === 'all' && !searchQuery 
+    ? Object.keys(catMap) 
+    : (searchQuery ? [...new Set(sourceProducts.map(p => p.cat))] : [catFilter]);
+
+  catsToRender.forEach(catId => {
+    const catProducts = sourceProducts.filter(p => p.cat === catId);
+    if (catProducts.length === 0) return;
+    
+    totalCount += catProducts.length;
+    const catInfo = catMap[catId] || { name: "DANH MỤC KHÁC", icon: "📦" };
+
+    html += `
+      <div class="category-group">
+        <div class="grid-row cat-header-row">
+          <div class="cat-header-info">
+            <div class="cat-header-icon">${catInfo.icon}</div>
+            ${catInfo.name}
           </div>
-          <button class="buy-btn">MUA</button>
+          <div>Xem trước</div>
+          <div>Hiện có</div>
+          <div>Đã bán</div>
+          <div>Giá</div>
+          <div>Thao tác</div>
+        </div>
+        
+        <div class="cat-products-list">
+          ${catProducts.map(p => {
+            // Giả lập số "Đã bán" ngẫu nhiên dựa trên ID để giống hình
+            const randomSold = (p.id * 7 + 15) % 800 + 10;
+            return `
+            <div class="grid-row product-row">
+              <div class="col-info">
+                <div class="prod-icon-wrap">${p.icon}</div>
+                <div class="prod-details">
+                  <div class="prod-name" onclick="openModal(${p.id})">${p.name}</div>
+                  <div class="prod-desc">${p.desc}</div>
+                </div>
+              </div>
+              <div class="col-preview"></div>
+              <div class="col-stock">
+                <div class="stat-box stock">
+                  <span>Còn lại:</span>
+                  <strong>${p.stock}</strong>
+                </div>
+              </div>
+              <div class="col-sold">
+                <div class="stat-box sold">
+                  <span>Đã bán:</span>
+                  <strong>${randomSold}</strong>
+                </div>
+              </div>
+              <div class="col-price">
+                <div class="stat-box price">
+                  <span>💵</span>
+                  <strong>${p.price}</strong>
+                </div>
+              </div>
+              <div class="col-action">
+                <button class="btn-buy" onclick="openModal(${p.id})">
+                  <span style="font-size:14px">🛒 MUA NGAY</span>
+                </button>
+              </div>
+            </div>
+            `;
+          }).join('')}
         </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  });
+
+  if (totalCount === 0) {
+    grid.innerHTML = `<div style="text-align:center;padding:48px;color:var(--text-muted)">Không tìm thấy sản phẩm phù hợp</div>`;
+  } else {
+    grid.innerHTML = html;
+  }
+  countDisplay.textContent = `${totalCount} sản phẩm`;
 }
 
-// Category filter
+// Lọc Category
 document.querySelectorAll('.cat-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentCat = btn.dataset.cat;
-    renderProducts(currentCat);
+    // Reset thanh tìm kiếm
+    document.querySelector('.search-bar input').value = '';
+    renderProducts(currentCat, "");
   });
 });
 
-// Search
+// Tìm kiếm
 document.querySelector('.search-bar input').addEventListener('input', function() {
   const q = this.value.toLowerCase();
-  const grid = document.getElementById("products-grid");
-  const count = document.getElementById("count");
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)
-  );
-  count.textContent = `${filtered.length} sản phẩm`;
-  grid.innerHTML = filtered.map(p => `
-    <div class="product-card" onclick="openModal(${p.id})">
-      <div class="product-img">
-        <span style="font-size:42px">${p.icon}</span>
-        ${p.badge ? `<span class="product-badge ${p.badge}">${p.badge === 'new' ? 'MỚI' : 'HOT'}</span>` : ''}
-      </div>
-      <div class="product-info">
-        <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
-        <div class="product-footer">
-          <div>
-            <div class="product-price">${p.price}</div>
-            <div class="product-stock">Còn ${p.stock} sp</div>
-          </div>
-          <button class="buy-btn">MUA</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
+  // Khi tìm kiếm, bỏ active ở các nút danh mục
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
+  currentCat = "all";
+  renderProducts("all", q);
 });
 
-// Modal
+// Modal Xử lý
 let currentProduct = null;
 function openModal(id) {
   currentProduct = products.find(p => p.id === id);
@@ -984,7 +995,7 @@ document.getElementById("modal").addEventListener('click', e => {
   if (e.target === e.currentTarget) closeModal();
 });
 
-// Theme toggle
+// Theme toggle (Có thể phát triển thêm)
 document.querySelectorAll('.theme-btn').forEach((btn, i) => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
@@ -992,8 +1003,8 @@ document.querySelectorAll('.theme-btn').forEach((btn, i) => {
   });
 });
 
-// Init
-renderProducts("all");
+// Khởi tạo
+renderProducts("all", "");
 </script>
 </body>
 </html>
