@@ -18,7 +18,7 @@
     --accent: #ea580c;     
     --green: #22c55e;
     --blue: #3b82f6;
-    --blue-dark: #1e293b; /* Màu nền header bảng như trong ảnh */
+    --blue-dark: #1e293b; /* Màu nền header bảng */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -64,8 +64,12 @@
     font-size: 13px;
     font-weight: 600;
     display: flex; align-items: center; gap: 6px;
+    transition: 0.2s;
   }
+  .wallet-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .wallet-btn.danger { background: var(--red); color: #fff; border-color: var(--red); padding: 7px 10px; }
   .wallet-btn::before { content: "💳"; font-size: 14px; }
+  .wallet-btn.no-icon::before { content: none; }
 
   .header-right { display: flex; align-items: center; gap: 12px; }
 
@@ -120,13 +124,13 @@
     text-transform: uppercase;
   }
 
-  /* CATEGORY GRID (ĐÃ CHỈNH RỘNG HƠN) */
+  /* CATEGORY GRID */
   .categories {
-    padding: 20px 16px; /* Tăng padding trên dưới cho thoáng */
+    padding: 20px 16px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); /* Tăng chiều rộng mỗi nút */
-    gap: 12px; /* Tăng khoảng cách giữa các nút */
-    max-height: 380px; /* Tăng chiều cao tổng thể của hộp chứa danh mục */
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+    max-height: 380px;
     overflow-y: auto;
     border-bottom: 1px solid var(--border);
     margin-bottom: 8px;
@@ -138,10 +142,10 @@
     background: var(--dark3);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 12px 16px; /* Nút to và thoáng hơn */
+    padding: 12px 16px;
     cursor: pointer;
     font-family: inherit;
-    font-size: 12.5px; /* Chữ to hơn một chút */
+    font-size: 12.5px;
     font-weight: 600;
     color: var(--text);
     display: flex;
@@ -196,120 +200,49 @@
   .search-bar input::placeholder { color: var(--text-muted); }
   .search-bar .search-icon { color: var(--text-muted); font-size: 15px; }
 
-  /* =========================================
-     BẢNG SẢN PHẨM MỚI (NEW TABLE LAYOUT)
-     ========================================= */
+  /* BẢNG SẢN PHẨM */
   .products-section { padding: 0 16px 16px; }
   .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
   .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
   .products-title { font-weight: 800; font-size: 16px; text-transform: uppercase; color: var(--text); }
   .products-count { color: var(--text-muted); font-size: 12px; }
 
-  /* Responsive wrapper cho bảng ngang */
   .table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    margin-bottom: 24px;
-    border: 1px solid var(--border);
-    background: var(--dark2);
+    width: 100%; overflow-x: auto; margin-bottom: 24px;
+    border: 1px solid var(--border); background: var(--dark2);
   }
-
   .table-responsive::-webkit-scrollbar { height: 6px; }
   .table-responsive::-webkit-scrollbar-track { background: var(--dark); }
   .table-responsive::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-  .category-group {
-    min-width: 900px; /* Đảm bảo các cột không bị bóp méo */
-  }
-
-  /* Định nghĩa các cột dùng CSS Grid */
+  .category-group { min-width: 900px; }
   .grid-row {
-    display: grid;
-    grid-template-columns: minmax(350px, 1fr) 90px 100px 100px 120px 120px;
-    align-items: center;
+    display: grid; grid-template-columns: minmax(350px, 1fr) 90px 100px 100px 120px 120px; align-items: center;
   }
 
-  /* Header danh mục màu xanh đen */
   .cat-header-row {
-    background: var(--blue-dark);
-    color: #fff;
-    font-weight: 700;
-    font-size: 13px;
-    border-bottom: 1px solid var(--blue-dark);
+    background: var(--blue-dark); color: #fff; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--blue-dark);
   }
-
-  .cat-header-row > div {
-    padding: 14px 12px;
-    text-align: center;
-    border-right: 1px solid rgba(255,255,255,0.1);
-  }
+  .cat-header-row > div { padding: 14px 12px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
   .cat-header-row > div:last-child { border-right: none; }
   
-  .cat-header-info {
-    display: flex; align-items: center; gap: 10px;
-    text-align: left !important;
-    text-transform: uppercase;
-  }
-  .cat-header-icon {
-    background: rgba(255,255,255,0.1);
-    width: 24px; height: 24px; border-radius: 4px;
-    display: flex; align-items: center; justify-content: center; font-size: 14px;
-  }
+  .cat-header-info { display: flex; align-items: center; gap: 10px; text-align: left !important; text-transform: uppercase; }
+  .cat-header-icon { background: rgba(255,255,255,0.1); width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
 
-  /* Row Sản phẩm */
-  .product-row {
-    background: var(--dark2);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.2s;
-  }
+  .product-row { background: var(--dark2); border-bottom: 1px solid var(--border); transition: background 0.2s; }
   .product-row:hover { background: #f8fafc; }
   .product-row:last-child { border-bottom: none; }
-
-  .product-row > div {
-    padding: 16px 12px;
-    text-align: center;
-    border-right: 1px solid var(--border);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  .product-row > div { padding: 16px 12px; text-align: center; border-right: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
   .product-row > div:last-child { border-right: none; }
 
-  /* Cột 1: Thông tin */
-  .col-info {
-    flex-direction: row !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
-    gap: 16px;
-  }
-  
-  .prod-icon-wrap {
-    width: 40px; height: 40px; border-radius: 8px;
-    background: #eef2ff; color: var(--blue);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; flex-shrink: 0;
-  }
-
+  .col-info { flex-direction: row !important; justify-content: flex-start !important; text-align: left !important; gap: 16px; }
+  .prod-icon-wrap { width: 40px; height: 40px; border-radius: 8px; background: #eef2ff; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
   .prod-details { flex: 1; }
-  .prod-name {
-    color: var(--blue); font-weight: 700; font-size: 13px;
-    margin-bottom: 6px; line-height: 1.4; text-transform: uppercase;
-    cursor: pointer;
-  }
+  .prod-name { color: var(--blue); font-weight: 700; font-size: 13px; margin-bottom: 6px; line-height: 1.4; text-transform: uppercase; cursor: pointer; }
   .prod-name:hover { text-decoration: underline; }
-  .prod-desc {
-    color: var(--text); font-size: 11.5px; line-height: 1.5;
-  }
+  .prod-desc { color: var(--text); font-size: 11.5px; line-height: 1.5; }
 
-  /* Các box thông số (Hiện có, Đã bán, Giá) */
-  .stat-box {
-    border: 1px solid var(--border);
-    border-radius: 4px; padding: 6px 0;
-    width: 100%; background: #fff;
-    font-size: 12px; line-height: 1.4;
-  }
+  .stat-box { border: 1px solid var(--border); border-radius: 4px; padding: 6px 0; width: 100%; background: #fff; font-size: 12px; line-height: 1.4; }
   .stat-box.stock { border-color: #0ea5e9; }
   .stat-box.stock span { color: var(--text-muted); }
   .stat-box.stock strong { color: var(--text); display: block; font-size: 13px; }
@@ -321,54 +254,46 @@
   .stat-box.price { border-color: var(--red); color: var(--red); padding: 8px 0; }
   .stat-box.price strong { display: block; font-size: 14px; font-weight: 800; margin-top: 2px;}
 
-  /* Nút Mua Ngay */
-  .btn-buy {
-    background: #4f46e5; color: #fff;
-    border: none; border-radius: 4px;
-    width: 100%; padding: 10px 0;
-    font-family: inherit; font-size: 12px; font-weight: 700;
-    cursor: pointer; text-transform: uppercase;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    transition: opacity 0.2s, background 0.2s;
-  }
+  .btn-buy { background: #4f46e5; color: #fff; border: none; border-radius: 4px; width: 100%; padding: 10px 0; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: opacity 0.2s, background 0.2s; }
   .btn-buy:hover { background: #4338ca; opacity: 0.9; }
 
-  /* MODAL */
+  /* =========================================
+     MODALS (ĐĂNG NHẬP, ĐĂNG KÝ, MUA HÀNG)
+     ========================================= */
   .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.5); backdrop-filter: blur(2px);
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px);
     z-index: 200; display: none; align-items: center; justify-content: center;
   }
   .modal-overlay.open { display: flex; }
   .modal {
-    background: var(--dark2); border: 1px solid var(--border);
-    border-radius: 14px; padding: 24px; max-width: 400px; width: 90%;
-    position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    background: var(--dark2); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px; max-width: 400px; width: 90%; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
   }
-  .modal-title { font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--text); }
+  .modal-title { font-weight: 800; font-size: 18px; margin-bottom: 16px; color: var(--text); text-align: center; text-transform: uppercase; }
+  
+  .auth-input {
+    background: var(--dark3); border: 1px solid var(--border); color: var(--text);
+    font-family: inherit; font-size: 14px; padding: 12px 14px; border-radius: 8px;
+    width: 100%; margin-bottom: 12px; outline: none;
+  }
+  .auth-input:focus { border-color: var(--blue); }
+  
+  .auth-btn {
+    width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none;
+    border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700;
+    cursor: pointer; text-transform: uppercase; transition: 0.2s; margin-top: 8px;
+  }
+  .auth-btn:hover { background: #2563eb; }
+
   .modal-price { color: var(--accent); font-size: 22px; font-weight: 800; margin-bottom: 12px; }
   .modal-desc { color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
   .modal-qty { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; color: var(--text); }
   .modal-qty label { font-size: 13px; font-weight: 600; }
-  .qty-input {
-    background: var(--dark3); border: 1px solid var(--border);
-    color: var(--text); font-family: inherit; font-size: 14px;
-    padding: 6px 12px; border-radius: 6px; width: 80px;
-  }
-  .modal-buy {
-    width: 100%; padding: 12px;
-    background: var(--red); color: #fff; border: none;
-    border-radius: 8px; font-family: inherit; font-size: 14px;
-    font-weight: 700; cursor: pointer; text-transform: uppercase;
-    letter-spacing: 0.5px; transition: opacity 0.2s;
-  }
+  .qty-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 6px 12px; border-radius: 6px; width: 80px; }
+  
+  .modal-buy { width: 100%; padding: 12px; background: var(--red); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: opacity 0.2s; }
   .modal-buy:hover { opacity: 0.88; }
-  .modal-close {
-    position: absolute; top: 14px; right: 14px;
-    background: var(--dark3); border: 1px solid var(--border);
-    color: var(--text); width: 28px; height: 28px; border-radius: 50%;
-    cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
-  }
+  .modal-close { position: absolute; top: 14px; right: 14px; background: var(--dark3); border: 1px solid var(--border); color: var(--text); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
 
   /* LƯU Ý SECTION */
   .luu-y-section { margin: 12px 16px; border: 2px solid #3b5bdb; border-radius: 10px; padding: 20px; background: rgba(59, 91, 219, 0.04); }
@@ -403,19 +328,13 @@
     <button class="menu-btn">
       <span></span><span></span><span></span>
     </button>
-    <button class="wallet-btn">Ví: 1.390đ</button>
+    <button class="wallet-btn" id="wallet-display" style="display: none;">
+      Ví: <span id="user-balance">0</span>đ
+    </button>
   </div>
-  <div class="header-right">
-    <div class="theme-toggle">
-      <button class="theme-btn active">☀️</button>
-      <button class="theme-btn">🌙</button>
+  
+  <div class="header-right" id="auth-section">
     </div>
-    <button class="notif-btn">🔔</button>
-    <div class="user-info">
-      <div class="avatar">🧑</div>
-      <span class="username">sonphan1204</span>
-    </div>
-  </div>
 </header>
 
 <div class="notice-banner">
@@ -654,17 +573,44 @@
   💬 LIÊN HỆ HỖ TRỢ
 </button>
 
-<div class="modal-overlay" id="modal">
+<div class="modal-overlay" id="buy-modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-title" id="modal-name"></div>
+    <button class="modal-close" onclick="closeAuthModal('buy')">✕</button>
+    <div class="modal-title" id="modal-name" style="font-size:16px; text-transform:none;"></div>
     <div class="modal-price" id="modal-price"></div>
     <div class="modal-desc" id="modal-desc"></div>
     <div class="modal-qty">
       <label>Số lượng:</label>
       <input class="qty-input" type="number" min="1" value="1" id="modal-qty">
     </div>
-    <button class="modal-buy" onclick="handleBuy()">🛒 MUA NGAY</button>
+    <button class="modal-buy" onclick="handleBuy()">🛒 Xác nhận Mua</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="login-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuthModal('login')">✕</button>
+    <div class="modal-title">ĐĂNG NHẬP</div>
+    <input type="text" id="login-user" class="auth-input" placeholder="Tên đăng nhập">
+    <input type="password" id="login-pass" class="auth-input" placeholder="Mật khẩu">
+    <button class="auth-btn" onclick="submitLogin()">Đăng nhập</button>
+    <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+      Chưa có tài khoản? <a href="#" onclick="switchAuthModal('register')" style="color: var(--blue); font-weight: bold;">Đăng ký ngay</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="register-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuthModal('register')">✕</button>
+    <div class="modal-title">ĐĂNG KÝ TÀI KHOẢN</div>
+    <input type="text" id="reg-user" class="auth-input" placeholder="Tên đăng nhập (viết liền không dấu)">
+    <input type="password" id="reg-pass" class="auth-input" placeholder="Mật khẩu">
+    <input type="password" id="reg-pass-confirm" class="auth-input" placeholder="Nhập lại mật khẩu">
+    <button class="auth-btn" onclick="submitRegister()">Đăng ký</button>
+    <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+      Đã có tài khoản? <a href="#" onclick="switchAuthModal('login')" style="color: var(--blue); font-weight: bold;">Đăng nhập</a>
+    </div>
   </div>
 </div>
 
@@ -833,7 +779,6 @@ const products = [
   { id: 161, name: "CÁ NHÂN - TIỆN ÍCH", cat: "ca-nhan-tien-ich", icon: "📱", price: "20.000đ", stock: 200, badge: "new", desc: "Các app cá nhân và tiện ích hữu dụng hàng ngày." },
 ];
 
-// Lấy mapping tên và icon danh mục từ HTML
 const catMap = {};
 document.querySelectorAll('.cat-btn').forEach(btn => {
   const catId = btn.dataset.cat;
@@ -843,6 +788,100 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
     catMap[catId] = { name, icon };
   }
 });
+
+/* =========================================
+   XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ
+   ========================================= */
+
+function updateHeaderUI() {
+  const authSection = document.getElementById("auth-section");
+  const walletBtn = document.getElementById("wallet-display");
+  const currentUser = localStorage.getItem("currentUser");
+
+  if (currentUser) {
+    // Trạng thái: Đã đăng nhập
+    authSection.innerHTML = `
+      <div class="theme-toggle">
+        <button class="theme-btn active">☀️</button>
+        <button class="theme-btn">🌙</button>
+      </div>
+      <button class="notif-btn">🔔</button>
+      <div class="user-info">
+        <div class="avatar">🧑</div>
+        <span class="username">${currentUser}</span>
+      </div>
+      <button class="wallet-btn danger no-icon" onclick="submitLogout()">Thoát</button>
+    `;
+    
+    // Lấy số dư
+    const users = JSON.parse(localStorage.getItem("users")) || {};
+    const balance = users[currentUser]?.balance || 0;
+    document.getElementById("user-balance").textContent = balance.toLocaleString('vi-VN');
+    walletBtn.style.display = "flex";
+
+  } else {
+    // Trạng thái: Chưa đăng nhập
+    authSection.innerHTML = `
+      <div class="theme-toggle">
+        <button class="theme-btn active">☀️</button>
+        <button class="theme-btn">🌙</button>
+      </div>
+      <button class="wallet-btn no-icon" onclick="openAuthModal('login')">Đăng nhập</button>
+      <button class="wallet-btn primary no-icon" onclick="openAuthModal('register')">Đăng ký</button>
+    `;
+    walletBtn.style.display = "none";
+  }
+}
+
+function openAuthModal(type) { document.getElementById(`${type}-modal`).classList.add("open"); }
+function closeAuthModal(type) { document.getElementById(`${type}-modal`).classList.remove("open"); }
+function switchAuthModal(to) {
+  closeAuthModal('login');
+  closeAuthModal('register');
+  openAuthModal(to);
+}
+
+function submitRegister() {
+  const user = document.getElementById("reg-user").value.trim();
+  const pass = document.getElementById("reg-pass").value;
+  const passConfirm = document.getElementById("reg-pass-confirm").value;
+
+  if(!user || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
+  if(pass !== passConfirm) return alert("Mật khẩu nhập lại không khớp!");
+
+  const users = JSON.parse(localStorage.getItem("users")) || {};
+  if(users[user]) return alert("Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.");
+
+  users[user] = { password: pass, balance: 0 };
+  localStorage.setItem("users", JSON.stringify(users));
+
+  alert("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
+  switchAuthModal('login');
+}
+
+function submitLogin() {
+  const user = document.getElementById("login-user").value.trim();
+  const pass = document.getElementById("login-pass").value;
+
+  const users = JSON.parse(localStorage.getItem("users")) || {};
+  
+  if(!users[user] || users[user].password !== pass) {
+    return alert("Sai tên đăng nhập hoặc mật khẩu!");
+  }
+
+  localStorage.setItem("currentUser", user);
+  closeAuthModal('login');
+  updateHeaderUI();
+}
+
+function submitLogout() {
+  localStorage.removeItem("currentUser");
+  updateHeaderUI();
+}
+
+/* =========================================
+   RENDER & XỬ LÝ SẢN PHẨM
+   ========================================= */
 
 let currentCat = "all";
 
@@ -854,7 +893,6 @@ function renderProducts(catFilter, searchQuery = "") {
   let html = '';
   let totalCount = 0;
 
-  // Nếu tìm kiếm
   let sourceProducts = products;
   if (searchQuery) {
     sourceProducts = products.filter(p => 
@@ -865,7 +903,6 @@ function renderProducts(catFilter, searchQuery = "") {
     titleDisplay.textContent = catFilter === 'all' ? 'Tất cả sản phẩm' : catMap[catFilter].name;
   }
 
-  // Quyết định render danh mục nào
   const catsToRender = catFilter === 'all' && !searchQuery 
     ? Object.keys(catMap) 
     : (searchQuery ? [...new Set(sourceProducts.map(p => p.cat))] : [catFilter]);
@@ -893,7 +930,6 @@ function renderProducts(catFilter, searchQuery = "") {
         
         <div class="cat-products-list">
           ${catProducts.map(p => {
-            // Giả lập số "Đã bán" ngẫu nhiên dựa trên ID để giống hình
             const randomSold = (p.id * 7 + 15) % 800 + 10;
             return `
             <div class="grid-row product-row">
@@ -950,7 +986,6 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentCat = btn.dataset.cat;
-    // Reset thanh tìm kiếm
     document.querySelector('.search-bar input').value = '';
     renderProducts(currentCat, "");
   });
@@ -959,39 +994,37 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
 // Tìm kiếm
 document.querySelector('.search-bar input').addEventListener('input', function() {
   const q = this.value.toLowerCase();
-  // Khi tìm kiếm, bỏ active ở các nút danh mục
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('[data-cat="all"]').classList.add('active');
   currentCat = "all";
   renderProducts("all", q);
 });
 
-// Modal Xử lý
+// Modal Mua Hàng Xử lý
 let currentProduct = null;
 function openModal(id) {
+  // KIỂM TRA ĐĂNG NHẬP TRƯỚC KHI MUA
+  if (!localStorage.getItem("currentUser")) {
+    alert("⚠️ Bạn cần Đăng nhập tài khoản để mua hàng!");
+    openAuthModal('login');
+    return;
+  }
+
   currentProduct = products.find(p => p.id === id);
   document.getElementById("modal-name").textContent = currentProduct.name;
   document.getElementById("modal-price").textContent = currentProduct.price;
   document.getElementById("modal-desc").textContent = currentProduct.desc;
   document.getElementById("modal-qty").value = 1;
-  document.getElementById("modal").classList.add("open");
-}
-
-function closeModal() {
-  document.getElementById("modal").classList.remove("open");
+  openAuthModal('buy');
 }
 
 function handleBuy() {
   const qty = parseInt(document.getElementById("modal-qty").value);
-  alert(`✅ Đã thêm ${qty} "${currentProduct.name}" vào giỏ hàng!\n\nVui lòng nạp đủ số dư để thanh toán.`);
-  closeModal();
+  alert(`✅ Bạn đã đặt lệnh mua ${qty} x "${currentProduct.name}".\n\nTuy nhiên số dư của bạn không đủ (0đ). Vui lòng nạp tiền!`);
+  closeAuthModal('buy');
 }
 
-document.getElementById("modal").addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeModal();
-});
-
-// Theme toggle (Có thể phát triển thêm)
+// Theme toggle
 document.querySelectorAll('.theme-btn').forEach((btn, i) => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
@@ -1000,6 +1033,7 @@ document.querySelectorAll('.theme-btn').forEach((btn, i) => {
 });
 
 // Khởi tạo
+updateHeaderUI();
 renderProducts("all", "");
 </script>
 </body>
