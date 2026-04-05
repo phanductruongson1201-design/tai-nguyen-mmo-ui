@@ -6,6 +6,8 @@
 <title>TàiNguyênMMO - Chợ Tài Khoản & Tool Marketing</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 <style>
   :root {
     --red: #e8192c;
@@ -25,11 +27,8 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--dark);
-    color: var(--text);
-    font-family: 'Be Vietnam Pro', sans-serif;
-    font-size: 13px;
-    min-height: 100vh;
+    background: var(--dark); color: var(--text); font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 13px; min-height: 100vh;
   }
 
   /* HEADER */
@@ -38,15 +37,9 @@
     display: flex; align-items: center; justify-content: space-between; height: 56px;
     position: sticky; top: 0; z-index: 100;
   }
-
   .header-left { display: flex; align-items: center; gap: 12px; }
-
-  .menu-btn {
-    background: none; border: none; cursor: pointer; color: var(--text);
-    padding: 6px; display: flex; flex-direction: column; gap: 4px;
-  }
+  .menu-btn { background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; display: flex; flex-direction: column; gap: 4px; }
   .menu-btn span { display: block; width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
-
   .wallet-btn {
     background: var(--dark3); border: 1px solid var(--border); color: var(--text);
     padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: inherit;
@@ -56,15 +49,11 @@
   .wallet-btn.danger { background: var(--red); color: #fff; border-color: var(--red); padding: 7px 10px; }
   .wallet-btn::before { content: "💳"; font-size: 14px; }
   .wallet-btn.no-icon::before { content: none; }
-
   .header-right { display: flex; align-items: center; gap: 12px; }
-
   .theme-toggle { background: var(--dark3); border: 1px solid var(--border); border-radius: 20px; padding: 4px; display: flex; gap: 2px; }
   .theme-btn { background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 14px; font-size: 14px; transition: background 0.2s; }
   .theme-btn.active { background: var(--dark); }
-
   .notif-btn { background: none; border: none; cursor: pointer; color: var(--text); font-size: 18px; position: relative; padding: 4px; }
-
   .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
   .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ef4444); display: flex; align-items: center; justify-content: center; font-size: 18px; }
   .username { font-weight: 600; font-size: 13px; }
@@ -80,7 +69,6 @@
   }
   .categories::-webkit-scrollbar { width: 5px; }
   .categories::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
-
   .cat-btn {
     background: var(--dark3); border: 1px solid var(--border); border-radius: 8px;
     padding: 12px 16px; cursor: pointer; font-family: inherit; font-size: 12.5px;
@@ -119,7 +107,7 @@
   .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
   .search-bar input::placeholder { color: var(--text-muted); }
 
-  /* BẢNG SẢN PHẨM */
+  /* BẢNG SẢN PHẨM MỚI */
   .products-section { padding: 0 16px 16px; }
   .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
   .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
@@ -137,7 +125,6 @@
   .cat-header-row { background: var(--blue-dark); color: #fff; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--blue-dark); }
   .cat-header-row > div { padding: 14px 12px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
   .cat-header-row > div:last-child { border-right: none; }
-  
   .cat-header-info { display: flex; align-items: center; gap: 10px; text-align: left !important; text-transform: uppercase; }
   .cat-header-icon { background: rgba(255,255,255,0.1); width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
 
@@ -172,7 +159,6 @@
   .modal-overlay.open { display: flex; }
   .modal { background: var(--dark2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; max-width: 400px; width: 90%; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
   .modal-title { font-weight: 800; font-size: 18px; margin-bottom: 16px; color: var(--text); text-align: center; text-transform: uppercase; }
-  
   .auth-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 12px 14px; border-radius: 8px; width: 100%; margin-bottom: 12px; outline: none; }
   .auth-input:focus { border-color: var(--blue); }
   .auth-btn { width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s; margin-top: 8px; }
@@ -183,7 +169,6 @@
   .modal-qty { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; color: var(--text); }
   .modal-qty label { font-size: 13px; font-weight: 600; }
   .qty-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 6px 12px; border-radius: 6px; width: 80px; }
-  
   .modal-buy { width: 100%; padding: 12px; background: var(--red); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: opacity 0.2s; }
   .modal-buy:hover { opacity: 0.88; }
   .modal-close { position: absolute; top: 14px; right: 14px; background: var(--dark3); border: 1px solid var(--border); color: var(--text); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
@@ -212,35 +197,22 @@
 
 <header class="header">
   <div class="header-left">
-    <button class="menu-btn">
-      <span></span><span></span><span></span>
-    </button>
-    <button class="wallet-btn" id="wallet-display" style="display: none;">
-      Ví: <span id="user-balance">0</span>đ
-    </button>
+    <button class="menu-btn"><span></span><span></span><span></span></button>
+    <button class="wallet-btn" id="wallet-display" style="display: none;">Ví: <span id="user-balance">0</span>đ</button>
   </div>
-  
-  <div class="header-right" id="auth-section">
-  </div>
+  <div class="header-right" id="auth-section"></div>
 </header>
 
-<div class="notice-banner">
-  ⚠️ Mọi sản phẩm sau khi mua không hoàn trả. Khách hàng cần đọc kỹ mô tả trước khi mua. Chúng tôi không chịu bất cứ trách nhiệm nào về vi phạm pháp luật.
-</div>
-
-<div class="warning-bar">
-  ⚠️ OẤN SAU KHI MUA KHÁCH HÀNG TỰ CHỊU TRÁCH NHIỆM! " KHÔNG BAO BACK "
-</div>
+<div class="notice-banner">⚠️ Mọi sản phẩm sau khi mua không hoàn trả. Khách hàng cần đọc kỹ mô tả trước khi mua. Chúng tôi không chịu bất cứ trách nhiệm nào về vi phạm pháp luật.</div>
+<div class="warning-bar">⚠️ OẤN SAU KHI MUA KHÁCH HÀNG TỰ CHỊU TRÁCH NHIỆM! " KHÔNG BAO BACK "</div>
 
 <div class="luu-y-section">
   <div class="luu-y-title">⚠️ LƯU Ý ⚠️</div>
-
   <div class="luu-y-boxes">
     <div class="luu-y-box">Các tài khoản được bán trên trang web chỉ được sử dụng cho mục đích quảng cáo và kinh doanh hợp pháp theo quy định của pháp luật nước CHXHCN Việt Nam.</div>
     <div class="luu-y-box">Người mua có trách nhiệm tuân thủ pháp luật tại Việt Nam, điều khoản sử dụng của nền tảng và tự chịu trách nhiệm về việc sử dụng các tài khoản này.</div>
     <div class="luu-y-box">Chúng tôi không chịu trách nhiệm đối với bất kỳ hành vi vi phạm pháp luật nào liên quan đến việc sử dụng các tài khoản được tạo ra từ trang web này. 🌟 🌟</div>
   </div>
-
   <div class="luu-y-list">
     <p class="luu-y-item">- DỮ LIỆU ĐƠN HÀNG SHOP TỰ ĐỘNG XÓA SAU 5 - 7 NGÀY ĐỂ NHẸ SERVER.</p>
     <p class="luu-y-item red">- ANH EM VUI LÒNG ĐỔI THÔNG TIN MẬT KHẨU VÀ ĐÁ THIẾT BỊ LẠ RA KHỎI TÀI KHOẢN !</p>
@@ -253,7 +225,6 @@
     <p class="luu-y-item">- Chúng tôi sẽ <strong class="red-text">không chịu trách nhiệm nào</strong> nếu các bạn không thay đổi thông tin tài khoản dẫn tới việc mất tài khoản.</p>
     <p class="luu-y-item red">- LƯU Ý: KHÁCH LẤY ĐỦ DÙNG HẾT LẤY TIẾP, SHOP NGÂM RỒI NÊN KHÔNG BẢO HÀNH NGÂM CHỈ HỖ TRỢ BẢO HÀNH ĐƠN HÀNG TRONG 24H.</p>
   </div>
-
   <div class="luu-y-check-list">
     <p class="check-item">✅ Lưu đối với những clone via dưới 1.000đ, hàng VER chỉ thích hợp chạy tool vì chỉ live time ngắn không nên mua dùng hay ngâm.</p>
     <p class="check-item">✅ Không bảo hành trường hợp acc Facebook dính WhatsApp anh em nên mua loại có 2FA để xác thực khi login.</p>
@@ -688,7 +659,7 @@ const products = [
   { id: 158, name: "HMA VPN", cat: "hma", icon: "🔒", price: "40.000đ", stock: 80, badge: "", desc: "HMA VPN tốc độ cao, bảo mật toàn diện đa thiết bị." },
   { id: 159, name: "APP LÀM ĐẸP PRO", cat: "app-lam-dep", icon: "💅", price: "25.000đ", stock: 150, badge: "new", desc: "Tài khoản app làm đẹp Pro, chỉnh ảnh chuyên nghiệp không quảng cáo." },
   { id: 160, name: "THIẾT KẾ - SÁNG TẠO", cat: "thiet-ke-sang-tao", icon: "🎭", price: "45.000đ", stock: 90, badge: "", desc: "Bộ tài khoản thiết kế và sáng tạo nội dung đa nền tảng." },
-  { id: 161, name: "CÁ NHÂN - TIỆN ÍCH", cat: "ca-nhan-tien-ich", icon: "📱", price: "20.000đ", stock: 200, badge: "new", desc: "Các app cá nhân và tiện ích hữu dụng hàng ngày." },
+  { id: 161, name: "CÁ NHÂN - TIỆN ÍCH", cat: "ca-nhan-tien-ich", icon: "📱", price: "20.000đ", stock: 200, badge: "new", desc: "Các app cá nhân và tiện ích hữu dụng hàng ngày." }
 ];
 
 const catMap = {};
@@ -702,8 +673,22 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
 });
 
 /* =========================================
-   XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ / QUÊN MẬT KHẨU
+   KẾT NỐI FIREBASE & XỬ LÝ AUTH/USER
    ========================================= */
+
+// Cấu hình Firebase đã cập nhật đúng theo API bạn cung cấp
+const firebaseConfig = {
+  apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
+  authDomain: "tainguyenmmo-1a233.firebaseapp.com",
+  projectId: "tainguyenmmo-1a233",
+  storageBucket: "tainguyenmmo-1a233.firebasestorage.app",
+  messagingSenderId: "880959861709",
+  appId: "1:880959861709:web:dfe8ce2253a90b87b10a84"
+};
+
+// Khởi tạo App và Firestore
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 function updateHeaderUI() {
   const authSection = document.getElementById("auth-section");
@@ -723,10 +708,16 @@ function updateHeaderUI() {
       </div>
       <button class="wallet-btn danger no-icon" onclick="submitLogout()">Thoát</button>
     `;
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-    const balance = users[currentUser]?.balance || 0;
-    document.getElementById("user-balance").textContent = balance.toLocaleString('vi-VN');
     walletBtn.style.display = "flex";
+
+    // Lắng nghe trực tiếp (Realtime) số dư từ Firebase
+    db.collection("users").doc(currentUser).onSnapshot((doc) => {
+      if (doc.exists) {
+        const balance = doc.data().balance || 0;
+        document.getElementById("user-balance").textContent = balance.toLocaleString('vi-VN');
+      }
+    });
+
   } else {
     authSection.innerHTML = `
       <div class="theme-toggle">
@@ -746,7 +737,6 @@ function switchAuthModal(to) {
   closeAuthModal('login');
   closeAuthModal('register');
   closeAuthModal('buy');
-  closeAuthModal('forgot');
   
   if(to === 'forgot') {
     document.getElementById("forgot-step-1").style.display = "block";
@@ -755,10 +745,15 @@ function switchAuthModal(to) {
     document.getElementById("forgot-code").value = "";
     document.getElementById("forgot-new-pass").value = "";
   }
+  
+  const forgotModalElem = document.getElementById('forgot-modal');
+  if(forgotModalElem) closeAuthModal('forgot');
+
   openAuthModal(to);
 }
 
-function submitRegister() {
+// ĐĂNG KÝ (Lưu lên Firebase)
+async function submitRegister() {
   const user = document.getElementById("reg-user").value.trim();
   const email = document.getElementById("reg-email").value.trim();
   const pass = document.getElementById("reg-pass").value;
@@ -767,28 +762,50 @@ function submitRegister() {
   if(!user || !email || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
   if(pass !== passConfirm) return alert("Mật khẩu nhập lại không khớp!");
 
-  const users = JSON.parse(localStorage.getItem("users")) || {};
-  if(users[user]) return alert("Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.");
+  const userRef = db.collection("users").doc(user);
+  
+  try {
+    const docSnap = await userRef.get();
+    if(docSnap.exists) {
+      return alert("Tên đăng nhập đã tồn tại trên hệ thống! Vui lòng chọn tên khác.");
+    }
 
-  users[user] = { email: email, password: pass, balance: 0 };
-  localStorage.setItem("users", JSON.stringify(users));
+    await userRef.set({ 
+      username: user,
+      email: email, 
+      password: pass, 
+      balance: 0,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
 
-  alert("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
-  switchAuthModal('login');
+    alert("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
+    switchAuthModal('login');
+  } catch (error) {
+    alert("Lỗi khi kết nối với máy chủ Firebase. Vui lòng kiểm tra lại cấu hình Database Test Mode.\nChi tiết lỗi: " + error.message);
+  }
 }
 
-function submitLogin() {
+// ĐĂNG NHẬP (Kiểm tra Firebase)
+async function submitLogin() {
   const user = document.getElementById("login-user").value.trim();
   const pass = document.getElementById("login-pass").value;
-  const users = JSON.parse(localStorage.getItem("users")) || {};
   
-  if(!users[user] || users[user].password !== pass) {
-    return alert("Sai tên đăng nhập hoặc mật khẩu!");
-  }
+  if(!user || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
 
-  localStorage.setItem("currentUser", user);
-  closeAuthModal('login');
-  updateHeaderUI();
+  try {
+    const userRef = db.collection("users").doc(user);
+    const docSnap = await userRef.get();
+    
+    if(!docSnap.exists || docSnap.data().password !== pass) {
+      return alert("Sai tên đăng nhập hoặc mật khẩu!");
+    }
+
+    localStorage.setItem("currentUser", user);
+    closeAuthModal('login');
+    updateHeaderUI();
+  } catch (error) {
+    alert("Lỗi khi đăng nhập: " + error.message);
+  }
 }
 
 function submitLogout() {
@@ -796,73 +813,84 @@ function submitLogout() {
   updateHeaderUI();
 }
 
+/* =========================================
+   QUÊN MẬT KHẨU BẰNG EMAILJS + FIREBASE
+   ========================================= */
 let resetTargetUser = "";
 let generatedResetCode = "";
 
-// BƯỚC QUAN TRỌNG: ĐIỀN API KEY CỦA EMAILJS VÀO ĐÂY
 (function(){
-   emailjs.init("YOUR_PUBLIC_KEY"); 
+   // BẠN VẪN PHẢI THAY PUBLIC KEY CỦA BẠN VÀO ĐÂY:
+   emailjs.init("KNJtY_VP9qiMTAhmH"); 
 })();
 
-function sendResetCode() {
+async function sendResetCode() {
   const inputUser = document.getElementById("forgot-user").value.trim();
   if(!inputUser) return alert("Vui lòng nhập tên đăng nhập!");
   
-  const users = JSON.parse(localStorage.getItem("users")) || {};
-  if(!users[inputUser]) {
-    return alert("Không tìm thấy tài khoản này trong hệ thống!");
+  try {
+    const userRef = db.collection("users").doc(inputUser);
+    const docSnap = await userRef.get();
+
+    if(!docSnap.exists) {
+      return alert("Không tìm thấy tài khoản này trong hệ thống!");
+    }
+    
+    const targetEmail = docSnap.data().email;
+    if(!targetEmail) {
+      return alert("Tài khoản này chưa được liên kết Email nên không thể khôi phục!");
+    }
+
+    resetTargetUser = inputUser;
+    generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    const btnSend = document.querySelector("#forgot-step-1 .auth-btn");
+    btnSend.textContent = "Đang gửi email...";
+    btnSend.disabled = true;
+
+    // BẠN VẪN PHẢI THAY SERVICE ID VÀ TEMPLATE ID CỦA BẠN VÀO ĐÂY:
+    emailjs.send("service_citv6v4", "service_citv6v4", {
+        to_email: targetEmail,
+        user_name: inputUser,
+        reset_code: generatedResetCode
+    })
+    .then(function(response) {
+        btnSend.textContent = "Nhận mã qua Email";
+        btnSend.disabled = false;
+
+        document.getElementById("forgot-step-1").style.display = "none";
+        document.getElementById("forgot-step-2").style.display = "block";
+        alert(`Đã gửi mã xác thực đến email: ${targetEmail}`);
+    }, function(error) {
+        btnSend.textContent = "Nhận mã qua Email";
+        btnSend.disabled = false;
+        alert("Gửi email thất bại. Vui lòng kiểm tra lại cấu hình EmailJS: " + JSON.stringify(error));
+    });
+  } catch (error) {
+    alert("Lỗi hệ thống: " + error.message);
   }
-  
-  const targetEmail = users[inputUser].email;
-  if(!targetEmail) {
-    return alert("Tài khoản này chưa được liên kết Email nên không thể khôi phục!");
-  }
-
-  resetTargetUser = inputUser;
-  generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
-  
-  const btnSend = document.querySelector("#forgot-step-1 .auth-btn");
-  btnSend.textContent = "Đang gửi email...";
-  btnSend.disabled = true;
-
-  // ĐIỀN SERVICE ID VÀ TEMPLATE ID VÀO ĐÂY
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-      to_email: targetEmail,
-      user_name: inputUser,
-      reset_code: generatedResetCode
-  })
-  .then(function(response) {
-      btnSend.textContent = "Nhận mã qua Email";
-      btnSend.disabled = false;
-
-      document.getElementById("forgot-step-1").style.display = "none";
-      document.getElementById("forgot-step-2").style.display = "block";
-      alert(`Đã gửi mã xác thực đến email: ${targetEmail}`);
-  }, function(error) {
-      btnSend.textContent = "Nhận mã qua Email";
-      btnSend.disabled = false;
-      alert("Gửi email thất bại. Vui lòng kiểm tra lại cấu hình EmailJS: " + JSON.stringify(error));
-  });
 }
 
-function resetPassword() {
+async function resetPassword() {
   const inputCode = document.getElementById("forgot-code").value.trim();
   const newPass = document.getElementById("forgot-new-pass").value;
   
   if(inputCode !== generatedResetCode) return alert("Mã xác thực không chính xác!");
   if(!newPass) return alert("Vui lòng nhập mật khẩu mới!");
   
-  const users = JSON.parse(localStorage.getItem("users")) || {};
-  if(users[resetTargetUser]) {
-    users[resetTargetUser].password = newPass;
-    localStorage.setItem("users", JSON.stringify(users));
+  try {
+    const userRef = db.collection("users").doc(resetTargetUser);
+    await userRef.update({ password: newPass });
+    
     alert("Đổi mật khẩu thành công! Hãy đăng nhập lại với mật khẩu mới.");
     switchAuthModal('login');
+  } catch (error) {
+    alert("Lỗi khi đổi mật khẩu: " + error.message);
   }
 }
 
 /* =========================================
-   RENDER SẢN PHẨM VÀ BỘ LỌC
+   RENDER & XỬ LÝ SẢN PHẨM (GIỐNG ẢNH 100%)
    ========================================= */
 
 let currentCat = "all";
@@ -953,12 +981,14 @@ document.querySelector('.search-bar input').addEventListener('input', function()
 
 // Xử lý Mua Hàng
 let currentProduct = null;
-function openModal(id) {
-  if (!localStorage.getItem("currentUser")) {
+async function openModal(id) {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
     alert("⚠️ Bạn cần Đăng nhập tài khoản để mua hàng!");
     openAuthModal('login');
     return;
   }
+  
   currentProduct = products.find(p => p.id === id);
   document.getElementById("modal-name").textContent = currentProduct.name;
   document.getElementById("modal-price").textContent = currentProduct.price;
@@ -967,9 +997,26 @@ function openModal(id) {
   openAuthModal('buy');
 }
 
-function handleBuy() {
+async function handleBuy() {
   const qty = parseInt(document.getElementById("modal-qty").value);
-  alert(`✅ Bạn đã đặt lệnh mua ${qty} x "${currentProduct.name}".\n\nTuy nhiên số dư của bạn không đủ (0đ). Vui lòng nạp tiền!`);
+  const currentUser = localStorage.getItem("currentUser");
+  
+  // Tính tổng tiền
+  const priceNumber = parseInt(currentProduct.price.replace(/\D/g, ''));
+  const totalPrice = priceNumber * qty;
+
+  try {
+    const userRef = db.collection("users").doc(currentUser);
+    const docSnap = await userRef.get();
+    
+    if (docSnap.exists) {
+      const currentBalance = docSnap.data().balance || 0;
+      alert(`✅ Bạn đã đặt lệnh mua ${qty} x "${currentProduct.name}".\n\nTuy nhiên số dư của bạn (${currentBalance.toLocaleString('vi-VN')}đ) không đủ để thanh toán đơn hàng trị giá ${totalPrice.toLocaleString('vi-VN')}đ. Vui lòng nạp thêm tiền!`);
+    }
+  } catch(error) {
+    alert("Lỗi khi kiểm tra số dư trên Firebase: " + error.message);
+  }
+  
   closeAuthModal('buy');
 }
 
