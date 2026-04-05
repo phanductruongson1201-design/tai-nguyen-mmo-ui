@@ -229,7 +229,21 @@
         balance: 0,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
+// Tạo mới tài khoản vào Firestore
+      await userRef.set({ 
+        username: user,
+        email: email, 
+        password: pass, 
+        balance: 0,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
 
+      // --- DÁN THÊM DÒNG NÀY ĐỂ BẮN THÔNG BÁO VỀ TELEGRAM ---
+      sendTelegramMsg(`🔥 KHÁCH ĐĂNG KÝ MỚI 🔥\n- Tài khoản: ${user}\n- Email: ${email}\n- Thời gian: ${new Date().toLocaleString('vi-VN')}`);
+      // ------------------------------------------------------
+
+      // Báo thành công màu xanh lá và chuyển hướng
+      msgBox.style.color = "#10b981";
       // Báo thành công màu xanh lá và chuyển hướng
       msgBox.style.color = "#10b981";
       msgBox.textContent = "✅ Đăng ký thành công! Đang chuyển sang Đăng nhập...";
