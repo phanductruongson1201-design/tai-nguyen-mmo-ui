@@ -689,7 +689,18 @@ const firebaseConfig = {
 // Khởi tạo App và Firestore
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
+// HÀM GỬI THÔNG BÁO TELEGRAM
+function sendTelegramMsg(message) {
+  const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; 
+  const chatId = "2133642610";
+  
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: message })
+  }).catch(err => console.log("Lỗi gửi Tele:", err));
+}
 function updateHeaderUI() {
   const authSection = document.getElementById("auth-section");
   const walletBtn = document.getElementById("wallet-display");
@@ -779,6 +790,7 @@ async function submitRegister() {
     });
 
     alert("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
+    sendTelegramMsg(`🔥 CÓ KHÁCH ĐĂNG KÝ MỚI 🔥\n- Tài khoản: ${user}\n- Email: ${email}`);
     switchAuthModal('login');
   } catch (error) {
     alert("Lỗi khi kết nối với máy chủ Firebase. Vui lòng kiểm tra lại cấu hình Database Test Mode.\nChi tiết lỗi: " + error.message);
@@ -1013,6 +1025,7 @@ async function handleBuy() {
       const currentBalance = docSnap.data().balance || 0;
       alert(`✅ Bạn đã đặt lệnh mua ${qty} x "${currentProduct.name}".\n\nTuy nhiên số dư của bạn (${currentBalance.toLocaleString('vi-VN')}đ) không đủ để thanh toán đơn hàng trị giá ${totalPrice.toLocaleString('vi-VN')}đ. Vui lòng nạp thêm tiền!`);
     }
+      sendTelegramMsg(`🛒 KHÁCH BẤM MUA HÀNG 🛒\n- Khách: ${currentUser}\n- Sản phẩm: ${qty} x ${currentProduct.name}\n- Tổng tiền: ${totalPrice.toLocaleString('vi-VN')}đ\n⚠️ Trạng thái: Số dư không đủ!`);
   } catch(error) {
     alert("Lỗi khi kiểm tra số dư trên Firebase: " + error.message);
   }
