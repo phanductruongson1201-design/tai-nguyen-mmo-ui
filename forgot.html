@@ -91,7 +91,7 @@
 
   // 2. KHỞI TẠO EMAILJS (THAY PUBLIC KEY VÀO ĐÂY)
   (function(){
-     emailjs.init("YOUR_PUBLIC_KEY"); 
+     emailjs.init("KNJtY_VP9qiMTAhmH"); 
   })();
 
   let resetTargetUser = "";
@@ -133,7 +133,7 @@
       generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
       
       // GỬI MAIL QUA EMAILJS (THAY SERVICE ID VÀ TEMPLATE ID VÀO ĐÂY)
-      emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+      emailjs.send("service_citv6v4", "service_citv6v4", {
           to_email: targetEmail,
           user_name: inputUser,
           reset_code: generatedResetCode
