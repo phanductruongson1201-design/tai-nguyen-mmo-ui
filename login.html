@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng Nhập - TàiNguyênMMO</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    /* Màu nền tím giống trong ảnh */
+    background: linear-gradient(135deg, #7028e4 0%, #4b11a8 100%);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+  }
+
+  .logo-box {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .logo-box img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+  }
+
+  .title {
+    text-align: center;
+    color: #1e293b;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  .label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #0f172a;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-group input:focus {
+    border-color: #3b82f6;
+  }
+
+  .input-group input::placeholder {
+    color: #94a3b8;
+  }
+
+  .link {
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  .btn-login {
+    width: 100%;
+    background: #3b82f6;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 10px;
+  }
+
+  .btn-login:hover {
+    background: #2563eb;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 13px;
+    color: #475569;
+    font-weight: 500;
+  }
+
+  #error-msg {
+    color: #ef4444;
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 600;
+    min-height: 18px;
+  }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <div class="logo-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Logo">
+  </div>
+  
+  <h2 class="title">Đăng Nhập</h2>
+
+  <div id="error-msg"></div>
+
+  <div class="input-group">
+    <label>Tên đăng nhập</label>
+    <input type="text" id="username" placeholder="Enter Username">
+  </div>
+
+  <div class="input-group">
+    <div class="label-row">
+      <label>Mật khẩu</label>
+      <a href="#" class="link">Quên mật khẩu</a>
+    </div>
+    <input type="password" id="password" placeholder="Vui lòng nhập mật khẩu">
+  </div>
+
+  <button class="btn-login" onclick="login()">Đăng Nhập</button>
+
+  <div class="footer">
+    Bạn không có tài khoản? <a href="#" class="link">Đăng Ký</a>
+  </div>
+</div>
+
+<script>
+  // KẾT NỐI FIREBASE CỦA BẠN
+  const firebaseConfig = {
+    apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
+    authDomain: "tainguyenmmo-1a233.firebaseapp.com",
+    projectId: "tainguyenmmo-1a233",
+    storageBucket: "tainguyenmmo-1a233.firebasestorage.app",
+    messagingSenderId: "880959861709",
+    appId: "1:880959861709:web:dfe8ce2253a90b87b10a84"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Kiểm tra nếu đã login thì đá thẳng về trang chủ
+  if (localStorage.getItem("currentUser")) {
+    window.location.href = "index.html";
+  }
+
+  // XỬ LÝ ĐĂNG NHẬP
+  async function login() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value;
+    const msgBox = document.getElementById("error-msg");
+
+    if(!user || !pass) {
+      msgBox.textContent = "⚠️ Vui lòng điền đầy đủ thông tin!";
+      return;
+    }
+
+    msgBox.style.color = "#3b82f6";
+    msgBox.textContent = "Đang kiểm tra dữ liệu...";
+
+    try {
+      const userRef = db.collection("users").doc(user);
+      const docSnap = await userRef.get();
+      
+      if(!docSnap.exists || docSnap.data().password !== pass) {
+        msgBox.style.color = "#ef4444";
+        msgBox.textContent = "❌ Sai tên đăng nhập hoặc mật khẩu!";
+        return;
+      }
+
+      // Lưu phiên đăng nhập và chuyển hướng về trang chủ
+      localStorage.setItem("currentUser", user);
+      msgBox.style.color = "#10b981";
+      msgBox.textContent = "✅ Đăng nhập thành công! Đang chuyển hướng...";
+      
+      setTimeout(() => {
+        window.location.href = "index.html"; // Trở về trang chủ
+      }, 1000);
+
+    } catch (error) {
+      msgBox.style.color = "#ef4444";
+      msgBox.textContent = "Lỗi kết nối máy chủ!";
+      console.error(error);
+    }
+  }
+
+  // Hỗ trợ bấm nút Enter để login
+  document.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") login();
+  });
+</script>
+
+</body>
+</html>
