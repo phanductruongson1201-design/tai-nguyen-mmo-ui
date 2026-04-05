@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - TàiNguyênMMO</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+<style>
+  body { font-family: 'Be Vietnam Pro', sans-serif; background: #f1f5f9; margin: 0; padding: 20px; color: #0f172a; }
+  .admin-container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+  h2 { margin-top: 0; color: #1e293b; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; display: inline-block;}
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+  th { background: #f8fafc; font-weight: 700; color: #475569; text-transform: uppercase; font-size: 12px; }
+  td { font-size: 14px; font-weight: 500; }
+  .balance { color: #10b981; font-weight: 700; }
+  .btn-add { background: #3b82f6; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+  .btn-add:hover { background: #2563eb; }
+</style>
+</head>
+<body>
+
+<div class="admin-container">
+  <h2>⚙️ QUẢN LÝ KHÁCH HÀNG & SỐ DƯ</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Tài khoản</th>
+        <th>Email</th>
+        <th>Số dư hiện tại (VNĐ)</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody id="users-table">
+      <tr><td colspan="4" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // 1. ĐIỀN FIREBASE CỦA BẠN VÀO ĐÂY (Giống hệt bên index.html)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
+    authDomain: "tainguyenmmo-1a233.firebaseapp.com",
+    projectId: "tainguyenmmo-1a233",
+    storageBucket: "tainguyenmmo-1a233.firebasestorage.app",
+    messagingSenderId: "880959861709",
+    appId: "1:880959861709:web:dfe8ce2253a90b87b10a84"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // 2. ĐIỀN THÔNG TIN TELEGRAM BOT VÀO ĐÂY
+  const BOT_TOKEN = "ĐIỀN_BOT_TOKEN_CỦA_BẠN";
+  const CHAT_ID = "ĐIỀN_CHAT_ID_CỦA_BẠN";
+
+  function sendTelegramMsg(message) {
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+    });
+  }
+
+  // Tải danh sách user từ Firebase
+  function loadUsers() {
+    db.collection("users").onSnapshot((querySnapshot) => {
+      const tbody = document.getElementById("users-table");
+      tbody.innerHTML = "";
+      
+      querySnapshot.forEach((doc) => {
+        const user = doc.data();
+        const username = doc.id;
+        const balance = user.balance || 0;
+        
+        tbody.innerHTML += `
+          <tr>
+            <td>${username}</td>
+            <td>${user.email || "Không có"}</td>
+            <td class="balance">${balance.toLocaleString('vi-VN')} đ</td>
+            <td>
+              <button class="btn-add" onclick="addFunds('${username}', ${balance})">💰 Nạp tiền</button>
+            </td>
+          </tr>
+        `;
+      });
+    });
+  }
+
+  // Hàm Nạp tiền cho khách
+  async function addFunds(username, currentBalance) {
+    const amountStr = prompt(`Nhập số tiền muốn NẠP cho [${username}]:\n(Ví dụ nạp 50 cành thì gõ: 50000)`);
+    if (!amountStr) return;
+    
+    const amount = parseInt(amountStr);
+    if (isNaN(amount) || amount <= 0) return alert("Số tiền không hợp lệ!");
+
+    const newBalance = currentBalance + amount;
+
+    try {
+      await db.collection("users").doc(username).update({ balance: newBalance });
+      alert(`Đã nạp thành công ${amount.toLocaleString('vi-VN')}đ cho ${username}!`);
+      
+      // Bắn thông báo về Tele
+      sendTelegramMsg(`💰 NẠP TIỀN THÀNH CÔNG 💰\n- Admin vừa nạp: ${amount.toLocaleString('vi-VN')}đ\n- Cho khách: ${username}\n- Số dư mới: ${newBalance.toLocaleString('vi-VN')}đ`);
+      
+    } catch (error) {
+      alert("Lỗi nạp tiền: " + error.message);
+    }
+  }
+
+  // Khởi chạy
+  loadUsers();
+</script>
+</body>
+</html>
