@@ -8,6 +8,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+  <script src="services.js"></script>
 
 <style>
 :root {
@@ -1356,18 +1357,7 @@ const db = firebase.firestore();
 // ═══════════════════════════════
 // DATA STORE
 // ═══════════════════════════════
-const SERVICES = [
-  { id:1, name:"PROFILE VIỆT NEW", cat:"Facebook", icon:"🇻🇳", price:25000, stock:500, sold:1240, badge:"new", active:true, desc:"Profile Việt mới tạo, đầy đủ thông tin, chưa vi phạm." },
-  { id:2, name:"TÍCH XANH FACEBOOK", cat:"Facebook", icon:"✅", price:299000, stock:12, sold:89, badge:"hot", active:true, desc:"Tài khoản Facebook đã được tích xanh xác minh." },
-  { id:3, name:"BM ĐÃ TẠO TKQC", cat:"Facebook", icon:"💼", price:120000, stock:25, sold:342, badge:"hot", active:true, desc:"Business Manager đã tạo tài khoản quảng cáo." },
-  { id:4, name:"CHAT GPT PLUS", cat:"AI Tools", icon:"🤖", price:55000, stock:60, sold:420, badge:"hot", active:true, desc:"Tài khoản ChatGPT Plus chính hãng." },
-  { id:5, name:"PROXY V4 ĐA QUỐC GIA", cat:"Proxy", icon:"🌍", price:35000, stock:1000, sold:2100, badge:"new", active:true, desc:"Proxy IPv4 đa quốc gia tốc độ cao." },
-  { id:6, name:"CANVA PRO", cat:"AI Tools", icon:"🎨", price:30000, stock:150, sold:890, badge:"new", active:true, desc:"Tài khoản Canva Pro đầy đủ tính năng." },
-  { id:7, name:"PROFILE PHI NEW", cat:"Facebook", icon:"🇵🇭", price:18000, stock:300, sold:540, badge:"new", active:true, desc:"Profile Philippines mới tạo." },
-  { id:8, name:"GMAIL", cat:"Email", icon:"📩", price:8000, stock:800, sold:1800, badge:"new", active:true, desc:"Tài khoản Gmail các loại." },
-  { id:9, name:"CLONE VIỆT NEW - NO 2FA", cat:"Facebook", icon:"🇻🇳", price:12000, stock:500, sold:2400, badge:"new", active:true, desc:"Clone Việt mới không có 2FA." },
-  { id:10, name:"GEMINI PRO", cat:"AI Tools", icon:"✨", price:40000, stock:90, sold:310, badge:"new", active:true, desc:"Tài khoản Gemini Pro Google." },
-];
+
 
 let ORDERS = [];
 let CUSTOMERS = []; // Dữ liệu thật từ Firebase
