@@ -6,10 +6,8 @@
 <title>TàiNguyênMMO - Chợ Tài Khoản & Tool Marketing</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
-
 <script src="services.js"></script>
 
 <style>
@@ -30,49 +28,28 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--dark); 
-    color: var(--text); 
-    font-family: 'Be Vietnam Pro', sans-serif;
-    font-size: 13px; 
-    min-height: 100vh;
+    background: var(--dark); color: var(--text); font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 13px; min-height: 100vh;
   }
 
   /* HEADER */
   .header {
-    background: var(--dark2); 
-    border-bottom: 1px solid var(--border); 
-    padding: 0 16px;
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    height: 56px;
-    position: sticky; 
-    top: 0; 
-    z-index: 100;
+    background: var(--dark2); border-bottom: 1px solid var(--border); padding: 0 16px;
+    display: flex; align-items: center; justify-content: space-between; height: 56px;
+    position: sticky; top: 0; z-index: 100;
   }
   .header-left { display: flex; align-items: center; gap: 12px; }
   .menu-btn { background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; display: flex; flex-direction: column; gap: 4px; }
   .menu-btn span { display: block; width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
   .wallet-btn {
-    background: var(--dark3); 
-    border: 1px solid var(--border); 
-    color: var(--text);
-    padding: 7px 14px; 
-    border-radius: 6px; 
-    cursor: pointer; 
-    font-family: inherit;
-    font-size: 13px; 
-    font-weight: 600; 
-    display: flex; 
-    align-items: center; 
-    gap: 6px; 
-    transition: 0.2s;
+    background: var(--dark3); border: 1px solid var(--border); color: var(--text);
+    padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: inherit;
+    font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: 0.2s;
   }
   .wallet-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
   .wallet-btn.danger { background: var(--red); color: #fff; border-color: var(--red); padding: 7px 10px; }
   .wallet-btn::before { content: "💳"; font-size: 14px; }
   .wallet-btn.no-icon::before { content: none; }
-  
   .header-right { display: flex; align-items: center; gap: 12px; }
   .theme-toggle { background: var(--dark3); border: 1px solid var(--border); border-radius: 20px; padding: 4px; display: flex; gap: 2px; }
   .theme-btn { background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 14px; font-size: 14px; transition: background 0.2s; }
@@ -83,7 +60,7 @@
   .username { font-weight: 600; font-size: 13px; }
 
   /* BANNERS */
-  .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59, 130, 246, 0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
+  .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59,130,246,0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
   .warning-bar { background: var(--red); padding: 10px 16px; text-align: center; font-weight: 700; font-size: 13px; letter-spacing: 0.3px; color: #fff; text-transform: uppercase; }
 
   /* LƯU Ý SECTION */
@@ -102,35 +79,17 @@
 
   /* CATEGORY GRID */
   .categories {
-    padding: 20px 16px; 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 12px; 
-    max-height: 380px; 
-    overflow-y: auto; 
-    border-bottom: 1px solid var(--border); 
-    margin-bottom: 8px;
+    padding: 20px 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px; max-height: 380px; overflow-y: auto; border-bottom: 1px solid var(--border); margin-bottom: 8px;
   }
   .categories::-webkit-scrollbar { width: 5px; }
   .categories::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
-  
   .cat-btn {
-    background: var(--dark3); 
-    border: 1px solid var(--border); 
-    border-radius: 8px;
-    padding: 12px 16px; 
-    cursor: pointer; 
-    font-family: inherit; 
-    font-size: 12.5px;
-    font-weight: 600; 
-    color: var(--text); 
-    display: flex; 
-    align-items: center; 
-    gap: 10px;
-    text-align: left; 
-    transition: border-color 0.2s, background 0.2s, transform 0.1s;
-    letter-spacing: 0.2px; 
-    text-transform: uppercase;
+    background: var(--dark3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 16px; cursor: pointer; font-family: inherit; font-size: 12.5px;
+    font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px;
+    text-align: left; transition: border-color 0.2s, background 0.2s, transform 0.1s;
+    letter-spacing: 0.2px; text-transform: uppercase;
   }
   .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
   .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
@@ -142,7 +101,7 @@
   .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
   .search-bar input::placeholder { color: var(--text-muted); }
 
-  /* BẢNG SẢN PHẨM MỚI */
+  /* BẢNG SẢN PHẨM */
   .products-section { padding: 0 16px 16px; }
   .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
   .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
@@ -255,13 +214,9 @@
     <p class="check-item">✅ Lưu đối với những clone via dưới 1.000đ, hàng VER chỉ thích hợp chạy tool vì chỉ live time ngắn không nên mua dùng hay ngâm.</p>
     <p class="check-item">✅ Không bảo hành trường hợp acc Facebook dính WhatsApp anh em nên mua loại có 2FA để xác thực khi login.</p>
     <p class="check-item">✅ NICK FB MỚI KHÔNG CHO BẬT 2FA, CHO NÊN NGÂM SẼ KHÔNG LOGIN BẰNG PASS ĐƯỢC VUI LÒNG DÙNG COOKIE.</p>
-    <p class="check-item">✅ <strong>ĐIỀU KHOẢN:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
-    <p class="check-item">✅ <strong>VIDEO HƯỚNG DẪN ĐĂNG NHẬP NICK CLONE:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
-    <p class="check-item">✅ <strong>VIDEO HƯỚNG DẪN ĐĂNG NHẬP NICK CLONE BẰNG COOKIE:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
     <p class="check-item">✅ Khi bán ra bạn login <strong>Thành Công</strong> Shop sẽ không chịu trách nhiệm khi bạn sử dụng tài khoản với các mục đích riêng hoặc bị khóa tài khoản.</p>
     <p class="check-item">✅ <strong>Shop không hỗ trợ hoàn tiền khi đã nạp vào web dưới bất kì hình thức nào</strong> nên anh em vui lòng nạp vừa đủ và test sản phẩm trước khi mua số lượng.</p>
     <p class="check-item">✅ Không bảo hành mọi trường hợp mua về ngâm dẫn đến die, check live kèm ảnh và thời gian tại thời điểm check live sau khi mua hàng để một thời gian rồi check live die không hỗ trợ.</p>
-    <p class="check-item">✅ Lưu ý: anh em nên tìm hiểu về clone và mua số lượng ít trước khi mua nhiều — 1 thiết bị 1 ip login nhiều acc sẽ bị fb quét, acc mới login về mà đi spam hay thay đổi thông tin quá nhiều cũng sẽ bị quét dẫn đến khóa tài khoản.</p>
   </div>
 </div>
 
@@ -360,20 +315,21 @@
     </div>
   </div>
 </div>
+
 <script>
 // =============================================
-// GỌI DATA TỪ FILE SERVICES.JS 
+// LẤY DỮ LIỆU TỪ FILE SERVICES.JS
 // =============================================
 const products = typeof SERVICES !== 'undefined' ? SERVICES : [];
 
 // =============================================
-// TỰ ĐỘNG TẠO DANH MỤC TỪ KHO HÀNG THẬT
+// TỰ ĐỘNG KHỞI TẠO CÁC NÚT DANH MỤC
 // =============================================
 const categoriesDiv = document.getElementById("categories");
 const uniqueCats = [...new Set(products.map(p => p.cat))]; 
 
 const catMap = {};
-let catHtml = `<button class="cat-btn active" data-cat="all"><span class="icon icon-cart">🛒</span> TẤT CẢ SẢN PHẨM</button>`;
+let catHtml = `<button class="cat-btn active" data-cat="all"><span class="icon" style="background:transparent; color:var(--blue); font-size:18px;">🛒</span> TẤT CẢ SẢN PHẨM</button>`;
 
 uniqueCats.forEach(catName => {
   const firstProd = products.find(p => p.cat === catName);
@@ -398,17 +354,14 @@ const firebaseConfig = {
   appId: "1:880959861709:web:dfe8ce2253a90b87b10a84"
 };
 
-// Khởi tạo App và Firestore
 if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 const db = firebase.firestore();
 
-// HÀM GỬI THÔNG BÁO TELEGRAM
 function sendTelegramMsg(message) {
   const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; 
   const chatId = "2133642610";
   
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-  fetch(url, {
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ chat_id: chatId, text: message })
@@ -435,7 +388,6 @@ function updateHeaderUI() {
     `;
     walletBtn.style.display = "flex";
 
-    // Lắng nghe trực tiếp (Realtime) số dư từ Firebase
     db.collection("users").doc(currentUser).onSnapshot((doc) => {
       if (doc.exists) {
         const balance = doc.data().balance || 0;
@@ -614,7 +566,7 @@ async function resetPassword() {
 }
 
 /* =========================================
-   RENDER & XỬ LÝ SẢN PHẨM TỰ ĐỘNG
+   RENDER & XỬ LÝ SẢN PHẨM 
    ========================================= */
 
 function renderProducts(catFilter, searchQuery = "") {
@@ -628,7 +580,7 @@ function renderProducts(catFilter, searchQuery = "") {
   let sourceProducts = products;
   if (searchQuery) {
     sourceProducts = products.filter(p => 
-      p.name.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery)
+      p.name.toLowerCase().includes(searchQuery) || (p.desc && p.desc.toLowerCase().includes(searchQuery))
     );
     titleDisplay.textContent = 'Kết quả tìm kiếm';
   } else {
@@ -653,20 +605,18 @@ function renderProducts(catFilter, searchQuery = "") {
           <div>Xem trước</div><div>Hiện có</div><div>Đã bán</div><div>Giá</div><div>Thao tác</div>
         </div>
         <div class="cat-products-list">
-          ${catProducts.map(p => {
-            const randomSold = (p.id * 7 + 15) % 800 + 10;
-            return `
+          ${catProducts.map(p => `
             <div class="grid-row product-row">
               <div class="col-info">
                 <div class="prod-icon-wrap">${p.icon}</div>
                 <div class="prod-details">
                   <div class="prod-name" onclick="openModal(${p.id})">${p.name}</div>
-                  <div class="prod-desc">${p.desc}</div>
+                  <div class="prod-desc">${p.desc || ''}</div>
                 </div>
               </div>
               <div class="col-preview"></div>
-              <div class="col-stock"><div class="stat-box stock"><span>Còn lại:</span><strong>${p.stock}</strong></div></div>
-              <div class="col-sold"><div class="stat-box sold"><span>Đã bán:</span><strong>${randomSold}</strong></div></div>
+              <div class="col-stock"><div class="stat-box stock"><span>Còn lại:</span><strong>${p.stock.toLocaleString('vi-VN')}</strong></div></div>
+              <div class="col-sold"><div class="stat-box sold"><span>Đã bán:</span><strong>${p.sold.toLocaleString('vi-VN')}</strong></div></div>
               <div class="col-price"><div class="stat-box price"><span class="icon-money">💵</span><strong>${p.price.toLocaleString('vi-VN')}đ</strong></div></div>
               <div class="col-action">
                 <button class="btn-buy" onclick="openModal(${p.id})">
@@ -674,8 +624,7 @@ function renderProducts(catFilter, searchQuery = "") {
                   <span style="font-size:12px">NGAY</span>
                 </button>
               </div>
-            </div>`;
-          }).join('')}
+            </div>`).join('')}
         </div>
       </div>`;
   });
@@ -714,7 +663,7 @@ async function openModal(id) {
   currentProduct = products.find(p => p.id === id);
   document.getElementById("modal-name").textContent = currentProduct.name;
   document.getElementById("modal-price").textContent = currentProduct.price.toLocaleString('vi-VN') + "đ";
-  document.getElementById("modal-desc").textContent = currentProduct.desc;
+  document.getElementById("modal-desc").textContent = currentProduct.desc || '';
   document.getElementById("modal-qty").value = 1;
   openAuthModal('buy');
 }
