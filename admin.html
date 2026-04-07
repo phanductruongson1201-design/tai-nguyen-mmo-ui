@@ -20,33 +20,26 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 13px; display: flex; min-height: 100vh; overflow-x: hidden; }
 
-/* SIDEBAR & UI CƠ BẢN */
+/* SIDEBAR */
 .sidebar { width: var(--sidebar-w); background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; box-shadow: var(--shadow-md); }
 .sidebar-logo { padding: 20px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
 .sidebar-logo .logo-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--red); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #fff; font-family: var(--mono); }
 .sidebar-logo .logo-text { font-weight: 800; font-size: 13px; line-height: 1.2; }
-.sidebar-logo .logo-sub { font-size: 10px; color: var(--text3); font-family: var(--mono); }
 .sidebar-nav { flex: 1; padding: 10px 0; overflow-y: auto; }
 .nav-section { padding: 14px 18px 6px; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
 .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 18px; cursor: pointer; color: var(--text2); font-size: 12.5px; font-weight: 500; transition: 0.15s; border-left: 3px solid transparent; }
 .nav-item:hover { background: var(--bg3); color: var(--text); }
 .nav-item.active { background: var(--red-dim); color: var(--text); border-left-color: var(--red); }
 .nav-item .nav-icon { font-size: 15px; width: 18px; text-align: center; }
-.sidebar-footer { padding: 14px 18px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-.admin-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--red), #f97316); display: flex; align-items: center; justify-content: center; font-size: 14px; color:#fff; }
-.admin-info { flex: 1; }
-.admin-name { font-weight: 700; font-size: 12px; }
-.admin-role { font-size: 10px; color: var(--text3); font-family: var(--mono); }
+
 .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
 .topbar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 40; }
 .topbar-title { font-weight: 800; font-size: 15px; flex: 1; }
-.topbar-search { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; gap: 8px; padding: 0 12px; width: 240px; }
-.topbar-search input { background: none; border: none; outline: none; color: var(--text); font-family: var(--sans); font-size: 12px; padding: 8px 0; flex: 1; }
 .content { padding: 24px; flex: 1; }
 .page { display: none; }
 .page.active { display: block; }
 
-/* STATS & TABLES */
+/* UI COMPONENTS */
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
 .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
 .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
@@ -56,132 +49,119 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 .stat-card.yellow::before { background: var(--yellow); }
 .stat-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
 .stat-value { font-size: 26px; font-weight: 800; font-family: var(--mono); }
-.sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.sec-title { font-weight: 800; font-size: 14px; }
-.table-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow); }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.card-title { font-weight: 800; font-size: 13px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.table-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
 table { width: 100%; border-collapse: collapse; }
 thead { background: var(--bg3); }
 th { padding: 11px 16px; text-align: left; font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; border-bottom: 1px solid var(--border); }
-td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; }
-.badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; }
-.badge.success { background: var(--green-dim); color: var(--green); }
-.badge.danger { background: var(--red-dim); color: var(--red); }
-.badge.warning { background: var(--yellow-dim); color: var(--yellow); }
-.badge.purple { background: var(--purple-dim); color: var(--purple); }
-.action-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: 0.15s; margin-right: 4px; }
-.action-btn:hover { border-color: var(--blue); color: var(--blue); }
-.btn-text { background: var(--green-dim); border: 1px solid var(--green); color: var(--green); font-family: var(--sans); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-.btn-text:hover { background: var(--green); color: #fff; }
+td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; }
 
-.filter-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; }
-.filter-input { background: var(--bg2); border: 1px solid var(--border); color: var(--text); font-family: var(--sans); font-size: 12px; padding: 7px 12px; border-radius: 7px; outline: none; width: 200px; }
+/* FORMS */
+.form-group { margin-bottom: 14px; }
+.form-label { display: block; font-size: 11px; font-weight: 700; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; }
+.form-control { width: 100%; background: var(--bg3); border: 1px solid var(--border); color: var(--text); font-family: var(--sans); font-size: 13px; padding: 9px 12px; border-radius: 8px; outline: none; }
+.btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text); font-family: var(--sans); font-size: 12px; font-weight: 600; padding: 8px 16px; border-radius: 7px; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 6px; }
+.btn.primary { background: var(--red); color: #fff; border-color: var(--red); }
+
+/* TELEGRAM SPECIFIC */
+.tg-status { padding: 10px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+.tg-status.connected { background: var(--green-dim); border: 1px solid var(--green); color: var(--green); }
+.tg-status.disconnected { background: var(--red-dim); border: 1px solid var(--red); color: var(--red); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-
-/* SERVICE CARD */
 .service-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; position: relative; }
-.service-card:hover { border-color: var(--border2); }
-.service-card .sc-icon { font-size: 28px; margin-bottom: 8px; }
-.service-card .sc-name { font-weight: 700; font-size: 12px; text-transform: uppercase; margin-bottom: 4px; }
-.service-card .sc-price { color: var(--accent); font-weight: 800; font-family: var(--mono); font-size: 14px; }
-.service-card .sc-stock { color: var(--text3); font-size: 11px; margin-top: 2px; }
-.service-card .sc-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s; }
-.service-card:hover .sc-actions { opacity: 1; }
-
+.action-btn { background: var(--bg3); border: 1px solid var(--border); width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.btn-text { background: var(--green-dim); border: 1px solid var(--green); color: var(--green); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
 </style>
 </head>
 <body>
 
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon">TN</div>
-    <div>
-      <div class="logo-text">TàiNguyênMMO</div>
-      <div class="logo-sub">Admin Panel v1.0</div>
-    </div>
+    <div class="logo-text">TàiNguyênMMO</div>
   </div>
-
   <nav class="sidebar-nav">
     <div class="nav-section">Tổng Quan</div>
     <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">📊</span> Dashboard</div>
-    
     <div class="nav-section">Quản Lý</div>
     <div class="nav-item" onclick="showPage('services')"><span class="nav-icon">🗂️</span> Dịch Vụ</div>
     <div class="nav-item" onclick="showPage('customers')"><span class="nav-icon">👥</span> Khách Hàng</div>
     <div class="nav-item" onclick="showPage('inventory')"><span class="nav-icon">📦</span> Kho Hàng</div>
+    <div class="nav-section">Hệ Thống</div>
+    <div class="nav-item" onclick="showPage('telegram')"><span class="nav-icon">✈️</span> Telegram Bot</div>
   </nav>
-
-  <div class="sidebar-footer">
-    <div class="admin-avatar">👤</div>
-    <div class="admin-info">
-      <div class="admin-name">Admin Tesla</div>
-      <div class="admin-role">SUPERADMIN</div>
-    </div>
-  </div>
 </aside>
 
 <div class="main">
   <div class="topbar">
     <div class="topbar-title" id="page-title">Dashboard</div>
-    <div class="topbar-search">
-      <span style="color:var(--text3)">🔍</span>
-      <input type="text" placeholder="Tìm kiếm..." id="global-search">
-    </div>
   </div>
 
   <div class="content">
-
+    
     <div class="page active" id="page-dashboard">
       <div class="stats-grid">
-        <div class="stat-card red"><div class="stat-label">Tổng Đơn Hàng</div><div class="stat-value" style="color:var(--red)">1,248</div></div>
-        <div class="stat-card green"><div class="stat-label">Doanh Thu Hôm Nay</div><div class="stat-value" style="color:var(--green)">8.4M</div></div>
-        <div class="stat-card blue"><div class="stat-label">Khách Hàng Mới</div><div class="stat-value" style="color:var(--blue)" id="dash-cust-count">...</div></div>
-        <div class="stat-card yellow"><div class="stat-label">Dịch Vụ Đang Bán</div><div class="stat-value" style="color:var(--yellow)" id="dash-svc-count">...</div></div>
+        <div class="stat-card red"><div class="stat-label">Tổng Đơn Hàng</div><div class="stat-value">1,248</div></div>
+        <div class="stat-card green"><div class="stat-label">Doanh Thu</div><div class="stat-value">8.4M</div></div>
+        <div class="stat-card blue"><div class="stat-label">Khách Hàng</div><div class="stat-value" id="dash-cust-count">...</div></div>
+        <div class="stat-card yellow"><div class="stat-label">Dịch Vụ</div><div class="stat-value" id="dash-svc-count">...</div></div>
       </div>
-      <div class="sec-header">
-        <div class="sec-title">🔥 Dịch Vụ Đang Hot</div>
-      </div>
+      <div class="sec-header"><div class="sec-title">🔥 Dịch Vụ Mới Nhất</div></div>
       <div class="grid3" id="top-services-grid"></div>
     </div>
 
     <div class="page" id="page-services">
-      <div class="filter-bar">
-        <input class="filter-input" type="text" placeholder="🔍 Tìm dịch vụ..." id="service-search" oninput="renderServices()">
-      </div>
+      <div class="filter-bar"><input class="filter-input" type="text" placeholder="🔍 Tìm dịch vụ..." id="service-search" oninput="renderServices()"></div>
       <div class="grid3" id="services-grid"></div>
     </div>
 
     <div class="page" id="page-customers">
-      <div class="filter-bar">
-        <input class="filter-input" type="text" placeholder="🔍 Tìm tên khách hàng..." id="cust-search" oninput="renderCustomers()">
-      </div>
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Tên Khách Hàng</th>
-              <th>Email</th>
-              <th>Số Dư Ví</th>
-              <th>Ngày Tham Gia</th>
-              <th>Thao Tác</th>
-            </tr>
-          </thead>
+          <thead><tr><th>#</th><th>Username</th><th>Email</th><th>Số Dư</th><th>Thao Tác</th></tr></thead>
           <tbody id="customers-body"></tbody>
         </table>
       </div>
     </div>
 
     <div class="page" id="page-inventory">
-      <div class="filter-bar">
-        <input class="filter-input" type="text" placeholder="🔍 Tìm kho hàng..." id="inv-search" oninput="renderInventory()">
-      </div>
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr><th>Dịch Vụ</th><th>Danh Mục</th><th>Tồn Kho</th><th>Đã Bán</th><th>Trạng Thái</th></tr>
-          </thead>
+          <thead><tr><th>Dịch Vụ</th><th>Danh Mục</th><th>Tồn Kho</th><th>Trạng Thái</th></tr></thead>
           <tbody id="inventory-body"></tbody>
         </table>
+      </div>
+    </div>
+
+    <div class="page" id="page-telegram">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">✈️ Cấu Hình Telegram Bot</div>
+          <div id="tg-status-bar" class="tg-status disconnected">Chưa kết nối Telegram</div>
+          <div class="form-group">
+            <label class="form-label">Bot Token</label>
+            <input class="form-control" id="tg-token" type="text" placeholder="Dán token từ @BotFather">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Chat ID</label>
+            <input class="form-control" id="tg-chatid" type="text" placeholder="Dán Chat ID nhận thông báo">
+          </div>
+          <div style="display:flex; gap:10px">
+            <button class="btn primary" onclick="saveTgConfig()">💾 Lưu Cấu Hình</button>
+            <button class="btn" onclick="testTgBot()">🔔 Gửi Test</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">📝 Hướng Dẫn</div>
+          <p style="font-size:12px; line-height:1.6; color:var(--text2)">
+            1. Chat với <a href="https://t.me/BotFather" target="_blank">@BotFather</a> để tạo Bot và lấy <b>Token</b>.<br>
+            2. Chat với <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a> để lấy <b>Chat ID</b> cá nhân của bạn.<br>
+            3. Nhập vào form bên cạnh và bấm Lưu.<br>
+            4. Hệ thống sẽ tự động báo Telegram khi khách nạp tiền tay hoặc mua hàng.
+          </p>
+        </div>
       </div>
     </div>
 
@@ -191,7 +171,7 @@ td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 12.5
 <div id="toast" style="position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,0.4);z-index:999;opacity:0;transform:translateY(20px);transition:all 0.3s;pointer-events:none;"></div>
 
 <script>
-// 1. KẾT NỐI FIREBASE 
+// FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
   authDomain: "tainguyenmmo-1a233.firebaseapp.com",
@@ -200,200 +180,136 @@ const firebaseConfig = {
   messagingSenderId: "880959861709",
   appId: "1:880959861709:web:dfe8ce2253a90b87b10a84"
 };
-if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 let SERVICES = [];
 let CUSTOMERS = [];
 
-// ==========================================
-// 2. LẮNG NGHE DỮ LIỆU REALTIME
-// ==========================================
-db.collection("services").onSnapshot((snapshot) => {
-    SERVICES = [];
-    snapshot.forEach((doc) => {
-        SERVICES.push(doc.data());
-    });
-    
-    if(document.getElementById('dash-svc-count')) {
-        document.getElementById('dash-svc-count').textContent = SERVICES.length;
-    }
-    
-    renderDashboard();
-    renderServices();
-    renderInventory();
+// REALTIME LISTENER
+db.collection("services").onSnapshot(snap => {
+  SERVICES = []; snap.forEach(doc => SERVICES.push(doc.data()));
+  document.getElementById('dash-svc-count').textContent = SERVICES.length;
+  renderDashboard(); renderServices(); renderInventory();
 });
 
-db.collection("users").onSnapshot((snapshot) => {
-  CUSTOMERS = [];
-  let index = 1;
-  snapshot.forEach((doc) => {
-    const user = doc.data();
-    CUSTOMERS.push({
-      id: index++,
-      username: doc.id,
-      email: user.email || "Không có",
-      balance: user.balance || 0,
-      joined: user.createdAt ? new Date(user.createdAt.toDate()).toLocaleDateString('vi-VN') : "Mới đây"
-    });
+db.collection("users").onSnapshot(snap => {
+  CUSTOMERS = []; 
+  snap.forEach(doc => {
+    let d = doc.data();
+    CUSTOMERS.push({username: doc.id, email: d.email, balance: d.balance || 0, joined: d.createdAt ? new Date(d.createdAt.toDate()).toLocaleDateString('vi-VN') : '...' });
   });
-  if(document.getElementById('dash-cust-count')) {
-      document.getElementById('dash-cust-count').textContent = CUSTOMERS.length;
-  }
+  document.getElementById('dash-cust-count').textContent = CUSTOMERS.length;
   renderCustomers();
 });
 
-// ==========================================
-// 3. CÁC HÀM RENDER GIAO DIỆN
-// ==========================================
-function fmt(n) { return (!n && n!==0) ? '-' : n.toLocaleString('vi-VN')+'đ'; }
-
-function showToast(msg, type='info') {
-  const t = document.getElementById('toast');
-  if(!t) return;
-  const colors = {success:'var(--green)',danger:'var(--red)',warning:'var(--yellow)',info:'var(--blue)'};
-  t.innerHTML = `<span style="color:${colors[type]||colors.info}">●</span> ${msg}`;
-  t.style.opacity = '1'; t.style.transform = 'translateY(0)';
-  clearTimeout(t._timer);
-  t._timer = setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(20px)'; },3000);
-}
-
+// FUNCTIONS
+function fmt(n) { return n.toLocaleString('vi-VN') + 'đ'; }
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById(`page-${name}`).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>{
-    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${name}'`)) n.classList.add('active');
-  });
-  const titles = {dashboard:'Dashboard',services:'Quản Lý Dịch Vụ',customers:'Quản Lý Khách Hàng',inventory:'Kho Hàng'};
-  document.getElementById('page-title').textContent = titles[name]||name;
-}
-
-function renderDashboard() {
-  const top = [...SERVICES].slice(0,3);
-  const topEl = document.getElementById('top-services-grid');
-  if(topEl) {
-    topEl.innerHTML = top.map(s=>`
-      <div class="service-card">
-        <div class="sc-icon">${s.icon}</div>
-        <div class="sc-name" style="height:35px;overflow:hidden">${s.name}</div>
-        <div class="sc-price">${fmt(s.price)}</div>
-        <div class="sc-stock" style="margin-top:6px">Tồn kho: <strong>${s.stock}</strong></div>
-      </div>`).join('');
-  }
+  document.getElementById('page-title').textContent = name.toUpperCase();
 }
 
 function renderServices() {
   const grid = document.getElementById('services-grid');
-  if(!grid) return;
-  
   const q = document.getElementById('service-search').value.toLowerCase();
-  const filtered = SERVICES.filter(s => !q || s.name.toLowerCase().includes(q));
-
-  grid.innerHTML = filtered.map(s=>`
+  const filtered = SERVICES.filter(s => s.name.toLowerCase().includes(q));
+  grid.innerHTML = filtered.map(s => `
     <div class="service-card">
-      <div class="sc-actions">
-        <button class="action-btn" title="Sửa giá" onclick="editServicePrice('${s.id}')">💰</button>
-      </div>
+      <div class="sc-actions"><button class="action-btn" onclick="editServicePrice('${s.id}')">💰</button></div>
       <div class="sc-icon">${s.icon}</div>
-      <div class="sc-name" style="height:35px;overflow:hidden" title="${s.name}">${s.name}</div>
-      <div style="font-size:10px;color:var(--text3);margin-bottom:4px">${s.cat}</div>
+      <div class="sc-name">${s.name}</div>
       <div class="sc-price">${fmt(s.price)}</div>
-      <div class="sc-stock">Còn: <strong style="color:${s.stock<20?'var(--red)':'var(--green)'}">${s.stock}</strong></div>
+      <div class="sc-stock">Tồn: ${s.stock}</div>
     </div>`).join('');
 }
 
-function renderInventory() {
-  const tbody = document.getElementById('inventory-body');
-  if(!tbody) return;
-  
-  const q = document.getElementById('inv-search').value.toLowerCase();
-  const filtered = SERVICES.filter(s => !q || s.name.toLowerCase().includes(q));
-
-  tbody.innerHTML = filtered.map(s=>{
-    const st = s.stock===0?'danger':s.stock<30?'warning':'success';
-    const stTxt = s.stock===0?'Hết hàng':s.stock<30?'Sắp hết':'Còn hàng';
-    return `<tr>
-      <td><strong>${s.icon} ${s.name}</strong></td>
-      <td><span class="badge purple">${s.cat}</span></td>
-      <td style="font-family:var(--mono);font-weight:700;color:${s.stock===0?'var(--red)':s.stock<30?'var(--yellow)':'var(--green)'}">${s.stock.toLocaleString()}</td>
-      <td style="font-family:var(--mono)">${s.sold ? s.sold.toLocaleString() : 0}</td>
-      <td><span class="badge ${st}">${stTxt}</span></td>
-    </tr>`;
-  }).join('');
-}
-
 function renderCustomers() {
-  const tbody = document.getElementById('customers-body');
-  if(!tbody) return;
-
-  const q = document.getElementById('cust-search').value.toLowerCase();
-  const filtered = CUSTOMERS.filter(c => !q || c.username.toLowerCase().includes(q));
-
-  tbody.innerHTML = filtered.map((c)=>`
+  document.getElementById('customers-body').innerHTML = CUSTOMERS.map((c, i) => `
     <tr>
-      <td style="color:var(--text3);font-family:var(--mono)">${c.id}</td>
-      <td><strong style="color:var(--blue)">${c.username}</strong></td>
-      <td style="color:var(--text3);font-size:11px">${c.email}</td>
-      <td><span style="color:var(--green);font-size:14px;font-family:var(--mono);font-weight:bold">${fmt(c.balance)}</span></td>
-      <td style="color:var(--text3);font-size:11px">${c.joined}</td>
-      <td>
-        <button class="btn-text" onclick="addFunds('${c.username}', ${c.balance})">💰 Cộng Tiền</button>
-      </td>
+      <td>${i+1}</td>
+      <td><b>${c.username}</b></td>
+      <td>${c.email}</td>
+      <td style="color:var(--green); font-weight:bold">${fmt(c.balance)}</td>
+      <td><button class="btn-text" onclick="addFunds('${c.username}', ${c.balance})">💰 Nạp tiền</button></td>
     </tr>`).join('');
 }
 
-// ==========================================
-// 4. HÀM CHỨC NĂNG ADMIN (CỘNG TIỀN & SỬA GIÁ)
-// ==========================================
-
-// CỘNG/TRỪ TIỀN CHO KHÁCH HÀNG
-async function addFunds(username, currentBalance) {
-    const input = prompt(`💰 QUẢN LÝ SỐ DƯ: [ ${username} ]\nSố dư hiện tại: ${currentBalance.toLocaleString('vi-VN')}đ\n\n👉 Nhập số tiền muốn CỘNG (Ví dụ: 50000)\n👉 Nhập số âm nếu muốn TRỪ (Ví dụ: -50000)`);
-    
-    if(input === null || input.trim() === '') return;
-
-    const amount = parseInt(input);
-    
-    if(!isNaN(amount)) {
-        const newBalance = currentBalance + amount;
-        try {
-            await db.collection("users").doc(username).update({ balance: newBalance });
-            if(amount >= 0) {
-                showToast(`✅ Đã CỘNG thành công ${amount.toLocaleString('vi-VN')}đ cho ${username}`, "success");
-            } else {
-                showToast(`✅ Đã TRỪ thành công ${Math.abs(amount).toLocaleString('vi-VN')}đ của ${username}`, "success");
-            }
-        } catch(e) {
-            showToast("❌ Lỗi khi cập nhật tiền: " + e.message, "danger");
-        }
-    } else {
-        showToast("⚠️ Vui lòng chỉ nhập số hợp lệ!", "warning");
-    }
+function renderInventory() {
+  document.getElementById('inventory-body').innerHTML = SERVICES.map(s => `
+    <tr>
+      <td>${s.icon} ${s.name}</td>
+      <td>${s.cat}</td>
+      <td>${s.stock}</td>
+      <td><span class="badge ${s.stock > 0 ? 'success' : 'danger'}">${s.stock > 0 ? 'Còn hàng' : 'Hết hàng'}</span></td>
+    </tr>`).join('');
 }
 
-// SỬA GIÁ SẢN PHẨM
+function renderDashboard() {
+  document.getElementById('top-services-grid').innerHTML = SERVICES.slice(0,3).map(s => `
+    <div class="service-card">
+      <div class="sc-icon">${s.icon}</div>
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-price">${fmt(s.price)}</div>
+    </div>`).join('');
+}
+
+// ADMIN ACTIONS
+async function addFunds(user, current) {
+  const val = prompt(`Cộng tiền cho ${user}. Số dư hiện tại: ${fmt(current)}\nNhập số tiền:`);
+  if (!val) return;
+  const amount = parseInt(val);
+  if (isNaN(amount)) return alert("Số tiền không hợp lệ");
+  await db.collection("users").doc(user).update({ balance: current + amount });
+  sendTg(`💰 *NẠP TIỀN THÀNH CÔNG*\n👤 Khách: ${user}\n💵 Số tiền: +${fmt(amount)}\n💎 Số dư mới: ${fmt(current + amount)}`);
+  showToast("Đã cộng tiền thành công", "success");
+}
+
 async function editServicePrice(id) {
-    const svc = SERVICES.find(s => s.id == id);
-    if(!svc) return;
-    
-    const newPriceStr = prompt(`💵 NHẬP GIÁ TIỀN MỚI CHO:\n[ ${svc.name} ]\n\n(Lưu ý: Chỉ nhập số liền nhau, ví dụ 50 ngàn thì gõ: 50000)`, svc.price);
-    
-    if(newPriceStr !== null && newPriceStr.trim() !== '') {
-        const newPrice = parseInt(newPriceStr.replace(/\D/g, ''));
-        if(!isNaN(newPrice)) {
-            try {
-                await db.collection("services").doc(id.toString()).update({ price: newPrice });
-                showToast(`✅ Đã cập nhật giá thành công: ${newPrice.toLocaleString('vi-VN')}đ`, "success");
-            } catch(e) {
-                showToast("❌ Lỗi khi cập nhật giá: " + e.message, "danger");
-            }
-        } else {
-            showToast("⚠️ Vui lòng chỉ nhập số hợp lệ!", "warning");
-        }
-    }
+  const s = SERVICES.find(x => x.id == id);
+  const val = prompt(`Sửa giá cho: ${s.name}\nGiá cũ: ${fmt(s.price)}\nGiá mới:`, s.price);
+  if (!val) return;
+  await db.collection("services").doc(id.toString()).update({ price: parseInt(val) });
+  showToast("Đã cập nhật giá mới", "success");
 }
 
+// TELEGRAM LOGIC
+function saveTgConfig() {
+  const token = document.getElementById('tg-token').value;
+  const id = document.getElementById('tg-chatid').value;
+  localStorage.setItem('tg_token', token);
+  localStorage.setItem('tg_chatid', id);
+  showToast("Đã lưu cấu hình Telegram", "success");
+  updateTgUI();
+}
+
+function updateTgUI() {
+  const bar = document.getElementById('tg-status-bar');
+  const token = localStorage.getItem('tg_token');
+  if(token) { bar.className = 'tg-status connected'; bar.textContent = '✅ Đã cấu hình Telegram'; }
+}
+
+async function sendTg(text) {
+  const token = localStorage.getItem('tg_token');
+  const id = localStorage.getItem('tg_chatid');
+  if(!token || !id) return;
+  fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${id}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
+}
+
+function testTgBot() {
+  sendTg("🔔 *Thông báo Test:* Bot của bạn đã kết nối thành công với trang Admin!");
+  showToast("Đã gửi tin nhắn test", "info");
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.opacity = 1; t.style.transform = 'translateY(0)';
+  setTimeout(() => { t.style.opacity = 0; t.style.transform = 'translateY(20px)'; }, 3000);
+}
+
+window.onload = updateTgUI;
 </script>
 </body>
 </html>
