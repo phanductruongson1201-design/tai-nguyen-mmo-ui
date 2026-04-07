@@ -6,15 +6,13 @@
 <title>TàiNguyênMMO - Chợ Tài Khoản & Tool Marketing</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
-
-<script src="services.js"></script>
 
 <style>
   :root {
     --red: #e8192c;
-    /* Giao diện Sáng (Light Theme) */
     --dark: #f0f2f5;       
     --dark2: #ffffff;      
     --dark3: #e4e6eb;      
@@ -235,7 +233,7 @@
 <div class="products-section">
   <div class="products-header">
     <span class="products-title" id="display-title">Tất cả sản phẩm</span>
-    <span class="products-count" id="count">Đang tải...</span>
+    <span class="products-count" id="count">Đang tải dữ liệu từ Đám mây...</span>
   </div>
   
   <div class="table-responsive">
@@ -318,29 +316,8 @@
 </div>
 
 <script>
-// =============================================
-// 1. LẤY DỮ LIỆU TỪ FILE services.js
-// =============================================
-const products = typeof SERVICES !== 'undefined' ? SERVICES : [];
-
-// =============================================
-// 2. TỰ ĐỘNG TẠO DANH MỤC DỰA VÀO DỮ LIỆU
-// =============================================
-const categoriesDiv = document.getElementById("categories");
-const uniqueCats = [...new Set(products.map(p => p.cat))]; 
-
-const catMap = {};
-let catHtml = `<button class="cat-btn active" data-cat="all"><span class="icon icon-cart" style="background:transparent; color:var(--blue); font-size:18px;">🛒</span> TẤT CẢ SẢN PHẨM</button>`;
-
-uniqueCats.forEach(catName => {
-  const firstProd = products.find(p => p.cat === catName);
-  const icon = firstProd ? firstProd.icon : "📦";
-  
-  catMap[catName] = { name: catName, icon: icon };
-  catHtml += `<button class="cat-btn" data-cat="${catName}"><span class="icon" style="background:var(--blue);color:#fff">${icon}</span> ${catName}</button>`;
-});
-
-categoriesDiv.innerHTML = catHtml;
+let products = [];
+let catMap = {};
 
 /* =========================================
    KẾT NỐI FIREBASE & XỬ LÝ AUTH/USER
@@ -355,9 +332,39 @@ const firebaseConfig = {
   appId: "1:880959861709:web:dfe8ce2253a90b87b10a84"
 };
 
-// Khởi tạo App và Firestore
 if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 const db = firebase.firestore();
+
+// =============================================
+// LẮNG NGHE DỮ LIỆU TỪ FIREBASE TRỰC TIẾP
+// =============================================
+db.collection("services").onSnapshot((snapshot) => {
+    products = [];
+    snapshot.forEach((doc) => {
+        products.push(doc.data());
+    });
+    
+    // Tự động tạo danh mục từ dữ liệu tải về
+    const categoriesDiv = document.getElementById("categories");
+    const uniqueCats = [...new Set(products.map(p => p.cat))]; 
+    
+    catMap = {};
+    let catHtml = `<button class="cat-btn active" data-cat="all"><span class="icon icon-cart" style="background:transparent; color:var(--blue); font-size:18px;">🛒</span> TẤT CẢ SẢN PHẨM</button>`;
+    
+    uniqueCats.forEach(catName => {
+      const firstProd = products.find(p => p.cat === catName);
+      const icon = firstProd ? firstProd.icon : "📦";
+      
+      catMap[catName] = { name: catName, icon: icon };
+      catHtml += `<button class="cat-btn" data-cat="${catName}"><span class="icon" style="background:var(--blue);color:#fff">${icon}</span> ${catName}</button>`;
+    });
+    
+    categoriesDiv.innerHTML = catHtml;
+    
+    // In danh sách sản phẩm ra màn hình
+    renderProducts("all", "");
+});
+
 
 function sendTelegramMsg(message) {
   const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; 
@@ -609,6 +616,13 @@ function renderProducts(catFilter, searchQuery = "") {
         <div class="cat-products-list">
           ${catProducts.map(p => {
             const randomSold = (p.id * 7 + 15) % 800 + 10;
+            let priceNumber = 0;
+            if (typeof p.price === 'string') {
+                priceNumber = parseInt(p.price.replace(/\D/g, '')) || 0;
+            } else {
+                priceNumber = p.price || 0;
+            }
+            
             return `
             <div class="grid-row product-row">
               <div class="col-info">
@@ -621,7 +635,7 @@ function renderProducts(catFilter, searchQuery = "") {
               <div class="col-preview"></div>
               <div class="col-stock"><div class="stat-box stock"><span>Còn lại:</span><strong>${p.stock.toLocaleString('vi-VN')}</strong></div></div>
               <div class="col-sold"><div class="stat-box sold"><span>Đã bán:</span><strong>${p.sold ? p.sold.toLocaleString('vi-VN') : randomSold}</strong></div></div>
-              <div class="col-price"><div class="stat-box price"><span class="icon-money">💵</span><strong>${p.price.toLocaleString('vi-VN')}đ</strong></div></div>
+              <div class="col-price"><div class="stat-box price"><span class="icon-money">💵</span><strong>${priceNumber.toLocaleString('vi-VN')}đ</strong></div></div>
               <div class="col-action">
                 <button class="btn-buy" onclick="openModal(${p.id})">
                   <span style="font-size:14px">🛒 MUA</span>
@@ -637,16 +651,6 @@ function renderProducts(catFilter, searchQuery = "") {
   grid.innerHTML = totalCount === 0 ? `<div style="text-align:center;padding:48px;color:var(--text-muted)">Không tìm thấy sản phẩm phù hợp</div>` : html;
   countDisplay.textContent = `${totalCount} sản phẩm`;
 }
-
-// Event Lọc Category
-document.querySelectorAll('.cat-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelector('.search-bar input').value = '';
-    renderProducts(btn.dataset.cat, "");
-  });
-});
 
 // Gắn sự kiện động cho các nút danh mục mới tạo
 document.getElementById('categories').addEventListener('click', function(e) {
@@ -677,8 +681,15 @@ async function openModal(id) {
   }
   
   currentProduct = products.find(p => p.id === id);
+  let priceNumber = 0;
+  if (typeof currentProduct.price === 'string') {
+      priceNumber = parseInt(currentProduct.price.replace(/\D/g, '')) || 0;
+  } else {
+      priceNumber = currentProduct.price || 0;
+  }
+  
   document.getElementById("modal-name").textContent = currentProduct.name;
-  document.getElementById("modal-price").textContent = currentProduct.price.toLocaleString('vi-VN') + "đ";
+  document.getElementById("modal-price").textContent = priceNumber.toLocaleString('vi-VN') + "đ";
   document.getElementById("modal-desc").textContent = currentProduct.desc || '';
   document.getElementById("modal-qty").value = 1;
   openAuthModal('buy');
@@ -691,9 +702,9 @@ async function handleBuy() {
   // Tính tổng tiền an toàn (hỗ trợ cả giá dạng số và giá dạng chuỗi "567.890đ")
   let priceNumber = 0;
   if(typeof currentProduct.price === 'string') {
-    priceNumber = parseInt(currentProduct.price.replace(/\D/g, ''));
+    priceNumber = parseInt(currentProduct.price.replace(/\D/g, '')) || 0;
   } else {
-    priceNumber = currentProduct.price;
+    priceNumber = currentProduct.price || 0;
   }
   
   const totalPrice = priceNumber * qty;
@@ -721,10 +732,7 @@ async function handleBuy() {
 
 // Khởi tạo giao diện
 updateHeaderUI();
-// Đợi xíu để JS load DOM rồi chạy render
-setTimeout(() => {
-    renderProducts("all", "");
-}, 100);
+
 </script>
 </body>
 </html>
