@@ -6,35 +6,73 @@
 <title>TàiNguyênMMO - Chợ Tài Khoản & Tool Marketing</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+<script src="services.js"></script>
+
 <style>
   :root {
     --red: #e8192c;
-    --dark: #f0f2f5;
-    --dark2: #ffffff;
-    --dark3: #e4e6eb;
-    --border: #ced0d4;
-    --text: #050505;
-    --text-muted: #65676b;
-    --accent: #ea580c;
+    --dark: #f0f2f5;       
+    --dark2: #ffffff;      
+    --dark3: #e4e6eb;      
+    --border: #ced0d4;     
+    --text: #050505;       
+    --text-muted: #65676b; 
+    --accent: #ea580c;     
     --green: #22c55e;
     --blue: #3b82f6;
     --blue-dark: #1e293b;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--dark); color: var(--text); font-family: "Be Vietnam Pro", sans-serif; font-size: 13px; min-height: 100vh; }
+
+  body {
+    background: var(--dark); 
+    color: var(--text); 
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 13px; 
+    min-height: 100vh;
+  }
 
   /* HEADER */
-  .header { background: var(--dark2); border-bottom: 1px solid var(--border); padding: 0 16px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
+  .header {
+    background: var(--dark2); 
+    border-bottom: 1px solid var(--border); 
+    padding: 0 16px;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    height: 56px;
+    position: sticky; 
+    top: 0; 
+    z-index: 100;
+  }
   .header-left { display: flex; align-items: center; gap: 12px; }
   .menu-btn { background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; display: flex; flex-direction: column; gap: 4px; }
   .menu-btn span { display: block; width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
-  .wallet-btn { background: var(--dark3); border: 1px solid var(--border); color: var(--text); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+  .wallet-btn {
+    background: var(--dark3); 
+    border: 1px solid var(--border); 
+    color: var(--text);
+    padding: 7px 14px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-family: inherit;
+    font-size: 13px; 
+    font-weight: 600; 
+    display: flex; 
+    align-items: center; 
+    gap: 6px; 
+    transition: 0.2s;
+  }
   .wallet-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
   .wallet-btn.danger { background: var(--red); color: #fff; border-color: var(--red); padding: 7px 10px; }
   .wallet-btn::before { content: "💳"; font-size: 14px; }
   .wallet-btn.no-icon::before { content: none; }
+  
   .header-right { display: flex; align-items: center; gap: 12px; }
   .theme-toggle { background: var(--dark3); border: 1px solid var(--border); border-radius: 20px; padding: 4px; display: flex; gap: 2px; }
   .theme-btn { background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 14px; font-size: 14px; transition: background 0.2s; }
@@ -45,66 +83,99 @@
   .username { font-weight: 600; font-size: 13px; }
 
   /* BANNERS */
-  .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59,130,246,0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
-  .warning-bar { background: var(--red); padding: 10px 16px; text-align: center; font-weight: 700; font-size: 13px; color: #fff; text-transform: uppercase; }
+  .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59, 130, 246, 0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
+  .warning-bar { background: var(--red); padding: 10px 16px; text-align: center; font-weight: 700; font-size: 13px; letter-spacing: 0.3px; color: #fff; text-transform: uppercase; }
 
-  /* CATEGORIES */
-  .categories { padding: 20px 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; max-height: 380px; overflow-y: auto; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+  /* LƯU Ý SECTION */
+  .luu-y-section { margin: 12px 16px; border: 2px solid #3b5bdb; border-radius: 10px; padding: 20px; background: rgba(59, 91, 219, 0.04); }
+  .luu-y-title { text-align: center; font-size: 22px; font-weight: 800; color: #e8192c; letter-spacing: 2px; margin-bottom: 16px; font-style: italic; }
+  .luu-y-boxes { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+  .luu-y-box { border: 1px solid #3b5bdb; border-radius: 6px; padding: 10px 14px; font-size: 13px; font-weight: 600; color: #e8192c; text-align: center; line-height: 1.5; background: rgba(232, 25, 44, 0.04); }
+  .luu-y-list { margin-bottom: 14px; display: flex; flex-direction: column; gap: 7px; }
+  .luu-y-item { font-size: 13px; line-height: 1.6; color: var(--text); }
+  .luu-y-item.red { color: #e8192c; font-weight: 600; }
+  .red-text { color: #e8192c; }
+  .luu-y-check-list { border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .check-item { font-size: 12.5px; line-height: 1.6; color: var(--text-muted); }
+  .luu-y-link { color: #e8192c; font-weight: 700; text-decoration: none; }
+  .luu-y-link:hover { text-decoration: underline; }
+
+  /* CATEGORY GRID */
+  .categories {
+    padding: 20px 16px; 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px; 
+    max-height: 380px; 
+    overflow-y: auto; 
+    border-bottom: 1px solid var(--border); 
+    margin-bottom: 8px;
+  }
   .categories::-webkit-scrollbar { width: 5px; }
   .categories::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
-  .cat-btn { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px; text-align: left; transition: border-color 0.2s, background 0.2s, transform 0.1s; letter-spacing: 0.2px; text-transform: uppercase; }
+  
+  .cat-btn {
+    background: var(--dark3); 
+    border: 1px solid var(--border); 
+    border-radius: 8px;
+    padding: 12px 16px; 
+    cursor: pointer; 
+    font-family: inherit; 
+    font-size: 12.5px;
+    font-weight: 600; 
+    color: var(--text); 
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    text-align: left; 
+    transition: border-color 0.2s, background 0.2s, transform 0.1s;
+    letter-spacing: 0.2px; 
+    text-transform: uppercase;
+  }
   .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
   .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
   .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
-  .icon-cart { background: transparent; color: var(--blue) !important; font-size: 18px !important; }
-  .icon-fb { background: #1877f2; }
-  .icon-page { background: #f97316; }
-  .icon-bm { background: #6366f1; }
-  .icon-ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-  .icon-via { background: #dc2626; }
-  .icon-902 { background: #059669; }
-  .icon-proxy { background: #0369a1; }
-  .icon-tool { background: #7c3aed; }
-  .icon-gpt { background: #10b981; }
-  .icon-cap { background: #ef4444; }
-  .icon-gem { background: #3b82f6; }
-  .icon-ms { background: #0078d4; }
-  .icon-canva { background: #00c4cc; }
-  .icon-flag { background: transparent; font-size: 18px !important; color: initial !important; }
 
-  /* SEARCH */
+  /* SEARCH BAR */
   .search-wrap { padding: 12px 16px; }
   .search-bar { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
   .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
   .search-bar input::placeholder { color: var(--text-muted); }
 
-  /* TABLE LAYOUT */
+  /* BẢNG SẢN PHẨM MỚI */
   .products-section { padding: 0 16px 16px; }
   .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
-  .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px; }
-  .products-title { font-weight: 800; font-size: 16px; text-transform: uppercase; }
+  .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
+  .products-title { font-weight: 800; font-size: 16px; text-transform: uppercase; color: var(--text); }
   .products-count { color: var(--text-muted); font-size: 12px; }
+
   .table-responsive { width: 100%; overflow-x: auto; margin-bottom: 24px; border: 1px solid var(--border); background: var(--dark2); }
   .table-responsive::-webkit-scrollbar { height: 6px; }
+  .table-responsive::-webkit-scrollbar-track { background: var(--dark); }
   .table-responsive::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
   .category-group { min-width: 900px; }
   .grid-row { display: grid; grid-template-columns: minmax(350px, 1fr) 90px 100px 100px 120px 120px; align-items: center; }
+
   .cat-header-row { background: var(--blue-dark); color: #fff; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--blue-dark); }
   .cat-header-row > div { padding: 14px 12px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
   .cat-header-row > div:last-child { border-right: none; }
   .cat-header-info { display: flex; align-items: center; gap: 10px; text-align: left !important; text-transform: uppercase; }
   .cat-header-icon { background: rgba(255,255,255,0.1); width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+
   .product-row { background: var(--dark2); border-bottom: 1px solid var(--border); transition: background 0.2s; }
   .product-row:hover { background: #f8fafc; }
   .product-row:last-child { border-bottom: none; }
-  .product-row > div { padding: 16px 12px; text-align: center; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  .product-row > div { padding: 16px 12px; text-align: center; border-right: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
   .product-row > div:last-child { border-right: none; }
+
   .col-info { flex-direction: row !important; justify-content: flex-start !important; text-align: left !important; gap: 16px; }
   .prod-icon-wrap { width: 40px; height: 40px; border-radius: 8px; background: #eef2ff; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
   .prod-details { flex: 1; }
   .prod-name { color: var(--blue); font-weight: 700; font-size: 13px; margin-bottom: 6px; line-height: 1.4; text-transform: uppercase; cursor: pointer; }
   .prod-name:hover { text-decoration: underline; }
   .prod-desc { color: var(--text); font-size: 11.5px; line-height: 1.5; }
+
   .stat-box { border: 1px solid var(--border); border-radius: 4px; padding: 6px 0; width: 100%; background: #fff; font-size: 12px; line-height: 1.4; }
   .stat-box.stock { border-color: #0ea5e9; }
   .stat-box.stock span { color: var(--text-muted); }
@@ -113,42 +184,37 @@
   .stat-box.sold span { color: var(--text-muted); }
   .stat-box.sold strong { color: var(--text); display: block; font-size: 13px; }
   .stat-box.price { border-color: var(--red); color: var(--red); padding: 8px 0; }
-  .stat-box.price strong { display: block; font-size: 14px; font-weight: 800; margin-top: 2px; }
+  .stat-box.price strong { display: block; font-size: 14px; font-weight: 800; margin-top: 2px;}
+
   .btn-buy { background: #4f46e5; color: #fff; border: none; border-radius: 4px; width: 100%; padding: 10px 0; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: opacity 0.2s, background 0.2s; }
-  .btn-buy:hover { background: #4338ca; }
+  .btn-buy:hover { background: #4338ca; opacity: 0.9; }
 
   /* MODALS */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 200; display: none; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
   .modal { background: var(--dark2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; max-width: 400px; width: 90%; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
   .modal-title { font-weight: 800; font-size: 18px; margin-bottom: 16px; color: var(--text); text-align: center; text-transform: uppercase; }
+  
   .auth-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 12px 14px; border-radius: 8px; width: 100%; margin-bottom: 12px; outline: none; }
   .auth-input:focus { border-color: var(--blue); }
+  
   .auth-btn { width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s; margin-top: 8px; }
   .auth-btn:hover { background: #2563eb; }
+
   .modal-price { color: var(--accent); font-size: 22px; font-weight: 800; margin-bottom: 12px; }
   .modal-desc { color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
   .modal-qty { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; color: var(--text); }
   .modal-qty label { font-size: 13px; font-weight: 600; }
   .qty-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 6px 12px; border-radius: 6px; width: 80px; }
-  .modal-buy { width: 100%; padding: 12px; background: var(--red); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; }
+  
+  .modal-buy { width: 100%; padding: 12px; background: var(--red); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: opacity 0.2s; }
   .modal-buy:hover { opacity: 0.88; }
+  
   .modal-close { position: absolute; top: 14px; right: 14px; background: var(--dark3); border: 1px solid var(--border); color: var(--text); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
 
-  /* LUU Y */
-  .luu-y-section { margin: 12px 16px; border: 2px solid #3b5bdb; border-radius: 10px; padding: 20px; background: rgba(59,91,219,0.04); }
-  .luu-y-title { text-align: center; font-size: 22px; font-weight: 800; color: #e8192c; letter-spacing: 2px; margin-bottom: 16px; font-style: italic; }
-  .luu-y-boxes { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
-  .luu-y-box { border: 1px solid #3b5bdb; border-radius: 6px; padding: 10px 14px; font-size: 13px; font-weight: 600; color: #e8192c; text-align: center; line-height: 1.5; background: rgba(232,25,44,0.04); }
-  .luu-y-list { margin-bottom: 14px; display: flex; flex-direction: column; gap: 7px; }
-  .luu-y-item { font-size: 13px; line-height: 1.6; }
-  .luu-y-item.red { color: #e8192c; font-weight: 600; }
-  .red-text { color: #e8192c; }
-  .luu-y-check-list { border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 8px; }
-  .check-item { font-size: 12.5px; line-height: 1.6; color: var(--text-muted); }
-  .luu-y-link { color: #e8192c; font-weight: 700; text-decoration: none; }
   .support-float { position: fixed; bottom: 20px; right: 20px; background: #e8192c; color: #fff; border: none; border-radius: 24px; padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(232,25,44,0.4); z-index: 150; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
+  
   .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
   .footer a { color: var(--blue); text-decoration: none; }
 </style>
@@ -158,210 +224,56 @@
 <header class="header">
   <div class="header-left">
     <button class="menu-btn"><span></span><span></span><span></span></button>
-    <button class="wallet-btn" id="wallet-display" style="display:none;">Ví: <span id="user-balance">0</span>đ</button>
+    <button class="wallet-btn" id="wallet-display" style="display: none;">Ví: <span id="user-balance">0</span>đ</button>
   </div>
   <div class="header-right" id="auth-section"></div>
 </header>
 
 <div class="notice-banner">⚠️ Mọi sản phẩm sau khi mua không hoàn trả. Khách hàng cần đọc kỹ mô tả trước khi mua. Chúng tôi không chịu bất cứ trách nhiệm nào về vi phạm pháp luật.</div>
-<div class="warning-bar">⚠️ OẤN SAU KHI MUA KHÁCH HÀNG TỰ CHỊU TRÁCH NHIỆM! "KHÔNG BAO BACK"</div>
+<div class="warning-bar">⚠️ Các tài khoản được bán trên trang web chỉ được sử dụng cho mục đích quảng cáo và kinh doanh hợp pháp theo quy định của pháp luật nước CHXHCN Việt Nam.</div>
 
 <div class="luu-y-section">
   <div class="luu-y-title">⚠️ LƯU Ý ⚠️</div>
   <div class="luu-y-boxes">
     <div class="luu-y-box">Các tài khoản được bán trên trang web chỉ được sử dụng cho mục đích quảng cáo và kinh doanh hợp pháp theo quy định của pháp luật nước CHXHCN Việt Nam.</div>
     <div class="luu-y-box">Người mua có trách nhiệm tuân thủ pháp luật tại Việt Nam, điều khoản sử dụng của nền tảng và tự chịu trách nhiệm về việc sử dụng các tài khoản này.</div>
-    <div class="luu-y-box">Chúng tôi không chịu trách nhiệm đối với bất kỳ hành vi vi phạm pháp luật nào liên quan đến việc sử dụng các tài khoản được tạo ra từ trang web này.</div>
+    <div class="luu-y-box">Chúng tôi không chịu trách nhiệm đối với bất kỳ hành vi vi phạm pháp luật nào liên quan đến việc sử dụng các tài khoản được tạo ra từ trang web này. 🌟 🌟</div>
   </div>
   <div class="luu-y-list">
     <p class="luu-y-item">- DỮ LIỆU ĐƠN HÀNG SHOP TỰ ĐỘNG XÓA SAU 5 - 7 NGÀY ĐỂ NHẸ SERVER.</p>
-    <p class="luu-y-item red">- ANH EM VUI LÒNG ĐỔI THÔNG TIN MẬT KHẨU VÀ ĐÁ THIẾT BỊ LẠ RA KHỎI TÀI KHOẢN!</p>
+    <p class="luu-y-item red">- ANH EM VUI LÒNG ĐỔI THÔNG TIN MẬT KHẨU VÀ ĐÁ THIẾT BỊ LẠ RA KHỎI TÀI KHOẢN !</p>
     <p class="luu-y-item red">- KHÁCH SAU KHI MUA PHẢI LƯU VỀ MÁY. SHOP KHÔNG LƯU DỮ LIỆU CỦA KHÁCH.</p>
-    <p class="luu-y-item">- Tất cả tài nguyên chỉ phục vụ mục đích <strong>Quảng cáo, Marketing Facebook</strong>.</p>
-    <p class="luu-y-item red">- LƯU Ý: KHÁCH LẤY ĐỦ DÙNG HẾT LẤY TIẾP, SHOP NGÂM RỒI NÊN KHÔNG BẢO HÀNH NGÂM. CHỈ HỖ TRỢ BẢO HÀNH ĐƠN HÀNG TRONG 24H.</p>
+    <p class="luu-y-item red">- SHOP CÓ BẬT KẾT NỐI CHO CÁC SHOP ĐẤU API - CÁC SHOP CÓ THỂ KẾT NỐI API - CẦN HỖ TRỢ LIÊN ZALO <strong>0935.748.199</strong> 🌟 🌟</p>
+    <p class="luu-y-item">- Tất cả tài nguyên trên website chỉ phục vụ với mục đích <strong>Quảng cáo, Marketing Facebook</strong>.</p>
+    <p class="luu-y-item">- Tất cả hành vi sử dụng vi phạm nào trái pháp luật Việt Nam, chúng tôi đều <strong class="red-text">không chịu bất cứ trách nhiệm nào</strong>.</p>
+    <p class="luu-y-item">- Khách hàng mua tài khoản về cần thay đổi mật khẩu <strong>tài khoản Facebook, tài khoản email liên kết</strong>. 🌟</p>
+    <p class="luu-y-item red">- Không được đổi mail hoặc lấy lại mật khẩu thông qua email vì sẽ làm mất tính năng checkpoint về mail.</p>
+    <p class="luu-y-item">- Chúng tôi sẽ <strong class="red-text">không chịu trách nhiệm nào</strong> nếu các bạn không thay đổi thông tin tài khoản dẫn tới việc mất tài khoản.</p>
+    <p class="luu-y-item red">- LƯU Ý: KHÁCH LẤY ĐỦ DÙNG HẾT LẤY TIẾP, SHOP NGÂM RỒI NÊN KHÔNG BẢO HÀNH NGÂM CHỈ HỖ TRỢ BẢO HÀNH ĐƠN HÀNG TRONG 24H.</p>
   </div>
   <div class="luu-y-check-list">
-    <p class="check-item">✅ Clone via dưới 1.000đ chỉ thích hợp chạy tool vì live time ngắn, không nên mua dùng hay ngâm.</p>
-    <p class="check-item">✅ Không bảo hành trường hợp acc Facebook dính WhatsApp — nên mua loại có 2FA để xác thực khi login.</p>
-    <p class="check-item">✅ NICK FB MỚI KHÔNG CHO BẬT 2FA, NGÂM SẼ KHÔNG LOGIN BẰNG PASS ĐƯỢC — VUI LÒNG DÙNG COOKIE.</p>
+    <p class="check-item">✅ Lưu đối với những clone via dưới 1.000đ, hàng VER chỉ thích hợp chạy tool vì chỉ live time ngắn không nên mua dùng hay ngâm.</p>
+    <p class="check-item">✅ Không bảo hành trường hợp acc Facebook dính WhatsApp anh em nên mua loại có 2FA để xác thực khi login.</p>
+    <p class="check-item">✅ NICK FB MỚI KHÔNG CHO BẬT 2FA, CHO NÊN NGÂM SẼ KHÔNG LOGIN BẰNG PASS ĐƯỢC VUI LÒNG DÙNG COOKIE.</p>
     <p class="check-item">✅ <strong>ĐIỀU KHOẢN:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
     <p class="check-item">✅ <strong>VIDEO HƯỚNG DẪN ĐĂNG NHẬP NICK CLONE:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
     <p class="check-item">✅ <strong>VIDEO HƯỚNG DẪN ĐĂNG NHẬP NICK CLONE BẰNG COOKIE:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
-    <p class="check-item">✅ Shop không hỗ trợ hoàn tiền khi đã nạp vào web dưới bất kì hình thức nào.</p>
+    <p class="check-item">✅ Khi bán ra bạn login <strong>Thành Công</strong> Shop sẽ không chịu trách nhiệm khi bạn sử dụng tài khoản với các mục đích riêng hoặc bị khóa tài khoản.</p>
+    <p class="check-item">✅ <strong>Shop không hỗ trợ hoàn tiền khi đã nạp vào web dưới bất kì hình thức nào</strong> nên anh em vui lòng nạp vừa đủ và test sản phẩm trước khi mua số lượng.</p>
+    <p class="check-item">✅ Không bảo hành mọi trường hợp mua về ngâm dẫn đến die, check live kèm ảnh và thời gian tại thời điểm check live sau khi mua hàng để một thời gian rồi check live die không hỗ trợ.</p>
+    <p class="check-item">✅ Lưu ý: anh em nên tìm hiểu về clone và mua số lượng ít trước khi mua nhiều — 1 thiết bị 1 ip login nhiều acc sẽ bị fb quét, acc mới login về mà đi spam hay thay đổi thông tin quá nhiều cũng sẽ bị quét dẫn đến khóa tài khoản.</p>
   </div>
 </div>
 
 <div class="search-wrap">
   <div class="search-bar">
-    <span>🔍</span>
+    <span class="search-icon">🔍</span>
     <input type="text" placeholder="Tìm kiếm sản phẩm...">
   </div>
 </div>
 
 <div class="categories" id="categories">
-  <button class="cat-btn active" data-cat="all"><span class="icon icon-cart">🛒</span> TẤT CẢ SẢN PHẨM</button>
-  <button class="cat-btn " data-cat="tich-xanh"><span class="icon icon-fb">✅</span> TÍCH XANH FACEBOOK</button>
-  <button class="cat-btn " data-cat="fanpage-reg"><span class="icon icon-page">📄</span> FANPAGE REG</button>
-  <button class="cat-btn " data-cat="page-khang"><span class="icon icon-page">🛡️</span> PAGE KHÁNG</button>
-  <button class="cat-btn " data-cat="page-scan-ngoai-co"><span class="icon icon-page">🌐</span> PAGE SCAN NGOẠI CỔ</button>
-  <button class="cat-btn " data-cat="page-luot-mua"><span class="icon icon-page">💫</span> PAGE LƯỢT MUA</button>
-  <button class="cat-btn " data-cat="page-can-vpcs"><span class="icon icon-page">📋</span> PAGE CẦN VPCS</button>
-  <button class="cat-btn " data-cat="page-scan-nhieu-follow"><span class="icon icon-page">👥</span> PAGE SCAN NGOẠI NHIỀU FOLLOW</button>
-  <button class="cat-btn " data-cat="page-reg-nhet"><span class="icon icon-page">📌</span> PAGE REG NHÉT VÀO D1 BM</button>
-  <button class="cat-btn " data-cat="page-livestream"><span class="icon icon-page">📹</span> PAGE LIVESTREAM ADS</button>
-  <button class="cat-btn " data-cat="page-bai-dang-follow"><span class="icon icon-page">📢</span> PAGE BÀI ĐĂNG VIỆT NHIỀU FOLLOW</button>
-  <button class="cat-btn " data-cat="page-ads"><span class="icon icon-page">🎯</span> PAGE CÁC LOẠI CHẠY ADS</button>
-  <button class="cat-btn " data-cat="bm-cam-page"><span class="icon icon-bm">📊</span> BM CẦM PAGE</button>
-  <button class="cat-btn " data-cat="bm-da-tao"><span class="icon icon-bm">💼</span> BM ĐÃ TẠO TKQC</button>
-  <button class="cat-btn " data-cat="bm-chua-tao"><span class="icon icon-bm">📁</span> BM CHƯA TẠO TKQC</button>
-  <button class="cat-btn " data-cat="tkbm"><span class="icon icon-bm">🤝</span> TKBM SHARE ĐỐI TÁC</button>
-  <button class="cat-btn " data-cat="bm-xmdn"><span class="icon icon-bm">✨</span> BM XMDN</button>
-  <button class="cat-btn " data-cat="bm-khang"><span class="icon icon-bm">🛡️</span> BM KHÁNG</button>
-  <button class="cat-btn " data-cat="bm-chay-qc"><span class="icon icon-bm">💰</span> BM CHẠY QUẢNG CÁO</button>
-  <button class="cat-btn " data-cat="bm-xmdn2"><span class="icon icon-bm">🏢</span> BM XMDN (XÁC MINH DOANH NGHIỆP)</button>
-  <button class="cat-btn " data-cat="bm-nam-tao"><span class="icon icon-bm">📅</span> BM NĂM TẠO 2016-2023</button>
-  <button class="cat-btn " data-cat="tkqc-ca-nhan"><span class="icon icon-bm">👤</span> TÀI KHOẢN QUẢNG CÁO CÁ NHÂN</button>
-  <button class="cat-btn " data-cat="bm-general"><span class="icon icon-bm">📦</span> BM</button>
-  <button class="cat-btn " data-cat="instagram"><span class="icon icon-ig">📸</span> INSTAGRAM</button>
-  <button class="cat-btn " data-cat="instagram-co"><span class="icon icon-ig">🖼️</span> INSTAGRAM CỔ</button>
-  <button class="cat-btn " data-cat="twitter"><span class="icon ">🐦</span> TWITTER</button>
-  <button class="cat-btn " data-cat="nhom-zalo"><span class="icon ">💬</span> NHÓM CHAT ZALO</button>
-  <button class="cat-btn " data-cat="profile-250"><span class="icon icon-via">💎</span> PROFILE 250$</button>
-  <button class="cat-btn " data-cat="profile-co-tkqc"><span class="icon icon-via">💰</span> PROFILE CÓ TKQC CỔ</button>
-  <button class="cat-btn " data-cat="profile-cam"><span class="icon icon-via">🔒</span> PROFILE CẦM TKQC 50$</button>
-  <button class="cat-btn " data-cat="profile-co-tkqc-bao-change"><span class="icon icon-via">🔑</span> PROFILE CÓ TKQC CỔ BAO CHANGE ALL</button>
-  <button class="cat-btn " data-cat="profile-bao-change-pass"><span class="icon icon-via">🔐</span> PROFILE BAO CHANGE PASS</button>
-  <button class="cat-btn " data-cat="profile-bao-set-camp"><span class="icon icon-via">⚙️</span> PROFILE BAO SET CAMP</button>
-  <button class="cat-btn " data-cat="profile-xin-tich-xanh"><span class="icon icon-fb">⭐</span> PROFILE XIN TÍCH XANH</button>
-  <button class="cat-btn " data-cat="profile-xin-tich"><span class="icon icon-fb">✨</span> PROFILE XIN TÍCH</button>
-  <button class="cat-btn " data-cat="profile-chuyen-ads"><span class="icon icon-page">🎯</span> PROFILE CHUYÊN ADS</button>
-  <button class="cat-btn " data-cat="profile-chat-support"><span class="icon ">💁</span> PROFILE CHAT SUPPORT</button>
-  <button class="cat-btn " data-cat="clone-viet"><span class="icon icon-flag">🇻🇳</span> CLONE VIỆT NUÔI BẠN BÈ VIỆT</button>
-  <button class="cat-btn " data-cat="clone-viet-new-2fa"><span class="icon icon-flag">🇻🇳</span> CLONE VIỆT NEW - CÓ 2FA</button>
-  <button class="cat-btn " data-cat="clone-viet-new-no2fa"><span class="icon icon-flag">🇻🇳</span> CLONE VIỆT NEW - NO 2FA</button>
-  <button class="cat-btn " data-cat="clone-viet-nuoi-2fa"><span class="icon icon-flag">🇻🇳</span> CLONE VIỆT NUÔI CÓ 2FA</button>
-  <button class="cat-btn " data-cat="clone-viet-usa-nhieu-bai"><span class="icon icon-flag">🇻🇳</span> CLONE VIỆT + USA NUÔI NHIỀU BÀI VIẾT</button>
-  <button class="cat-btn " data-cat="clone-spam"><span class="icon ">📤</span> CLONE SPAM</button>
-  <button class="cat-btn " data-cat="clone-usa"><span class="icon icon-flag">🇺🇸</span> CLONE USA</button>
-  <button class="cat-btn " data-cat="clone-ngoai-no2fa-v1"><span class="icon ">🌐</span> CLONE NGOẠI NO 2FA VER 1</button>
-  <button class="cat-btn " data-cat="clone-ngoai-no2fa-v2"><span class="icon ">🌐</span> CLONE NGOẠI NO 2FA VER 2</button>
-  <button class="cat-btn " data-cat="clone-ngoai-no2fa-v3"><span class="icon ">🌐</span> CLONE NGOẠI NO 2FA VER 3</button>
-  <button class="cat-btn " data-cat="clone-ngoai-no2fa-v4"><span class="icon ">🌐</span> CLONE NGOẠI NO 2FA VER 4</button>
-  <button class="cat-btn " data-cat="clone-ngoai-co2fa"><span class="icon ">🌐</span> CLONE NGOẠI CÓ 2FA</button>
-  <button class="cat-btn " data-cat="clone-ngoai-nuoi-co2fa"><span class="icon ">🌐</span> CLONE NGOẠI NUÔI - CÓ 2FA</button>
-  <button class="cat-btn " data-cat="clone-ngoai-nuoi-no2fa"><span class="icon ">🌐</span> CLONE NGOẠI NUÔI - NO 2FA</button>
-  <button class="cat-btn " data-cat="clone-khang-282"><span class="icon ">🛡️</span> CLONE KHÁNG 282</button>
-  <button class="cat-btn " data-cat="clone-qua-su-dung"><span class="icon ">♻️</span> CLONE QUA SỬ DỤNG</button>
-  <button class="cat-btn " data-cat="clone-cac-nuoc"><span class="icon ">🗺️</span> CLONE CÁC NƯỚC</button>
-  <button class="cat-btn " data-cat="clone-ngoai-ver-mail"><span class="icon ">📧</span> CLONE NGOẠI VER MAIL</button>
-  <button class="cat-btn " data-cat="clone-2024-nuoi-trust"><span class="icon ">🔋</span> CLONE 2024 NUÔI TRUST CHUYÊN SPAM</button>
-  <button class="cat-btn " data-cat="clone-instagram"><span class="icon icon-ig">📷</span> CLONE INSTAGRAM</button>
-  <button class="cat-btn " data-cat="clone-tiktok"><span class="icon ">🎵</span> CLONE TIKTOK</button>
-  <button class="cat-btn " data-cat="clone-chuan-ads"><span class="icon ">📣</span> CLONE CHUYÊN DÙNG ADS - REG BM</button>
-  <button class="cat-btn " data-cat="fakebook-seeding"><span class="icon icon-fb">🎭</span> FAKEBOOK CHUYÊN SEEDING SPAM NUÔI</button>
-  <button class="cat-btn " data-cat="acc-1000x"><span class="icon icon-fb">💯</span> ACC 1000X - TẠO PROFILE PHỤ+FAN PAGE</button>
-  <button class="cat-btn " data-cat="fb-vip-1000"><span class="icon icon-fb">👑</span> FACEBOOK VIP 1000XX</button>
-  <button class="cat-btn " data-cat="acc-host-co"><span class="icon ">🖥️</span> ACC HOST CỔ</button>
-  <button class="cat-btn " data-cat="acc-name-viet"><span class="icon icon-flag">🇻🇳</span> Acc Name Việt</button>
-  <button class="cat-btn " data-cat="acc-name-ngoai"><span class="icon ">🌐</span> Acc Name Ngoại</button>
-  <button class="cat-btn " data-cat="acc-name-usa-nhieu-bai"><span class="icon icon-flag">🇺🇸</span> ACC NAME USA NHIỀU BÀI VIẾT</button>
-  <button class="cat-btn " data-cat="acc-usa"><span class="icon icon-flag">🇺🇸</span> Acc USA</button>
-  <button class="cat-btn " data-cat="acc-ngoai"><span class="icon ">🌍</span> Acc Ngoại</button>
-  <button class="cat-btn " data-cat="acc-viet"><span class="icon icon-flag">🇻🇳</span> Acc Việt</button>
-  <button class="cat-btn " data-cat="acc-in-pk-bd"><span class="icon ">🌏</span> Acc Ấn Độ, Pakistan, Bangladet</button>
-  <button class="cat-btn " data-cat="profile-viet-new"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT NEW</button>
-  <button class="cat-btn " data-cat="profile-viet-co-2fa"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT CỔ - CÓ 2FA</button>
-  <button class="cat-btn " data-cat="profile-viet-sieu-co"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT SIÊU CỔ</button>
-  <button class="cat-btn " data-cat="profile-viet-xmdt"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT XMDT</button>
-  <button class="cat-btn " data-cat="profile-viet-loc-nam"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT LỌC NAM</button>
-  <button class="cat-btn " data-cat="profile-viet-loc-nu"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT LỌC NỮ</button>
-  <button class="cat-btn " data-cat="profile-viet-nhieu-bai"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT NHIỀU BÀI ĐĂNG</button>
-  <button class="cat-btn " data-cat="profile-viet-spam"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT SPAM</button>
-  <button class="cat-btn " data-cat="profile-viet-co-no2fa"><span class="icon icon-flag">🇻🇳</span> PROFILE VIỆT CỔ NO 2FA</button>
-  <button class="cat-btn " data-cat="profile-902-new"><span class="icon icon-902">9️⃣</span> PROFILE 902 NEW</button>
-  <button class="cat-btn " data-cat="profile-902-co"><span class="icon icon-902">🔢</span> PROFILE 902 CỔ</button>
-  <button class="cat-btn " data-cat="profile-902"><span class="icon icon-902">🔟</span> PROFILE 902</button>
-  <button class="cat-btn " data-cat="profile-ngoai-xmdt"><span class="icon ">🌐</span> PROFILE NGOẠI XMDT</button>
-  <button class="cat-btn " data-cat="profile-ngoai-new-no2fa"><span class="icon ">🌐</span> PROFILE NGOẠI NEW NO 2FA</button>
-  <button class="cat-btn " data-cat="profile-ngoai-co-co2fa"><span class="icon ">🌐</span> PROFILE NGOẠI CỔ - CÓ 2FA</button>
-  <button class="cat-btn " data-cat="profile-ngoai-co-no2fa"><span class="icon ">🌐</span> PROFILE NGOẠI CỔ NO 2FA</button>
-  <button class="cat-btn " data-cat="profile-ngoai-new-co2fa"><span class="icon ">🌐</span> PROFILE NGOẠI NEW CÓ 2FA</button>
-  <button class="cat-btn " data-cat="profile-ngoai-spam"><span class="icon ">📤</span> PROFILE NGOẠI SPAM</button>
-  <button class="cat-btn " data-cat="profile-ngoai-nhieu-follow"><span class="icon ">👥</span> PROFILE NGOẠI NHIỀU FOLLOW</button>
-  <button class="cat-btn " data-cat="profile-ngoai-nhieu-ban"><span class="icon ">👫</span> PROFILE NGOẠI NHIỀU BẠN BÈ</button>
-  <button class="cat-btn " data-cat="profile-ngoai-1000-ban"><span class="icon ">👥</span> PROFILE NGOẠI 1000+ BẠN BÈ</button>
-  <button class="cat-btn " data-cat="profile-ngoai-nhieu-bai"><span class="icon ">📝</span> PROFILE NGOẠI NHIỀU BÀI ĐĂNG</button>
-  <button class="cat-btn " data-cat="profile-ngoai-1-hotmail"><span class="icon ">📧</span> PROFILE NGOẠI 1 HOTMAIL</button>
-  <button class="cat-btn " data-cat="profile-ngoai-co-fanpage"><span class="icon ">📄</span> PROFILE NGOẠI ĐÃ TẠO SẴN 1 FANPAGE</button>
-  <button class="cat-btn " data-cat="profile-random-quocgia"><span class="icon ">🎲</span> PROFILE RANDOM QUỐC GIA</button>
-  <button class="cat-btn " data-cat="profile-random-spam"><span class="icon ">🎲</span> PROFILE RANDOM QUỐC GIA SPAM</button>
-  <button class="cat-btn " data-cat="profile-chau-phi-random"><span class="icon ">🌍</span> PROFILE CHÂU PHI RANDOM</button>
-  <button class="cat-btn " data-cat="profile-nam-my"><span class="icon ">🌎</span> PROFILE NAM MỸ</button>
-  <button class="cat-btn " data-cat="profile-cac-nuoc"><span class="icon ">🗺️</span> PROFILE CÁC NƯỚC</button>
-  <button class="cat-btn " data-cat="profile-phi-new"><span class="icon icon-flag">🇵🇭</span> PROFILE PHI NEW</button>
-  <button class="cat-btn " data-cat="profile-phi-co"><span class="icon icon-flag">🇵🇭</span> PROFILE PHI CỔ</button>
-  <button class="cat-btn " data-cat="profile-phi-xmdt"><span class="icon icon-flag">🇵🇭</span> PROFILE PHI XMDT</button>
-  <button class="cat-btn " data-cat="profile-indo-new"><span class="icon icon-flag">🇮🇩</span> PROFILE INDO NEW</button>
-  <button class="cat-btn " data-cat="profile-indo-co"><span class="icon icon-flag">🇮🇩</span> PROFILE INDO CỔ</button>
-  <button class="cat-btn " data-cat="profile-indo-xmdt"><span class="icon icon-flag">🇮🇩</span> PROFILE INDO XMDT</button>
-  <button class="cat-btn " data-cat="profile-thai-new"><span class="icon icon-flag">🇹🇭</span> PROFILE THAILAND NEW</button>
-  <button class="cat-btn " data-cat="profile-thai-co"><span class="icon icon-flag">🇹🇭</span> PROFILE THAILAND CỔ</button>
-  <button class="cat-btn " data-cat="profile-brazil"><span class="icon icon-flag">🇧🇷</span> PROFILE BRAZIL</button>
-  <button class="cat-btn " data-cat="profile-bangladesh"><span class="icon icon-flag">🇧🇩</span> PROFILE BANGLADESH</button>
-  <button class="cat-btn " data-cat="profile-pakistan"><span class="icon icon-flag">🇵🇰</span> PROFILE PAKISTAN</button>
-  <button class="cat-btn " data-cat="profile-myanmar"><span class="icon icon-flag">🇲🇲</span> PROFILE MYANMAR</button>
-  <button class="cat-btn " data-cat="profile-canada"><span class="icon icon-flag">🇨🇦</span> PROFILE CANADA</button>
-  <button class="cat-btn " data-cat="profile-colombia"><span class="icon icon-flag">🇨🇴</span> PROFILE COLOMBIA</button>
-  <button class="cat-btn " data-cat="profile-india"><span class="icon icon-flag">🇮🇳</span> PROFILE INDIA</button>
-  <button class="cat-btn " data-cat="profile-germany"><span class="icon icon-flag">🇩🇪</span> PROFILE GERMANY</button>
-  <button class="cat-btn " data-cat="profile-italia"><span class="icon icon-flag">🇮🇹</span> PROFILE ITALIA</button>
-  <button class="cat-btn " data-cat="profile-egypt"><span class="icon icon-flag">🇪🇬</span> PROFILE EGYPT</button>
-  <button class="cat-btn " data-cat="profile-australia"><span class="icon icon-flag">🇦🇺</span> PROFILE AUSTRALIA</button>
-  <button class="cat-btn " data-cat="profile-uk"><span class="icon icon-flag">🇬🇧</span> PROFILE UK</button>
-  <button class="cat-btn " data-cat="profile-mexico"><span class="icon icon-flag">🇲🇽</span> PROFILE MEXICO</button>
-  <button class="cat-btn " data-cat="profile-malaysia"><span class="icon icon-flag">🇲🇾</span> PROFILE MALAYSIA</button>
-  <button class="cat-btn " data-cat="profile-eu"><span class="icon icon-flag">🇪🇺</span> PROFILE EU</button>
-  <button class="cat-btn " data-cat="profile-srilanka"><span class="icon icon-flag">🇱🇰</span> PROFILE SRILANKA</button>
-  <button class="cat-btn " data-cat="profile-nepal"><span class="icon icon-flag">🇳🇵</span> PROFILE NEPAL</button>
-  <button class="cat-btn " data-cat="profile-balan"><span class="icon icon-flag">🇵🇱</span> PROFILE BALAN</button>
-  <button class="cat-btn " data-cat="profile-guatemala"><span class="icon icon-flag">🇬🇹</span> PROFILE GUATEMALA</button>
-  <button class="cat-btn " data-cat="profile-iran"><span class="icon icon-flag">🇮🇷</span> PROFILE IRAN</button>
-  <button class="cat-btn " data-cat="profile-venezuela"><span class="icon icon-flag">🇻🇪</span> PROFILE VENEZUELA</button>
-  <button class="cat-btn " data-cat="profile-madagascar"><span class="icon icon-flag">🇲🇬</span> PROFILE MADAGASCAR</button>
-  <button class="cat-btn " data-cat="profile-usa-co"><span class="icon icon-flag">🇺🇸</span> PROFILE USA CỔ</button>
-  <button class="cat-btn " data-cat="tiktok-ngoai-live"><span class="icon ">🎵</span> TIKTOK NGOẠI MỞ SẴN LIVE - LIVESTUDIO</button>
-  <button class="cat-btn " data-cat="tiktok-viet"><span class="icon icon-flag">🎵</span> TIKTOK VIỆT NAM</button>
-  <button class="cat-btn " data-cat="tiktok-ngoai"><span class="icon ">🎵</span> TIKTOK NGOẠI</button>
-  <button class="cat-btn " data-cat="tkcn-tiktok-ads"><span class="icon ">📣</span> TKCN Tiktok Ads</button>
-  <button class="cat-btn " data-cat="bc3-tiktok"><span class="icon ">💳</span> BC3 - Phí nạp 0%</button>
-  <button class="cat-btn " data-cat="bc-tiktok-ads"><span class="icon ">📊</span> BC Tiktok Ads</button>
-  <button class="cat-btn " data-cat="tiktok-chi-tieu"><span class="icon ">💸</span> Tài Khoản Chi Tiêu</button>
-  <button class="cat-btn " data-cat="tiktok-thailand"><span class="icon icon-flag">🇹🇭</span> Tiktok Ads Thailand</button>
-  <button class="cat-btn " data-cat="tiktok-brazil"><span class="icon icon-flag">🇧🇷</span> Tiktok Ads Brazil</button>
-  <button class="cat-btn " data-cat="tiktok-us-uk"><span class="icon icon-flag">🇺🇸</span> Tiktok Ads US/UK</button>
-  <button class="cat-btn " data-cat="xu-tuong-tac"><span class="icon ">💠</span> XU TƯƠNG TÁC</button>
-  <button class="cat-btn " data-cat="gmail"><span class="icon ">📩</span> GMAIL</button>
-  <button class="cat-btn " data-cat="gmail-edu"><span class="icon ">🎓</span> GMAIL EDU</button>
-  <button class="cat-btn " data-cat="hotmail"><span class="icon ">📧</span> HOTMAIL</button>
-  <button class="cat-btn " data-cat="outlook"><span class="icon ">📮</span> OUTLOOK</button>
-  <button class="cat-btn " data-cat="cookie"><span class="icon ">🍪</span> COOKIE</button>
-  <button class="cat-btn " data-cat="chatgpt"><span class="icon icon-gpt">🤖</span> CHAT GPT</button>
-  <button class="cat-btn " data-cat="gemini"><span class="icon icon-gem">✨</span> GEMINI PRO</button>
-  <button class="cat-btn " data-cat="grok"><span class="icon ">🧠</span> GROK</button>
-  <button class="cat-btn " data-cat="veo3"><span class="icon ">🎬</span> VEO 3</button>
-  <button class="cat-btn " data-cat="kling"><span class="icon ">🎥</span> KLING</button>
-  <button class="cat-btn " data-cat="cong-cu-ai"><span class="icon ">🦾</span> CÔNG CỤ AI</button>
-  <button class="cat-btn " data-cat="capcut"><span class="icon icon-cap">✂️</span> CAPCUT</button>
-  <button class="cat-btn " data-cat="canva"><span class="icon icon-canva">🎨</span> CANVA PRO</button>
-  <button class="cat-btn " data-cat="adobe"><span class="icon ">🖌️</span> ADOBE</button>
-  <button class="cat-btn " data-cat="microsoft"><span class="icon icon-ms">🪟</span> MICROSOFT 365</button>
-  <button class="cat-btn " data-cat="hma"><span class="icon ">🔒</span> HMA</button>
-  <button class="cat-btn " data-cat="app-lam-dep"><span class="icon ">💅</span> APP LÀM ĐẸP</button>
-  <button class="cat-btn " data-cat="thiet-ke-sang-tao"><span class="icon ">🎭</span> THIẾT KẾ - SÁNG TẠO</button>
-  <button class="cat-btn " data-cat="ca-nhan-tien-ich"><span class="icon ">📱</span> CÁ NHÂN - TIỆN ÍCH</button>
-  <button class="cat-btn " data-cat="cong-cu"><span class="icon icon-tool">🔧</span> CÔNG CỤ HỖ TRỢ MARKETING</button>
-  <button class="cat-btn " data-cat="proxy"><span class="icon icon-proxy">🌍</span> PROXY V4 - V6 ĐA QUỐC GIA</button>
-</div>
+  </div>
 
 <div class="section-title">SẢN PHẨM NỔI BẬT</div>
 <div class="products-section">
@@ -369,6 +281,7 @@
     <span class="products-title" id="display-title">Tất cả sản phẩm</span>
     <span class="products-count" id="count">Đang tải...</span>
   </div>
+  
   <div class="table-responsive">
     <div id="products-grid"></div>
   </div>
@@ -378,16 +291,20 @@
   © 2025 TàiNguyênMMO &nbsp;|&nbsp; <a href="#">Điều khoản</a> &nbsp;|&nbsp; <a href="#">Liên hệ</a> &nbsp;|&nbsp; Hỗ trợ: <a href="#">Telegram</a>
 </div>
 
-<button class="support-float" onclick="alert('Liên hệ Zalo: 0795.922.922')">💬 LIÊN HỆ HỖ TRỢ</button>
+<button class="support-float" onclick="alert('Liên hệ Zalo: 0935.748.199')">
+  💬 LIÊN HỆ HỖ TRỢ
+</button>
 
-<!-- MODALS -->
 <div class="modal-overlay" id="buy-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeAuthModal('buy')">✕</button>
-    <div class="modal-title" id="modal-name" style="font-size:16px;text-transform:none;"></div>
+    <div class="modal-title" id="modal-name" style="font-size:16px; text-transform:none;"></div>
     <div class="modal-price" id="modal-price"></div>
     <div class="modal-desc" id="modal-desc"></div>
-    <div class="modal-qty"><label>Số lượng:</label><input class="qty-input" type="number" min="1" value="1" id="modal-qty"></div>
+    <div class="modal-qty">
+      <label>Số lượng:</label>
+      <input class="qty-input" type="number" min="1" value="1" id="modal-qty">
+    </div>
     <button class="modal-buy" onclick="handleBuy()">🛒 Xác nhận Mua</button>
   </div>
 </div>
@@ -398,9 +315,13 @@
     <div class="modal-title">ĐĂNG NHẬP</div>
     <input type="text" id="login-user" class="auth-input" placeholder="Tên đăng nhập">
     <input type="password" id="login-pass" class="auth-input" placeholder="Mật khẩu">
-    <div style="text-align:right;margin-bottom:12px;font-size:13px;"><a href="#" onclick="switchAuthModal('forgot')" style="color:var(--blue)">Quên mật khẩu?</a></div>
+    <div style="text-align: right; margin-bottom: 12px; margin-top: -6px; font-size: 13px;">
+      <a href="#" onclick="switchAuthModal('forgot')" style="color: var(--blue); text-decoration: none;">Quên mật khẩu?</a>
+    </div>
     <button class="auth-btn" onclick="submitLogin()">Đăng nhập</button>
-    <div style="text-align:center;margin-top:18px;font-size:13px;color:var(--text-muted);">Chưa có tài khoản? <a href="#" onclick="switchAuthModal('register')" style="color:var(--blue);font-weight:bold;">Đăng ký ngay</a></div>
+    <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+      Chưa có tài khoản? <a href="#" onclick="switchAuthModal('register')" style="color: var(--blue); font-weight: bold;">Đăng ký ngay</a>
+    </div>
   </div>
 </div>
 
@@ -409,11 +330,13 @@
     <button class="modal-close" onclick="closeAuthModal('register')">✕</button>
     <div class="modal-title">ĐĂNG KÝ TÀI KHOẢN</div>
     <input type="text" id="reg-user" class="auth-input" placeholder="Tên đăng nhập (viết liền không dấu)">
-    <input type="email" id="reg-email" class="auth-input" placeholder="Địa chỉ Email">
+    <input type="email" id="reg-email" class="auth-input" placeholder="Địa chỉ Email (Dùng để khôi phục mật khẩu)">
     <input type="password" id="reg-pass" class="auth-input" placeholder="Mật khẩu">
     <input type="password" id="reg-pass-confirm" class="auth-input" placeholder="Nhập lại mật khẩu">
     <button class="auth-btn" onclick="submitRegister()">Đăng ký</button>
-    <div style="text-align:center;margin-top:18px;font-size:13px;color:var(--text-muted);">Đã có tài khoản? <a href="#" onclick="switchAuthModal('login')" style="color:var(--blue);font-weight:bold;">Đăng nhập</a></div>
+    <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+      Đã có tài khoản? <a href="#" onclick="switchAuthModal('login')" style="color: var(--blue); font-weight: bold;">Đăng nhập</a>
+    </div>
   </div>
 </div>
 
@@ -422,43 +345,50 @@
     <button class="modal-close" onclick="closeAuthModal('forgot')">✕</button>
     <div class="modal-title">QUÊN MẬT KHẨU</div>
     <div id="forgot-step-1">
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; text-align: center;">Nhập tên đăng nhập để nhận mã khôi phục.</p>
       <input type="text" id="forgot-user" class="auth-input" placeholder="Tên đăng nhập">
       <button class="auth-btn" onclick="sendResetCode()">Nhận mã qua Email</button>
     </div>
-    <div id="forgot-step-2" style="display:none;">
+    <div id="forgot-step-2" style="display: none;">
+      <p style="font-size: 13px; color: var(--green); margin-bottom: 12px; text-align: center;">Mã xác thực 6 số đã được gửi đến email của bạn!</p>
       <input type="text" id="forgot-code" class="auth-input" placeholder="Nhập mã xác thực">
       <input type="password" id="forgot-new-pass" class="auth-input" placeholder="Mật khẩu mới">
       <button class="auth-btn" onclick="resetPassword()">Cập nhật mật khẩu</button>
     </div>
-    <div style="text-align:center;margin-top:18px;font-size:13px;color:var(--text-muted);">Nhớ mật khẩu? <a href="#" onclick="switchAuthModal('login')" style="color:var(--blue);font-weight:bold;">Đăng nhập</a></div>
+    <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+      Nhớ mật khẩu? <a href="#" onclick="switchAuthModal('login')" style="color: var(--blue); font-weight: bold;">Đăng nhập</a>
+    </div>
   </div>
 </div>
-<script src="services.js"></script>
-
 <script>
 // =============================================
-// PRODUCTS DATA - ĐẦY ĐỦ TẤT CẢ DANH MỤC
+// GỌI DATA TỪ FILE SERVICES.JS 
 // =============================================
-// Dữ liệu sản phẩm được load từ services.js
+const products = typeof SERVICES !== 'undefined' ? SERVICES : [];
 
+// =============================================
+// TỰ ĐỘNG TẠO DANH MỤC TỪ KHO HÀNG THẬT
+// =============================================
+const categoriesDiv = document.getElementById("categories");
+const uniqueCats = [...new Set(products.map(p => p.cat))]; 
 
-// =============================================
-// CAT MAP - BUILD TỰ ĐỘNG
-// =============================================
 const catMap = {};
-document.querySelectorAll(".cat-btn").forEach(btn => {
-  const catId = btn.dataset.cat;
-  if(catId !== "all") {
-    const iconEl = btn.querySelector(".icon");
-    const icon = iconEl ? iconEl.textContent.trim() : "📦";
-    const name = btn.textContent.replace(icon,"").trim();
-    catMap[catId] = { name, icon };
-  }
+let catHtml = `<button class="cat-btn active" data-cat="all"><span class="icon icon-cart">🛒</span> TẤT CẢ SẢN PHẨM</button>`;
+
+uniqueCats.forEach(catName => {
+  const firstProd = products.find(p => p.cat === catName);
+  const icon = firstProd ? firstProd.icon : "📦";
+  
+  catMap[catName] = { name: catName, icon: icon };
+  catHtml += `<button class="cat-btn" data-cat="${catName}"><span class="icon" style="background:var(--blue);color:#fff">${icon}</span> ${catName}</button>`;
 });
 
-// =============================================
-// FIREBASE CONFIG
-// =============================================
+categoriesDiv.innerHTML = catHtml;
+
+/* =========================================
+   KẾT NỐI FIREBASE & XỬ LÝ AUTH/USER
+   ========================================= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
   authDomain: "tainguyenmmo-1a233.firebaseapp.com",
@@ -467,43 +397,61 @@ const firebaseConfig = {
   messagingSenderId: "880959861709",
   appId: "1:880959861709:web:dfe8ce2253a90b87b10a84"
 };
-firebase.initializeApp(firebaseConfig);
+
+// Khởi tạo App và Firestore
+if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 const db = firebase.firestore();
 
-// =============================================
-// TELEGRAM NOTIFICATION
-// =============================================
+// HÀM GỬI THÔNG BÁO TELEGRAM
 function sendTelegramMsg(message) {
-  const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4";
+  const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; 
   const chatId = "2133642610";
-  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-    method: "POST", headers: {"Content-Type":"application/json"},
+  
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ chat_id: chatId, text: message })
-  }).catch(err => console.log("Telegram error:", err));
+  }).catch(err => console.log("Lỗi gửi Tele:", err));
 }
 
-// =============================================
-// AUTH UI
-// =============================================
 function updateHeaderUI() {
   const authSection = document.getElementById("auth-section");
   const walletBtn = document.getElementById("wallet-display");
   const currentUser = localStorage.getItem("currentUser");
-  if(currentUser) {
+
+  if (currentUser) {
     authSection.innerHTML = `
-      <div class="theme-toggle"><button class="theme-btn active">☀️</button><button class="theme-btn">🌙</button></div>
+      <div class="theme-toggle">
+        <button class="theme-btn active">☀️</button>
+        <button class="theme-btn">🌙</button>
+      </div>
       <button class="notif-btn">🔔</button>
-      <div class="user-info"><div class="avatar">🧑</div><span class="username">${currentUser}</span></div>
-      <button class="wallet-btn danger no-icon" onclick="submitLogout()">Thoát</button>`;
+      <div class="user-info">
+        <div class="avatar">🧑</div>
+        <span class="username">${currentUser}</span>
+      </div>
+      <button class="wallet-btn danger no-icon" onclick="submitLogout()">Thoát</button>
+    `;
     walletBtn.style.display = "flex";
-    db.collection("users").doc(currentUser).onSnapshot(doc => {
-      if(doc.exists) document.getElementById("user-balance").textContent = (doc.data().balance||0).toLocaleString("vi-VN");
+
+    // Lắng nghe trực tiếp (Realtime) số dư từ Firebase
+    db.collection("users").doc(currentUser).onSnapshot((doc) => {
+      if (doc.exists) {
+        const balance = doc.data().balance || 0;
+        document.getElementById("user-balance").textContent = balance.toLocaleString('vi-VN');
+      }
     });
+
   } else {
     authSection.innerHTML = `
-      <div class="theme-toggle"><button class="theme-btn active">☀️</button><button class="theme-btn">🌙</button></div>
+      <div class="theme-toggle">
+        <button class="theme-btn active">☀️</button>
+        <button class="theme-btn">🌙</button>
+      </div>
       <button class="wallet-btn no-icon" onclick="openAuthModal('login')">Đăng nhập</button>
-      <button class="wallet-btn primary no-icon" onclick="openAuthModal('register')">Đăng ký</button>`;
+      <button class="wallet-btn primary no-icon" onclick="openAuthModal('register')">Đăng ký</button>
+    `;
     walletBtn.style.display = "none";
   }
 }
@@ -511,113 +459,193 @@ function updateHeaderUI() {
 function openAuthModal(type) { document.getElementById(`${type}-modal`).classList.add("open"); }
 function closeAuthModal(type) { document.getElementById(`${type}-modal`).classList.remove("open"); }
 function switchAuthModal(to) {
-  ["login","register","buy","forgot"].forEach(t => closeAuthModal(t));
-  if(to === "forgot") {
+  closeAuthModal('login');
+  closeAuthModal('register');
+  closeAuthModal('buy');
+  
+  if(to === 'forgot') {
     document.getElementById("forgot-step-1").style.display = "block";
     document.getElementById("forgot-step-2").style.display = "none";
+    document.getElementById("forgot-user").value = "";
+    document.getElementById("forgot-code").value = "";
+    document.getElementById("forgot-new-pass").value = "";
   }
+  
+  const forgotModalElem = document.getElementById('forgot-modal');
+  if(forgotModalElem) closeAuthModal('forgot');
+
   openAuthModal(to);
 }
 
+// ĐĂNG KÝ (Lưu lên Firebase)
 async function submitRegister() {
   const user = document.getElementById("reg-user").value.trim();
   const email = document.getElementById("reg-email").value.trim();
   const pass = document.getElementById("reg-pass").value;
   const passConfirm = document.getElementById("reg-pass-confirm").value;
-  if(!user||!email||!pass) return alert("Vui lòng điền đầy đủ thông tin!");
+
+  if(!user || !email || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
   if(pass !== passConfirm) return alert("Mật khẩu nhập lại không khớp!");
+
+  const userRef = db.collection("users").doc(user);
+  
   try {
-    const docSnap = await db.collection("users").doc(user).get();
-    if(docSnap.exists) return alert("Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.");
-    await db.collection("users").doc(user).set({ username:user, email, password:pass, balance:0, createdAt:firebase.firestore.FieldValue.serverTimestamp() });
-    alert("Đăng ký thành công! Vui lòng đăng nhập.");
-    sendTelegramMsg(`🔥 KHÁCH ĐĂNG KÝ MỚI\n- Tài khoản: ${user}\n- Email: ${email}`);
-    switchAuthModal("login");
-  } catch(e) { alert("Lỗi: " + e.message); }
+    const docSnap = await userRef.get();
+    if(docSnap.exists) {
+      return alert("Tên đăng nhập đã tồn tại trên hệ thống! Vui lòng chọn tên khác.");
+    }
+
+    await userRef.set({ 
+      username: user,
+      email: email, 
+      password: pass, 
+      balance: 0,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    alert("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
+    sendTelegramMsg(`🔥 CÓ KHÁCH ĐĂNG KÝ MỚI 🔥\n- Tài khoản: ${user}\n- Email: ${email}`);
+    switchAuthModal('login');
+  } catch (error) {
+    alert("Lỗi khi kết nối với máy chủ Firebase. Vui lòng kiểm tra lại cấu hình Database Test Mode.\nChi tiết lỗi: " + error.message);
+  }
 }
 
+// ĐĂNG NHẬP (Kiểm tra Firebase)
 async function submitLogin() {
   const user = document.getElementById("login-user").value.trim();
   const pass = document.getElementById("login-pass").value;
-  if(!user||!pass) return alert("Vui lòng điền đầy đủ!");
+  
+  if(!user || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
+
   try {
-    const docSnap = await db.collection("users").doc(user).get();
-    if(!docSnap.exists || docSnap.data().password !== pass) return alert("Sai tên đăng nhập hoặc mật khẩu!");
+    const userRef = db.collection("users").doc(user);
+    const docSnap = await userRef.get();
+    
+    if(!docSnap.exists || docSnap.data().password !== pass) {
+      return alert("Sai tên đăng nhập hoặc mật khẩu!");
+    }
+
     localStorage.setItem("currentUser", user);
-    closeAuthModal("login");
+    closeAuthModal('login');
     updateHeaderUI();
-  } catch(e) { alert("Lỗi: " + e.message); }
+  } catch (error) {
+    alert("Lỗi khi đăng nhập: " + error.message);
+  }
 }
 
-function submitLogout() { localStorage.removeItem("currentUser"); updateHeaderUI(); }
+function submitLogout() {
+  localStorage.removeItem("currentUser");
+  updateHeaderUI();
+}
 
-// =============================================
-// QUÊN MẬT KHẨU
-// =============================================
-let resetTargetUser = "", generatedResetCode = "";
-(function(){ emailjs.init("KNJtY_VP9qiMTAhmH"); })();
+/* =========================================
+   QUÊN MẬT KHẨU BẰNG EMAILJS + FIREBASE
+   ========================================= */
+let resetTargetUser = "";
+let generatedResetCode = "";
+
+(function(){
+   emailjs.init("KNJtY_VP9qiMTAhmH"); 
+})();
 
 async function sendResetCode() {
   const inputUser = document.getElementById("forgot-user").value.trim();
   if(!inputUser) return alert("Vui lòng nhập tên đăng nhập!");
+  
   try {
-    const docSnap = await db.collection("users").doc(inputUser).get();
-    if(!docSnap.exists) return alert("Không tìm thấy tài khoản này!");
+    const userRef = db.collection("users").doc(inputUser);
+    const docSnap = await userRef.get();
+
+    if(!docSnap.exists) {
+      return alert("Không tìm thấy tài khoản này trong hệ thống!");
+    }
+    
     const targetEmail = docSnap.data().email;
-    if(!targetEmail) return alert("Tài khoản này chưa liên kết email!");
+    if(!targetEmail) {
+      return alert("Tài khoản này chưa được liên kết Email nên không thể khôi phục!");
+    }
+
     resetTargetUser = inputUser;
-    generatedResetCode = Math.floor(100000 + Math.random()*900000).toString();
-    const btn = document.querySelector("#forgot-step-1 .auth-btn");
-    btn.textContent = "Đang gửi..."; btn.disabled = true;
-    emailjs.send("service_citv6v4","service_citv6v4",{ to_email:targetEmail, user_name:inputUser, reset_code:generatedResetCode })
-    .then(() => {
-      btn.textContent = "Nhận mã qua Email"; btn.disabled = false;
-      document.getElementById("forgot-step-1").style.display = "none";
-      document.getElementById("forgot-step-2").style.display = "block";
-    }, err => { btn.textContent = "Nhận mã qua Email"; btn.disabled = false; alert("Gửi email thất bại: " + JSON.stringify(err)); });
-  } catch(e) { alert("Lỗi: " + e.message); }
+    generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    const btnSend = document.querySelector("#forgot-step-1 .auth-btn");
+    btnSend.textContent = "Đang gửi email...";
+    btnSend.disabled = true;
+
+    emailjs.send("service_citv6v4", "service_citv6v4", {
+        to_email: targetEmail,
+        user_name: inputUser,
+        reset_code: generatedResetCode
+    })
+    .then(function(response) {
+        btnSend.textContent = "Nhận mã qua Email";
+        btnSend.disabled = false;
+
+        document.getElementById("forgot-step-1").style.display = "none";
+        document.getElementById("forgot-step-2").style.display = "block";
+        alert(`Đã gửi mã xác thực đến email: ${targetEmail}`);
+    }, function(error) {
+        btnSend.textContent = "Nhận mã qua Email";
+        btnSend.disabled = false;
+        alert("Gửi email thất bại. Vui lòng kiểm tra lại cấu hình EmailJS: " + JSON.stringify(error));
+    });
+  } catch (error) {
+    alert("Lỗi hệ thống: " + error.message);
+  }
 }
 
 async function resetPassword() {
   const inputCode = document.getElementById("forgot-code").value.trim();
   const newPass = document.getElementById("forgot-new-pass").value;
-  if(inputCode !== generatedResetCode) return alert("Mã xác thực không đúng!");
+  
+  if(inputCode !== generatedResetCode) return alert("Mã xác thực không chính xác!");
   if(!newPass) return alert("Vui lòng nhập mật khẩu mới!");
+  
   try {
-    await db.collection("users").doc(resetTargetUser).update({ password: newPass });
-    alert("Đổi mật khẩu thành công! Hãy đăng nhập lại.");
-    switchAuthModal("login");
-  } catch(e) { alert("Lỗi: " + e.message); }
+    const userRef = db.collection("users").doc(resetTargetUser);
+    await userRef.update({ password: newPass });
+    
+    alert("Đổi mật khẩu thành công! Hãy đăng nhập lại với mật khẩu mới.");
+    switchAuthModal('login');
+  } catch (error) {
+    alert("Lỗi khi đổi mật khẩu: " + error.message);
+  }
 }
 
-// =============================================
-// RENDER SẢN PHẨM
-// =============================================
-let currentCat = "all";
+/* =========================================
+   RENDER & XỬ LÝ SẢN PHẨM TỰ ĐỘNG
+   ========================================= */
 
-function renderProducts(catFilter, searchQuery="") {
+function renderProducts(catFilter, searchQuery = "") {
   const grid = document.getElementById("products-grid");
   const countDisplay = document.getElementById("count");
   const titleDisplay = document.getElementById("display-title");
-  let html = "", totalCount = 0;
-  let source = products;
+  
+  let html = '';
+  let totalCount = 0;
 
-  if(searchQuery) {
-    source = products.filter(p => p.name.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery));
-    titleDisplay.textContent = "Kết quả tìm kiếm";
+  let sourceProducts = products;
+  if (searchQuery) {
+    sourceProducts = products.filter(p => 
+      p.name.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery)
+    );
+    titleDisplay.textContent = 'Kết quả tìm kiếm';
   } else {
-    titleDisplay.textContent = catFilter==="all" ? "Tất cả sản phẩm" : (catMap[catFilter]?.name || "Sản phẩm");
+    titleDisplay.textContent = catFilter === 'all' ? 'Tất cả sản phẩm' : catMap[catFilter].name;
   }
 
-  const catsToRender = catFilter==="all" && !searchQuery
-    ? Object.keys(catMap)
-    : (searchQuery ? [...new Set(source.map(p=>p.cat))] : [catFilter]);
+  const catsToRender = catFilter === 'all' && !searchQuery 
+    ? Object.keys(catMap) 
+    : (searchQuery ? [...new Set(sourceProducts.map(p => p.cat))] : [catFilter]);
 
   catsToRender.forEach(catId => {
-    const catProds = source.filter(p => p.cat===catId);
-    if(!catProds.length) return;
-    totalCount += catProds.length;
-    const catInfo = catMap[catId] || { name:"DANH MỤC KHÁC", icon:"📦" };
+    const catProducts = sourceProducts.filter(p => p.cat === catId);
+    if (catProducts.length === 0) return;
+    
+    totalCount += catProducts.length;
+    const catInfo = catMap[catId] || { name: catId, icon: "📦" };
+
     html += `
       <div class="category-group">
         <div class="grid-row cat-header-row">
@@ -625,92 +653,97 @@ function renderProducts(catFilter, searchQuery="") {
           <div>Xem trước</div><div>Hiện có</div><div>Đã bán</div><div>Giá</div><div>Thao tác</div>
         </div>
         <div class="cat-products-list">
-          ${catProds.map(p => `
-          <div class="grid-row product-row">
-            <div class="col-info">
-              <div class="prod-icon-wrap">${p.icon}</div>
-              <div class="prod-details">
-                <div class="prod-name" onclick="openModal(${p.id})">${p.name}</div>
-                <div class="prod-desc">${p.desc}</div>
+          ${catProducts.map(p => {
+            const randomSold = (p.id * 7 + 15) % 800 + 10;
+            return `
+            <div class="grid-row product-row">
+              <div class="col-info">
+                <div class="prod-icon-wrap">${p.icon}</div>
+                <div class="prod-details">
+                  <div class="prod-name" onclick="openModal(${p.id})">${p.name}</div>
+                  <div class="prod-desc">${p.desc}</div>
+                </div>
               </div>
-            </div>
-            <div class="col-preview"></div>
-            <div class="col-stock"><div class="stat-box stock"><span>Còn lại:</span><strong>${p.stock.toLocaleString()}</strong></div></div>
-            <div class="col-sold"><div class="stat-box sold"><span>Đã bán:</span><strong>${p.sold.toLocaleString()}</strong></div></div>
-            <div class="col-price"><div class="stat-box price"><span>💵</span><strong>${p.price}</strong></div></div>
-            <div class="col-action">
-              <button class="btn-buy" onclick="openModal(${p.id})">
-                <span style="font-size:14px">🛒 MUA</span><span style="font-size:12px">NGAY</span>
-              </button>
-            </div>
-          </div>`).join("")}
+              <div class="col-preview"></div>
+              <div class="col-stock"><div class="stat-box stock"><span>Còn lại:</span><strong>${p.stock}</strong></div></div>
+              <div class="col-sold"><div class="stat-box sold"><span>Đã bán:</span><strong>${randomSold}</strong></div></div>
+              <div class="col-price"><div class="stat-box price"><span class="icon-money">💵</span><strong>${p.price.toLocaleString('vi-VN')}đ</strong></div></div>
+              <div class="col-action">
+                <button class="btn-buy" onclick="openModal(${p.id})">
+                  <span style="font-size:14px">🛒 MUA</span>
+                  <span style="font-size:12px">NGAY</span>
+                </button>
+              </div>
+            </div>`;
+          }).join('')}
         </div>
       </div>`;
   });
 
-  grid.innerHTML = totalCount===0
-    ? `<div style="text-align:center;padding:48px;color:#65676b">Không tìm thấy sản phẩm phù hợp</div>`
-    : html;
+  grid.innerHTML = totalCount === 0 ? `<div style="text-align:center;padding:48px;color:var(--text-muted)">Không tìm thấy sản phẩm phù hợp</div>` : html;
   countDisplay.textContent = `${totalCount} sản phẩm`;
 }
 
-// Category filter
-document.querySelectorAll(".cat-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    document.querySelector(".search-bar input").value = "";
+// Event Lọc Category
+document.querySelectorAll('.cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelector('.search-bar input').value = '';
     renderProducts(btn.dataset.cat, "");
   });
 });
 
-// Search
-document.querySelector(".search-bar input").addEventListener("input", function() {
-  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-  document.querySelector("[data-cat='all']").classList.add("active");
+// Event Tìm kiếm
+document.querySelector('.search-bar input').addEventListener('input', function() {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
   renderProducts("all", this.value.toLowerCase());
 });
 
-// =============================================
-// MUA HÀNG
-// =============================================
+// Xử lý Mua Hàng
 let currentProduct = null;
-
 async function openModal(id) {
   const currentUser = localStorage.getItem("currentUser");
-  if(!currentUser) {
-    alert("⚠️ Bạn cần Đăng nhập để mua hàng!");
-    openAuthModal("login"); return;
+  if (!currentUser) {
+    alert("⚠️ Bạn cần Đăng nhập tài khoản để mua hàng!");
+    openAuthModal('login');
+    return;
   }
-  currentProduct = products.find(p => p.id===id);
+  
+  currentProduct = products.find(p => p.id === id);
   document.getElementById("modal-name").textContent = currentProduct.name;
-  document.getElementById("modal-price").textContent = currentProduct.price;
+  document.getElementById("modal-price").textContent = currentProduct.price.toLocaleString('vi-VN') + "đ";
   document.getElementById("modal-desc").textContent = currentProduct.desc;
   document.getElementById("modal-qty").value = 1;
-  openAuthModal("buy");
+  openAuthModal('buy');
 }
 
 async function handleBuy() {
   const qty = parseInt(document.getElementById("modal-qty").value);
   const currentUser = localStorage.getItem("currentUser");
-  const priceNum = parseInt(currentProduct.price.replace(/\D/g,""));
-  const total = priceNum * qty;
+  
+  const totalPrice = currentProduct.price * qty;
+
   try {
-    const docSnap = await db.collection("users").doc(currentUser).get();
-    const bal = docSnap.exists ? (docSnap.data().balance||0) : 0;
-    sendTelegramMsg(`🛒 KHÁCH BẤM MUA HÀNG\n- Khách: ${currentUser}\n- Sản phẩm: ${qty} x ${currentProduct.name}\n- Tổng tiền: ${total.toLocaleString("vi-VN")}đ\n⚠️ Trạng thái: ${bal>=total?"Đủ tiền":"Số dư không đủ!"}`);
-    alert(bal>=total
-      ? `✅ Đặt lệnh mua ${qty} x "${currentProduct.name}" thành công!\nTổng: ${total.toLocaleString("vi-VN")}đ`
-      : `⚠️ Số dư (${bal.toLocaleString("vi-VN")}đ) không đủ thanh toán ${total.toLocaleString("vi-VN")}đ.\nVui lòng nạp thêm tiền!`);
-  } catch(e) { alert("Lỗi: " + e.message); }
-  closeAuthModal("buy");
+    const userRef = db.collection("users").doc(currentUser);
+    const docSnap = await userRef.get();
+    
+    if (docSnap.exists) {
+      const currentBalance = docSnap.data().balance || 0;
+      alert(`✅ Bạn đã đặt lệnh mua ${qty} x "${currentProduct.name}".\n\nTuy nhiên số dư của bạn (${currentBalance.toLocaleString('vi-VN')}đ) không đủ để thanh toán đơn hàng trị giá ${totalPrice.toLocaleString('vi-VN')}đ. Vui lòng nạp thêm tiền!`);
+    }
+      sendTelegramMsg(`🛒 KHÁCH BẤM MUA HÀNG 🛒\n- Khách: ${currentUser}\n- Sản phẩm: ${qty} x ${currentProduct.name}\n- Tổng tiền: ${totalPrice.toLocaleString('vi-VN')}đ\n⚠️ Trạng thái: Số dư không đủ!`);
+  } catch(error) {
+    alert("Lỗi khi kiểm tra số dư trên Firebase: " + error.message);
+  }
+  
+  closeAuthModal('buy');
 }
 
-// =============================================
-// INIT
-// =============================================
+// Khởi tạo giao diện
 updateHeaderUI();
-renderProducts("all","");
+renderProducts("all", "");
 </script>
 </body>
 </html>
