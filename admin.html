@@ -19,48 +19,34 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 13px; display: flex; min-height: 100vh; overflow-x: hidden; }
-/* ─── CÁC CSS GIỮ NGUYÊN BẢN GỐC CỦA BẠN ─── */
-.sidebar { width: var(--sidebar-w); background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; transition: transform 0.28s cubic-bezier(.4,0,.2,1); box-shadow: var(--shadow-md); }
-.sidebar-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:49; display:none;backdrop-filter:blur(2px); }
-.sidebar-overlay.open{display:block;}
-.sidebar.collapsed { transform: translateX(calc(-1 * var(--sidebar-w))); }
-@media(min-width:901px){ .sidebar { transform: translateX(0) !important; } .main.expanded { margin-left: 0; } }
+
+/* SIDEBAR & UI CƠ BẢN */
+.sidebar { width: var(--sidebar-w); background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; box-shadow: var(--shadow-md); }
 .sidebar-logo { padding: 20px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
 .sidebar-logo .logo-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--red); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #fff; font-family: var(--mono); }
 .sidebar-logo .logo-text { font-weight: 800; font-size: 13px; line-height: 1.2; }
 .sidebar-logo .logo-sub { font-size: 10px; color: var(--text3); font-family: var(--mono); }
 .sidebar-nav { flex: 1; padding: 10px 0; overflow-y: auto; }
 .nav-section { padding: 14px 18px 6px; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 18px; cursor: pointer; border-radius: 0; color: var(--text2); font-size: 12.5px; font-weight: 500; transition: background 0.15s, color 0.15s; position: relative; border-left: 3px solid transparent; user-select: none; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 18px; cursor: pointer; color: var(--text2); font-size: 12.5px; font-weight: 500; transition: 0.15s; border-left: 3px solid transparent; }
 .nav-item:hover { background: var(--bg3); color: var(--text); }
 .nav-item.active { background: var(--red-dim); color: var(--text); border-left-color: var(--red); }
-.nav-item .nav-icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; }
-.nav-item .nav-badge { margin-left: auto; background: var(--red); color: #fff; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; font-family: var(--mono); }
-.nav-item .nav-badge.green { background: var(--green); }
-.nav-item .nav-badge.yellow { background: var(--yellow); color: #000; }
+.nav-item .nav-icon { font-size: 15px; width: 18px; text-align: center; }
 .sidebar-footer { padding: 14px 18px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-.admin-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--red), #f97316); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-.admin-info { flex: 1; min-width: 0; }
+.admin-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--red), #f97316); display: flex; align-items: center; justify-content: center; font-size: 14px; color:#fff; }
+.admin-info { flex: 1; }
 .admin-name { font-weight: 700; font-size: 12px; }
 .admin-role { font-size: 10px; color: var(--text3); font-family: var(--mono); }
-.logout-btn { background: none; border: none; cursor: pointer; color: var(--text3); font-size: 16px; transition: color 0.2s; }
-.logout-btn:hover { color: var(--red); }
 .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-.hamburger-btn { width: 40px !important; height: 40px !important; flex-direction: column !important; gap: 5px !important; border-radius: 10px !important; padding: 0 !important; align-items: center; justify-content: center; display: flex; }
-.hamburger-btn span { display: block; width: 18px; height: 2px; background: var(--text2); border-radius: 2px; transition: all 0.3s; transform-origin: center; }
 .topbar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 40; }
 .topbar-title { font-weight: 800; font-size: 15px; flex: 1; }
 .topbar-search { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; gap: 8px; padding: 0 12px; width: 240px; }
 .topbar-search input { background: none; border: none; outline: none; color: var(--text); font-family: var(--sans); font-size: 12px; padding: 8px 0; flex: 1; }
-.topbar-search input::placeholder { color: var(--text3); }
-.topbar-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; transition: border-color 0.2s; position: relative; }
-.topbar-btn:hover { border-color: var(--border2); }
-.notif-dot { position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--red); border: 1px solid var(--bg2); }
-.add-btn { background: var(--red); color: #fff; border: none; border-radius: 8px; padding: 8px 16px; font-family: var(--sans); font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: opacity 0.2s; }
-.add-btn:hover { opacity: 0.85; }
 .content { padding: 24px; flex: 1; }
 .page { display: none; }
 .page.active { display: block; }
+
+/* STATS & TABLES */
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
 .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
 .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
@@ -68,46 +54,31 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 .stat-card.green::before { background: var(--green); }
 .stat-card.blue::before { background: var(--blue); }
 .stat-card.yellow::before { background: var(--yellow); }
-.stat-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
-.stat-value { font-size: 26px; font-weight: 800; font-family: var(--mono); margin-bottom: 4px; }
-.stat-change { font-size: 11px; color: var(--text3); }
-.stat-change span { font-weight: 700; }
-.stat-change span.up { color: var(--green); }
-.stat-change span.dn { color: var(--red); }
-.stat-icon { position: absolute; top: 16px; right: 16px; font-size: 28px; opacity: 0.2; }
+.stat-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
+.stat-value { font-size: 26px; font-weight: 800; font-family: var(--mono); }
 .sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .sec-title { font-weight: 800; font-size: 14px; }
 .table-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow); }
 table { width: 100%; border-collapse: collapse; }
 thead { background: var(--bg3); }
-th { padding: 11px 16px; text-align: left; font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+th { padding: 11px 16px; text-align: left; font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; border-bottom: 1px solid var(--border); }
 td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-tbody tr:hover { background: var(--bg3); }
-.badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+.badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; }
 .badge.success { background: var(--green-dim); color: var(--green); }
 .badge.danger { background: var(--red-dim); color: var(--red); }
 .badge.warning { background: var(--yellow-dim); color: var(--yellow); }
-.badge.info { background: var(--blue-dim); color: var(--blue); }
 .badge.purple { background: var(--purple-dim); color: var(--purple); }
-.action-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s; margin-right: 4px; }
+.action-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: 0.15s; margin-right: 4px; }
 .action-btn:hover { border-color: var(--blue); color: var(--blue); }
-.action-btn.del:hover { border-color: var(--red); color: var(--red); }
-.action-btn.ok:hover { border-color: var(--green); color: var(--green); }
-.filter-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
-.filter-select, .filter-input { background: var(--bg2); border: 1px solid var(--border); color: var(--text); font-family: var(--sans); font-size: 12px; padding: 7px 12px; border-radius: 7px; outline: none; cursor: pointer; }
-.filter-input { width: 200px; }
-.btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text); font-family: var(--sans); font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 7px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
-.btn:hover { border-color: var(--border2); background: var(--bg4); }
-.btn.primary { background: var(--red); border-color: var(--red); color: #fff; }
-.btn.primary:hover { opacity: 0.88; }
-.btn.success-btn { background: var(--green-dim); border-color: var(--green); color: var(--green); }
-.btn.danger-btn { background: var(--red-dim); border-color: var(--red); color: var(--red); }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.btn-text { background: var(--green-dim); border: 1px solid var(--green); color: var(--green); font-family: var(--sans); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+.btn-text:hover { background: var(--green); color: #fff; }
+
+.filter-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; }
+.filter-input { background: var(--bg2); border: 1px solid var(--border); color: var(--text); font-family: var(--sans); font-size: 12px; padding: 7px 12px; border-radius: 7px; outline: none; width: 200px; }
 .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
-.card-title { font-weight: 800; font-size: 13px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-.service-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; transition: border-color 0.2s; position: relative; }
+
+/* SERVICE CARD */
+.service-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; position: relative; }
 .service-card:hover { border-color: var(--border2); }
 .service-card .sc-icon { font-size: 28px; margin-bottom: 8px; }
 .service-card .sc-name { font-weight: 700; font-size: 12px; text-transform: uppercase; margin-bottom: 4px; }
@@ -115,6 +86,7 @@ tbody tr:hover { background: var(--bg3); }
 .service-card .sc-stock { color: var(--text3); font-size: 11px; margin-top: 2px; }
 .service-card .sc-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s; }
 .service-card:hover .sc-actions { opacity: 1; }
+
 </style>
 </head>
 <body>
@@ -131,9 +103,7 @@ tbody tr:hover { background: var(--bg3); }
   <nav class="sidebar-nav">
     <div class="nav-section">Tổng Quan</div>
     <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">📊</span> Dashboard</div>
-    <div class="nav-item" onclick="showPage('orders')"><span class="nav-icon">🛒</span> Đơn Hàng<span class="nav-badge" id="badge-orders">0</span></div>
-    <div class="nav-item" onclick="showPage('notifications')"><span class="nav-icon">🔔</span> Thông Báo</div>
-
+    
     <div class="nav-section">Quản Lý</div>
     <div class="nav-item" onclick="showPage('services')"><span class="nav-icon">🗂️</span> Dịch Vụ</div>
     <div class="nav-item" onclick="showPage('customers')"><span class="nav-icon">👥</span> Khách Hàng</div>
@@ -168,7 +138,7 @@ tbody tr:hover { background: var(--bg3); }
         <div class="stat-card yellow"><div class="stat-label">Dịch Vụ Đang Bán</div><div class="stat-value" style="color:var(--yellow)" id="dash-svc-count">...</div></div>
       </div>
       <div class="sec-header">
-        <div class="sec-title">🔥 Dịch Vụ Mới Bơm Lên Firebase</div>
+        <div class="sec-title">🔥 Dịch Vụ Đang Hot</div>
       </div>
       <div class="grid3" id="top-services-grid"></div>
     </div>
@@ -181,10 +151,20 @@ tbody tr:hover { background: var(--bg3); }
     </div>
 
     <div class="page" id="page-customers">
+      <div class="filter-bar">
+        <input class="filter-input" type="text" placeholder="🔍 Tìm tên khách hàng..." id="cust-search" oninput="renderCustomers()">
+      </div>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>#</th><th>Tên Khách Hàng</th><th>Email</th><th>Số Dư</th><th>Ngày Tham Gia</th></tr>
+            <tr>
+              <th>#</th>
+              <th>Tên Khách Hàng</th>
+              <th>Email</th>
+              <th>Số Dư Ví</th>
+              <th>Ngày Tham Gia</th>
+              <th>Thao Tác</th>
+            </tr>
           </thead>
           <tbody id="customers-body"></tbody>
         </table>
@@ -192,6 +172,9 @@ tbody tr:hover { background: var(--bg3); }
     </div>
 
     <div class="page" id="page-inventory">
+      <div class="filter-bar">
+        <input class="filter-input" type="text" placeholder="🔍 Tìm kho hàng..." id="inv-search" oninput="renderInventory()">
+      </div>
       <div class="table-wrap">
         <table>
           <thead>
@@ -202,16 +185,13 @@ tbody tr:hover { background: var(--bg3); }
       </div>
     </div>
 
-    <div class="page" id="page-orders"><p>Tính năng đang hoàn thiện...</p></div>
-    <div class="page" id="page-notifications"><p>Tính năng đang hoàn thiện...</p></div>
-
   </div>
 </div>
 
 <div id="toast" style="position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,0.4);z-index:999;opacity:0;transform:translateY(20px);transition:all 0.3s;pointer-events:none;"></div>
 
 <script>
-// 1. KẾT NỐI FIREBASE CỦA BẠN
+// 1. KẾT NỐI FIREBASE 
 const firebaseConfig = {
   apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
   authDomain: "tainguyenmmo-1a233.firebaseapp.com",
@@ -227,7 +207,7 @@ let SERVICES = [];
 let CUSTOMERS = [];
 
 // ==========================================
-// 2. LẮNG NGHE DỮ LIỆU SẢN PHẨM REALTIME TỪ FIREBASE
+// 2. LẮNG NGHE DỮ LIỆU REALTIME
 // ==========================================
 db.collection("services").onSnapshot((snapshot) => {
     SERVICES = [];
@@ -235,18 +215,15 @@ db.collection("services").onSnapshot((snapshot) => {
         SERVICES.push(doc.data());
     });
     
-    // Cập nhật số lượng hiển thị trên Dashboard
     if(document.getElementById('dash-svc-count')) {
         document.getElementById('dash-svc-count').textContent = SERVICES.length;
     }
     
-    // Render lại các bảng
     renderDashboard();
     renderServices();
     renderInventory();
 });
 
-// Lắng nghe dữ liệu khách hàng
 db.collection("users").onSnapshot((snapshot) => {
   CUSTOMERS = [];
   let index = 1;
@@ -260,7 +237,9 @@ db.collection("users").onSnapshot((snapshot) => {
       joined: user.createdAt ? new Date(user.createdAt.toDate()).toLocaleDateString('vi-VN') : "Mới đây"
     });
   });
-  if(document.getElementById('dash-cust-count')) document.getElementById('dash-cust-count').textContent = CUSTOMERS.length;
+  if(document.getElementById('dash-cust-count')) {
+      document.getElementById('dash-cust-count').textContent = CUSTOMERS.length;
+  }
   renderCustomers();
 });
 
@@ -286,12 +265,12 @@ function showPage(name) {
   document.querySelectorAll('.nav-item').forEach(n=>{
     if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${name}'`)) n.classList.add('active');
   });
-  const titles = {dashboard:'Dashboard',services:'Quản Lý Dịch Vụ',customers:'Khách Hàng',inventory:'Kho Hàng'};
+  const titles = {dashboard:'Dashboard',services:'Quản Lý Dịch Vụ',customers:'Quản Lý Khách Hàng',inventory:'Kho Hàng'};
   document.getElementById('page-title').textContent = titles[name]||name;
 }
 
 function renderDashboard() {
-  const top = [...SERVICES].slice(0,3); // Lấy 3 SP đầu tiên hiện lên
+  const top = [...SERVICES].slice(0,3);
   const topEl = document.getElementById('top-services-grid');
   if(topEl) {
     topEl.innerHTML = top.map(s=>`
@@ -299,7 +278,7 @@ function renderDashboard() {
         <div class="sc-icon">${s.icon}</div>
         <div class="sc-name" style="height:35px;overflow:hidden">${s.name}</div>
         <div class="sc-price">${fmt(s.price)}</div>
-        <div class="sc-stock" style="margin-top:6px">Tồn: <strong>${s.stock}</strong></div>
+        <div class="sc-stock" style="margin-top:6px">Tồn kho: <strong>${s.stock}</strong></div>
       </div>`).join('');
   }
 }
@@ -327,33 +306,73 @@ function renderServices() {
 function renderInventory() {
   const tbody = document.getElementById('inventory-body');
   if(!tbody) return;
-  tbody.innerHTML = SERVICES.map(s=>{
+  
+  const q = document.getElementById('inv-search').value.toLowerCase();
+  const filtered = SERVICES.filter(s => !q || s.name.toLowerCase().includes(q));
+
+  tbody.innerHTML = filtered.map(s=>{
     const st = s.stock===0?'danger':s.stock<30?'warning':'success';
     const stTxt = s.stock===0?'Hết hàng':s.stock<30?'Sắp hết':'Còn hàng';
     return `<tr>
       <td><strong>${s.icon} ${s.name}</strong></td>
       <td><span class="badge purple">${s.cat}</span></td>
       <td style="font-family:var(--mono);font-weight:700;color:${s.stock===0?'var(--red)':s.stock<30?'var(--yellow)':'var(--green)'}">${s.stock.toLocaleString()}</td>
-      <td style="font-family:var(--mono)">${s.sold.toLocaleString()}</td>
+      <td style="font-family:var(--mono)">${s.sold ? s.sold.toLocaleString() : 0}</td>
       <td><span class="badge ${st}">${stTxt}</span></td>
     </tr>`;
   }).join('');
 }
 
 function renderCustomers() {
-  document.getElementById('customers-body').innerHTML = CUSTOMERS.map((c)=>`
+  const tbody = document.getElementById('customers-body');
+  if(!tbody) return;
+
+  const q = document.getElementById('cust-search').value.toLowerCase();
+  const filtered = CUSTOMERS.filter(c => !q || c.username.toLowerCase().includes(q));
+
+  tbody.innerHTML = filtered.map((c)=>`
     <tr>
       <td style="color:var(--text3);font-family:var(--mono)">${c.id}</td>
       <td><strong style="color:var(--blue)">${c.username}</strong></td>
       <td style="color:var(--text3);font-size:11px">${c.email}</td>
       <td><span style="color:var(--green);font-size:14px;font-family:var(--mono);font-weight:bold">${fmt(c.balance)}</span></td>
       <td style="color:var(--text3);font-size:11px">${c.joined}</td>
+      <td>
+        <button class="btn-text" onclick="addFunds('${c.username}', ${c.balance})">💰 Cộng Tiền</button>
+      </td>
     </tr>`).join('');
 }
 
 // ==========================================
-// 4. HÀM CHỈNH SỬA GIÁ CẬP NHẬT LÊN FIREBASE
+// 4. HÀM CHỨC NĂNG ADMIN (CỘNG TIỀN & SỬA GIÁ)
 // ==========================================
+
+// CỘNG/TRỪ TIỀN CHO KHÁCH HÀNG
+async function addFunds(username, currentBalance) {
+    const input = prompt(`💰 QUẢN LÝ SỐ DƯ: [ ${username} ]\nSố dư hiện tại: ${currentBalance.toLocaleString('vi-VN')}đ\n\n👉 Nhập số tiền muốn CỘNG (Ví dụ: 50000)\n👉 Nhập số âm nếu muốn TRỪ (Ví dụ: -50000)`);
+    
+    if(input === null || input.trim() === '') return;
+
+    const amount = parseInt(input);
+    
+    if(!isNaN(amount)) {
+        const newBalance = currentBalance + amount;
+        try {
+            await db.collection("users").doc(username).update({ balance: newBalance });
+            if(amount >= 0) {
+                showToast(`✅ Đã CỘNG thành công ${amount.toLocaleString('vi-VN')}đ cho ${username}`, "success");
+            } else {
+                showToast(`✅ Đã TRỪ thành công ${Math.abs(amount).toLocaleString('vi-VN')}đ của ${username}`, "success");
+            }
+        } catch(e) {
+            showToast("❌ Lỗi khi cập nhật tiền: " + e.message, "danger");
+        }
+    } else {
+        showToast("⚠️ Vui lòng chỉ nhập số hợp lệ!", "warning");
+    }
+}
+
+// SỬA GIÁ SẢN PHẨM
 async function editServicePrice(id) {
     const svc = SERVICES.find(s => s.id == id);
     if(!svc) return;
@@ -362,10 +381,8 @@ async function editServicePrice(id) {
     
     if(newPriceStr !== null && newPriceStr.trim() !== '') {
         const newPrice = parseInt(newPriceStr.replace(/\D/g, ''));
-        
         if(!isNaN(newPrice)) {
             try {
-                // Đẩy giá mới lên Firebase
                 await db.collection("services").doc(id.toString()).update({ price: newPrice });
                 showToast(`✅ Đã cập nhật giá thành công: ${newPrice.toLocaleString('vi-VN')}đ`, "success");
             } catch(e) {
@@ -376,6 +393,7 @@ async function editServicePrice(id) {
         }
     }
 }
+
 </script>
 </body>
 </html>
