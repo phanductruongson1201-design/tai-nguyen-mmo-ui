@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TàiNguyênMMO - Chợ Tài Khoản & Tool Marketing</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
 
 <style>
   :root {
@@ -109,14 +109,14 @@
   .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
   .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
   .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
-  
+
   /* SEARCH BAR */
   .search-wrap { padding: 12px 16px; }
   .search-bar { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
   .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
   .search-bar input::placeholder { color: var(--text-muted); }
 
-  /* BẢNG SẢN PHẨM MỚI */
+  /* BẢNG SẢN PHẨM */
   .products-section { padding: 0 16px 16px; }
   .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
   .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
@@ -201,13 +201,10 @@
   .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
   .footer a { color: var(--blue); text-decoration: none; }
 
-  /* ========================================================
-     CSS SIDEBAR NAV
-     ======================================================== */
+  /* CSS SIDEBAR NAV */
   .app-sidebar {
     position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: #0b1727; color: #fff;
-    z-index: 105; overflow-y: auto; transform: translateX(0); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    z-index: 105; overflow-y: auto; transform: translateX(0); transition: left 0.3s ease;
     font-family: var(--sans); box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   }
   .app-sidebar::-webkit-scrollbar { width: 4px; }
@@ -224,7 +221,7 @@
   .text-red { color: #ef4444; }
   
   .sidebar-menu { display: flex; flex-direction: column; padding-bottom: 20px; }
-  .menu-item { display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s, color 0.2s; }
+  .menu-item { display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s; }
   .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.05); color: #fff; border-left: 3px solid var(--blue); padding-left: 17px; }
   .menu-icon { width: 24px; font-size: 16px; margin-right: 12px; text-align: center; }
   .menu-item .arrow { margin-left: auto; font-size: 16px; }
@@ -233,17 +230,15 @@
   @media (min-width: 901px) {
     body { padding-left: 260px; transition: padding-left 0.3s ease; }
     body.sidebar-closed { padding-left: 0 !important; }
-    .app-sidebar.collapsed { transform: translateX(-100%) !important; }
+    .app-sidebar.collapsed { left: -260px !important; }
   }
   @media (max-width: 900px) {
-    .app-sidebar { transform: translateX(-100%); }
-    .app-sidebar.open { transform: translateX(0); }
+    .app-sidebar { left: -260px; }
+    .app-sidebar.open { left: 0; }
     body { padding-left: 0; }
   }
 
-  /* ========================================================
-     CSS CHO CÁC BẢNG LỊCH SỬ / BIẾN ĐỘNG SỐ DƯ
-     ======================================================== */
+  /* CSS CHO BẢNG LỊCH SỬ & BIẾN ĐỘNG */
   .history-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin: 20px 16px; }
   .history-card h2 { color: #1e293b; font-size: 24px; font-weight: 700; margin-bottom: 20px; }
   .history-controls { display: flex; justify-content: space-between; margin-bottom: 15px; align-items: center; color: #475569; font-size: 13px; }
@@ -261,9 +256,7 @@
   .hist-btn.prev { border-radius: 4px 0 0 4px; border-right: none; }
   .hist-btn.next { border-radius: 0 4px 4px 0; }
 
-  /* ========================================================
-     CSS CHO TRANG CÁ NHÂN (PROFILE)
-     ======================================================== */
+  /* CSS CHO TRANG CÁ NHÂN (PROFILE) */
   .profile-wrapper { padding: 20px 16px; max-width: 1000px; margin: 0 auto; }
   .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
   @media (max-width: 900px) { .profile-grid { grid-template-columns: 1fr; } }
@@ -655,15 +648,9 @@
     <button class="modal-close" onclick="closeAuthModal('forgot')">✕</button>
     <div class="modal-title">QUÊN MẬT KHẨU</div>
     <div id="forgot-step-1">
-      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; text-align: center;">Nhập tên đăng nhập để nhận mã khôi phục.</p>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; text-align: center;">Nhập tên đăng nhập để nhận link khôi phục mật khẩu qua Email.</p>
       <input type="text" id="forgot-user" class="auth-input" placeholder="Tên đăng nhập">
-      <button class="auth-btn" onclick="sendResetCode()">Nhận mã qua Email</button>
-    </div>
-    <div id="forgot-step-2" style="display: none;">
-      <p style="font-size: 13px; color: var(--green); margin-bottom: 12px; text-align: center;">Mã xác thực 6 số đã được gửi đến email của bạn!</p>
-      <input type="text" id="forgot-code" class="auth-input" placeholder="Nhập mã xác thực">
-      <input type="password" id="forgot-new-pass" class="auth-input" placeholder="Mật khẩu mới">
-      <button class="auth-btn" onclick="resetPassword()">Cập nhật mật khẩu</button>
+      <button class="auth-btn" onclick="sendResetCode()">Nhận Link qua Email</button>
     </div>
     <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
       Nhớ mật khẩu? <a href="#" onclick="switchAuthModal('login')" style="color: var(--blue); font-weight: bold;">Đăng nhập</a>
@@ -678,86 +665,57 @@ let catMap = {};
 function toggleMenu() {
   const sidebar = document.getElementById('app-sidebar');
   const overlay = document.getElementById('mobile-menu-overlay');
-  
   if (window.innerWidth <= 900) {
     sidebar.classList.toggle('open');
-    if(sidebar.classList.contains('open')) {
-      overlay.classList.add('show');
-    } else {
-      overlay.classList.remove('show');
-    }
+    if(sidebar.classList.contains('open')) overlay.classList.add('show');
+    else overlay.classList.remove('show');
   } else {
     sidebar.classList.toggle('collapsed');
     document.body.classList.toggle('sidebar-closed');
   }
 }
 
-// CẬP NHẬT: HÀM QUẢN LÝ CHUYỂN TRANG
 function showMainView(viewName) {
-  // Ẩn tất cả các màn hình
   document.getElementById('view-home').style.display = 'none';
   document.getElementById('view-history').style.display = 'none';
   document.getElementById('view-profile').style.display = 'none';
   document.getElementById('view-changepass').style.display = 'none';
   document.getElementById('view-transactions').style.display = 'none';
 
-  // Hiển thị màn hình được yêu cầu
   if (viewName === 'home') document.getElementById('view-home').style.display = 'block';
-  if (viewName === 'history') {
-      document.getElementById('view-history').style.display = 'block';
-      loadHistoryData();
-  }
-  if (viewName === 'profile') {
-      document.getElementById('view-profile').style.display = 'block';
-      loadProfileData();
-  }
-  if (viewName === 'changepass') {
-      document.getElementById('view-changepass').style.display = 'block';
-  }
-  if (viewName === 'transactions') {
-      document.getElementById('view-transactions').style.display = 'block';
-      loadTransactionsData();
-  }
+  if (viewName === 'history') { document.getElementById('view-history').style.display = 'block'; loadHistoryData(); }
+  if (viewName === 'profile') { document.getElementById('view-profile').style.display = 'block'; loadProfileData(); }
+  if (viewName === 'changepass') { document.getElementById('view-changepass').style.display = 'block'; }
+  if (viewName === 'transactions') { document.getElementById('view-transactions').style.display = 'block'; loadTransactionsData(); }
   
-  // Đóng menu thả xuống của user nếu đang mở
   const menu = document.getElementById('user-dropdown-menu');
-  if (menu && menu.classList.contains('show')) {
-      menu.classList.remove('show');
-  }
+  if (menu && menu.classList.contains('show')) menu.classList.remove('show');
 }
 
 function setActiveMenu(element, view) {
   document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
   if(element) element.classList.add('active');
-  
   showMainView(view);
-  
   if (window.innerWidth <= 900) {
       document.getElementById('app-sidebar').classList.remove('open');
       document.getElementById('mobile-menu-overlay').classList.remove('show');
   }
 }
 
-// TẮT BẬT DROPDOWN USER MENU
 function toggleUserDropdown(event) {
   event.stopPropagation();
   const dropdown = document.getElementById('user-dropdown-menu');
-  if (dropdown) {
-      dropdown.classList.toggle('show');
-  }
+  if (dropdown) dropdown.classList.toggle('show');
 }
 
 window.addEventListener('click', function(e) {
   const menu = document.getElementById('user-dropdown-menu');
-  if (menu && menu.classList.contains('show')) {
-    menu.classList.remove('show');
-  }
+  if (menu && menu.classList.contains('show')) menu.classList.remove('show');
 });
 
 /* =========================================
-   KẾT NỐI FIREBASE & XỬ LÝ AUTH/USER
+   KẾT NỐI FIREBASE & XỬ LÝ AUTH
    ========================================= */
-
 const firebaseConfig = {
   apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
   authDomain: "tainguyenmmo-1a233.firebaseapp.com",
@@ -769,42 +727,31 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 const db = firebase.firestore();
+const auth = firebase.auth(); // KHỞI TẠO FIREBASE AUTH
 
-// =============================================
-// LẮNG NGHE DỮ LIỆU TỪ FIREBASE TRỰC TIẾP
-// =============================================
 db.collection("services").onSnapshot((snapshot) => {
     products = [];
     snapshot.forEach((doc) => { products.push(doc.data()); });
-    
     const categoriesDiv = document.getElementById("categories");
     const uniqueCats = [...new Set(products.map(p => p.cat))]; 
-    
     catMap = {};
     let catHtml = `<button class="cat-btn active" data-cat="all"><span class="icon icon-cart" style="background:transparent; color:var(--blue); font-size:18px;">🛒</span> TẤT CẢ SẢN PHẨM</button>`;
-    
     uniqueCats.forEach(catName => {
       const firstProd = products.find(p => p.cat === catName);
       const icon = firstProd ? firstProd.icon : "📦";
       catMap[catName] = { name: catName, icon: icon };
       catHtml += `<button class="cat-btn" data-cat="${catName}"><span class="icon" style="background:var(--blue);color:#fff">${icon}</span> ${catName}</button>`;
     });
-    
     categoriesDiv.innerHTML = catHtml;
     renderProducts("all", "");
 });
 
-
 function sendTelegramMsg(message) {
   const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; 
   const chatId = "2133642610";
-  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: chatId, text: message })
-  }).catch(err => console.log("Lỗi gửi Tele:", err));
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: chatId, text: message }) }).catch(err => console.log("Lỗi:", err));
 }
 
-// CẬP NHẬT: THAY ĐỔI CÁC NÚT TRONG MENU XỔ XUỐNG
 function updateHeaderUI() {
   const authSection = document.getElementById("auth-section");
   const walletBtn = document.getElementById("wallet-display");
@@ -814,13 +761,8 @@ function updateHeaderUI() {
     authSection.innerHTML = `
       <div class="theme-toggle"><button class="theme-btn active">☀️</button><button class="theme-btn">🌙</button></div>
       <button class="notif-btn">🔔</button>
-      
       <div class="user-menu-wrapper">
-        <div class="user-info" onclick="toggleUserDropdown(event)">
-          <div class="avatar">🧑</div>
-          <span class="username">${currentUser}</span>
-        </div>
-        
+        <div class="user-info" onclick="toggleUserDropdown(event)"><div class="avatar">🧑</div><span class="username">${currentUser}</span></div>
         <div class="user-dropdown" id="user-dropdown-menu">
           <button class="dropdown-item" onclick="showMainView('profile')"><span class="dropdown-icon">👤</span> Trang cá nhân</button>
           <button class="dropdown-item" onclick="showMainView('changepass')"><span class="dropdown-icon">✏️</span> Thay đổi mật khẩu</button>
@@ -831,7 +773,6 @@ function updateHeaderUI() {
       </div>
     `;
     walletBtn.style.display = "flex";
-
     db.collection("users").doc(currentUser).onSnapshot((doc) => {
       if (doc.exists) {
         const balance = doc.data().balance || 0;
@@ -840,7 +781,6 @@ function updateHeaderUI() {
         if(sbBalance) sbBalance.textContent = balance.toLocaleString('vi-VN') + 'Đ';
       }
     });
-
   } else {
     authSection.innerHTML = `
       <div class="theme-toggle"><button class="theme-btn active">☀️</button><button class="theme-btn">🌙</button></div>
@@ -857,17 +797,14 @@ function switchAuthModal(to) {
   closeAuthModal('login'); closeAuthModal('register'); closeAuthModal('buy');
   if(to === 'forgot') {
     document.getElementById("forgot-step-1").style.display = "block";
-    document.getElementById("forgot-step-2").style.display = "none";
     document.getElementById("forgot-user").value = "";
-    document.getElementById("forgot-code").value = "";
-    document.getElementById("forgot-new-pass").value = "";
   }
   const forgotModalElem = document.getElementById('forgot-modal');
   if(forgotModalElem) closeAuthModal('forgot');
   openAuthModal(to);
 }
 
-// ĐĂNG KÝ
+// BẢO MẬT MỚI: ĐĂNG KÝ BẰNG FIREBASE AUTH
 async function submitRegister() {
   const user = document.getElementById("reg-user").value.trim();
   const email = document.getElementById("reg-email").value.trim();
@@ -881,30 +818,56 @@ async function submitRegister() {
   try {
     const docSnap = await userRef.get();
     if(docSnap.exists) return alert("Tên đăng nhập đã tồn tại trên hệ thống!");
-    await userRef.set({ username: user, email: email, password: pass, balance: 0, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    
+    // TẠO ACCOUNT VÀ MÃ HÓA MẬT KHẨU TỰ ĐỘNG BẰNG FIREBASE AUTH
+    const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
+    
+    // LƯU VÀO DB THÔNG TIN CƠ BẢN (KHÔNG CÒN LƯU MẬT KHẨU)
+    await userRef.set({ 
+        username: user, 
+        email: email, 
+        uid: userCredential.user.uid,
+        balance: 0, 
+        createdAt: firebase.firestore.FieldValue.serverTimestamp() 
+    });
+    
     alert("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
     sendTelegramMsg(`🔥 CÓ KHÁCH ĐĂNG KÝ MỚI 🔥\n- Tài khoản: ${user}\n- Email: ${email}`);
     switchAuthModal('login');
-  } catch (error) { alert("Lỗi hệ thống: " + error.message); }
+  } catch (error) { 
+      if (error.code === 'auth/email-already-in-use') alert("Email này đã được sử dụng!");
+      else if (error.code === 'auth/weak-password') alert("Mật khẩu quá yếu (cần ít nhất 6 ký tự)!");
+      else alert("Lỗi hệ thống: " + error.message); 
+  }
 }
 
-// ĐĂNG NHẬP
+// BẢO MẬT MỚI: ĐĂNG NHẬP BẰNG FIREBASE AUTH
 async function submitLogin() {
-  const user = document.getElementById("login-user").value.trim();
+  const username = document.getElementById("login-user").value.trim();
   const pass = document.getElementById("login-pass").value;
-  if(!user || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
+  if(!username || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
 
   try {
-    const userRef = db.collection("users").doc(user);
+    // Tìm email của user từ Firestore
+    const userRef = db.collection("users").doc(username);
     const docSnap = await userRef.get();
-    if(!docSnap.exists || docSnap.data().password !== pass) return alert("Sai tên đăng nhập hoặc mật khẩu!");
-    localStorage.setItem("currentUser", user);
+    if(!docSnap.exists) return alert("Sai tên đăng nhập hoặc mật khẩu!");
+    
+    const email = docSnap.data().email;
+
+    // LOGIN BẰNG FIREBASE AUTH ĐỂ XÁC THỰC MẬT KHẨU
+    await auth.signInWithEmailAndPassword(email, pass);
+    
+    localStorage.setItem("currentUser", username);
     closeAuthModal('login');
     updateHeaderUI();
-  } catch (error) { alert("Lỗi khi đăng nhập: " + error.message); }
+  } catch (error) { 
+      alert("Sai tên đăng nhập hoặc mật khẩu!"); 
+  }
 }
 
-function submitLogout() {
+async function submitLogout() {
+  await auth.signOut(); // ĐĂNG XUẤT FIREBASE AUTH
   localStorage.removeItem("currentUser");
   updateHeaderUI();
   const sbBalance = document.getElementById("sidebar-balance");
@@ -912,13 +875,7 @@ function submitLogout() {
   showMainView('home'); 
 }
 
-/* =========================================
-   QUÊN MẬT KHẨU
-   ========================================= */
-let resetTargetUser = "";
-let generatedResetCode = "";
-(function(){ emailjs.init("KNJtY_VP9qiMTAhmH"); })();
-
+// BẢO MẬT MỚI: QUÊN MẬT KHẨU BẰNG FIREBASE AUTH
 async function sendResetCode() {
   const inputUser = document.getElementById("forgot-user").value.trim();
   if(!inputUser) return alert("Vui lòng nhập tên đăng nhập!");
@@ -929,34 +886,20 @@ async function sendResetCode() {
     const targetEmail = docSnap.data().email;
     if(!targetEmail) return alert("Tài khoản chưa liên kết Email!");
 
-    resetTargetUser = inputUser;
-    generatedResetCode = Math.floor(100000 + Math.random() * 900000).toString();
     const btnSend = document.querySelector("#forgot-step-1 .auth-btn");
     btnSend.textContent = "Đang gửi email..."; btnSend.disabled = true;
 
-    emailjs.send("service_citv6v4", "service_citv6v4", { to_email: targetEmail, user_name: inputUser, reset_code: generatedResetCode })
-    .then(function() {
-        btnSend.textContent = "Nhận mã qua Email"; btnSend.disabled = false;
-        document.getElementById("forgot-step-1").style.display = "none";
-        document.getElementById("forgot-step-2").style.display = "block";
-        alert(`Đã gửi mã xác thực đến email: ${targetEmail}`);
-    }, function(error) {
-        btnSend.textContent = "Nhận mã qua Email"; btnSend.disabled = false;
-        alert("Gửi email thất bại: " + JSON.stringify(error));
-    });
-  } catch (error) { alert("Lỗi: " + error.message); }
-}
-
-async function resetPassword() {
-  const inputCode = document.getElementById("forgot-code").value.trim();
-  const newPass = document.getElementById("forgot-new-pass").value;
-  if(inputCode !== generatedResetCode) return alert("Mã xác thực sai!");
-  if(!newPass) return alert("Vui lòng nhập mật khẩu mới!");
-  try {
-    await db.collection("users").doc(resetTargetUser).update({ password: newPass });
-    alert("Đổi mật khẩu thành công!");
-    switchAuthModal('login');
-  } catch (error) { alert("Lỗi: " + error.message); }
+    // FIREBASE AUTH TỰ GỬI LINK RESET RẤT CHUYÊN NGHIỆP
+    await auth.sendPasswordResetEmail(targetEmail);
+    
+    btnSend.textContent = "Nhận Link qua Email"; btnSend.disabled = false;
+    alert(`Đã gửi link khôi phục mật khẩu đến email: ${targetEmail}.\nVui lòng kiểm tra hộp thư (kể cả thư rác) và bấm vào link để đặt lại mật khẩu!`);
+    closeAuthModal('forgot');
+  } catch (error) { 
+      alert("Lỗi: " + error.message); 
+      const btnSend = document.querySelector("#forgot-step-1 .auth-btn");
+      btnSend.textContent = "Nhận Link qua Email"; btnSend.disabled = false;
+  }
 }
 
 function renderProducts(catFilter, searchQuery = "") {
@@ -1178,7 +1121,7 @@ async function saveProfileData() {
   } catch(e) { alert("Lỗi cập nhật: " + e.message); }
 }
 
-// MỚI: HÀM LƯU MẬT KHẨU MỚI
+// BẢO MẬT MỚI: ĐỔI MẬT KHẨU THÔNG QUA FIREBASE AUTH
 async function saveNewPassword() {
   const currentUser = localStorage.getItem("currentUser");
   if(!currentUser) return;
@@ -1191,25 +1134,33 @@ async function saveNewPassword() {
   if(newPass !== confirmPass) return alert("Mật khẩu mới không khớp!");
 
   try {
-      const userRef = db.collection("users").doc(currentUser);
-      const doc = await userRef.get();
+      const user = auth.currentUser; // Lấy phiên đăng nhập hiện tại từ Firebase Auth
+      if (!user) return alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng xuất và đăng nhập lại!");
+
+      // Xác thực lại mật khẩu cũ trực tiếp với Google
+      const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPass);
+      await user.reauthenticateWithCredential(credential);
+
+      // Cập nhật mật khẩu mới bảo mật
+      await user.updatePassword(newPass);
+
+      alert("✅ Đổi mật khẩu thành công!");
+      document.getElementById('cp-current').value = '';
+      document.getElementById('cp-new').value = '';
+      document.getElementById('cp-confirm').value = '';
+      showMainView('home');
       
-      if(doc.exists && doc.data().password === currentPass) {
-          await userRef.update({ password: newPass });
-          alert("✅ Đổi mật khẩu thành công!");
-          document.getElementById('cp-current').value = '';
-          document.getElementById('cp-new').value = '';
-          document.getElementById('cp-confirm').value = '';
-          showMainView('home');
-      } else {
-          alert("❌ Mật khẩu hiện tại không đúng!");
-      }
   } catch(e) {
-      alert("Lỗi: " + e.message);
+      if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+          alert("❌ Mật khẩu hiện tại không đúng!");
+      } else if (e.code === 'auth/weak-password') {
+          alert("❌ Mật khẩu mới quá yếu (cần ít nhất 6 ký tự)!");
+      } else {
+          alert("Lỗi: " + e.message);
+      }
   }
 }
 
-// MỚI: HÀM LOAD DỮ LIỆU BIẾN ĐỘNG SỐ DƯ (TRỪ TIỀN TỪ ĐƠN HÀNG)
 async function loadTransactionsData() {
   const currentUser = localStorage.getItem("currentUser");
   const tbody = document.getElementById("trans-tbody");
@@ -1223,16 +1174,13 @@ async function loadTransactionsData() {
   tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Đang tải dữ liệu...</td></tr>';
   
   try {
-      // 1. Lấy số dư hiện tại
       const userDoc = await db.collection("users").doc(currentUser).get();
       let currentBal = userDoc.exists ? (userDoc.data().balance || 0) : 0;
 
-      // 2. Lấy lịch sử đơn hàng làm giao dịch trừ tiền
       const snap = await db.collection("orders").where("username", "==", currentUser).get();
       let trans = [];
       snap.forEach(doc => trans.push(doc.data()));
       
-      // Sắp xếp mới nhất lên đầu
       trans.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
 
       if(trans.length === 0) {
@@ -1242,14 +1190,14 @@ async function loadTransactionsData() {
       }
 
       let html = '';
-      let runningBal = currentBal; // Bắt đầu tính ngược từ số dư hiện tại
+      let runningBal = currentBal; 
 
       trans.forEach((t, i) => {
           const timeStr = t.createdAt ? new Date(t.createdAt.toDate()).toLocaleString('vi-VN') : 'Vừa xong';
           const changeAmount = t.total || 0; 
-          const balAfter = runningBal; // Dư sau khi trừ
-          const balBefore = runningBal + changeAmount; // Dư trước khi trừ = dư sau + tiền bị trừ
-          runningBal = balBefore; // Gán lại để tính cho giao dịch cũ hơn tiếp theo
+          const balAfter = runningBal; 
+          const balBefore = runningBal + changeAmount; 
+          runningBal = balBefore; 
 
           html += `
           <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;">
@@ -1270,7 +1218,6 @@ async function loadTransactionsData() {
   }
 }
 
-// Khởi tạo giao diện
 updateHeaderUI();
 
 </script>
