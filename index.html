@@ -23,6 +23,7 @@
     --green: #22c55e;
     --blue: #3b82f6;
     --blue-dark: #1e293b;
+    --sidebar-width: 260px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,7 +31,11 @@
   body {
     background: var(--dark); color: var(--text); font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 13px; min-height: 100vh;
+    padding-left: var(--sidebar-width);
+    transition: padding-left 0.3s ease;
   }
+  
+  body.sidebar-closed { padding-left: 0; }
 
   /* HEADER */
   .header {
@@ -60,7 +65,7 @@
   .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ef4444); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: bold; }
   .username { font-weight: 600; font-size: 13px; }
 
-  /* MỚI: CSS CHO MENU XỔ XUỐNG KHI BẤM VÀO USER */
+  /* CSS CHO MENU XỔ XUỐNG KHI BẤM VÀO USER */
   .user-menu-wrapper { position: relative; }
   .user-dropdown {
     position: absolute; top: 100%; right: 0; margin-top: 10px;
@@ -104,14 +109,14 @@
   .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
   .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
   .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
-
+  
   /* SEARCH BAR */
   .search-wrap { padding: 12px 16px; }
   .search-bar { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
   .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
   .search-bar input::placeholder { color: var(--text-muted); }
 
-  /* BẢNG SẢN PHẨM */
+  /* BẢNG SẢN PHẨM MỚI */
   .products-section { padding: 0 16px 16px; }
   .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
   .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
@@ -197,30 +202,19 @@
   .footer a { color: var(--blue); text-decoration: none; }
 
   /* ========================================================
-     CSS SIDEBAR NAV (TỐI ƯU HÓA GPU CHỐNG LAG TỐI ĐA)
+     CSS SIDEBAR NAV
      ======================================================== */
   .app-sidebar {
-    position: fixed;
-    top: 0; left: 0;
-    width: 260px;
-    height: 100vh;
-    background: #0b1727; 
-    color: #fff;
-    z-index: 105;
-    overflow-y: auto;
-    transform: translateX(0);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform; 
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    font-family: var(--sans);
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: #0b1727; color: #fff;
+    z-index: 105; overflow-y: auto; transform: translateX(0); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    font-family: var(--sans); box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   }
   .app-sidebar::-webkit-scrollbar { width: 4px; }
   .app-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
   
-  .sidebar-logo-container { background: #fff; margin: 20px; border-radius: 8px; display: flex; justify-content: center; align-items: center; height: 120px; overflow: hidden; transform: translateZ(0); }
-  .sidebar-logo-img { width: 80%; height: auto; object-fit: contain; }
+  .sidebar-logo-container { background: #fff; margin: 20px auto; border-radius: 8px; display: flex; justify-content: center; align-items: center; width: 220px; height: 220px; overflow: hidden; transform: translateZ(0); }
+  .sidebar-logo-img { width: 150px; height: auto; object-fit: contain; }
   
   .sidebar-settings { padding: 0 20px; font-size: 12px; line-height: 2.2; color: #cbd5e1; }
   .sidebar-settings strong { color: #fff; font-weight: 600; }
@@ -230,14 +224,14 @@
   .text-red { color: #ef4444; }
   
   .sidebar-menu { display: flex; flex-direction: column; padding-bottom: 20px; }
-  .menu-item { display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 600; transition: background-color 0.2s, color 0.2s; }
-  .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.05); color: #fff; border-left: 3px solid var(--blue); }
+  .menu-item { display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s, color 0.2s; }
+  .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.05); color: #fff; border-left: 3px solid var(--blue); padding-left: 17px; }
   .menu-icon { width: 24px; font-size: 16px; margin-right: 12px; text-align: center; }
   .menu-item .arrow { margin-left: auto; font-size: 16px; }
   .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
   
   @media (min-width: 901px) {
-    body { padding-left: 260px; }
+    body { padding-left: 260px; transition: padding-left 0.3s ease; }
     body.sidebar-closed { padding-left: 0 !important; }
     .app-sidebar.collapsed { transform: translateX(-100%) !important; }
   }
@@ -248,7 +242,7 @@
   }
 
   /* ========================================================
-     CSS CHO BẢNG LỊCH SỬ MUA HÀNG
+     CSS CHO CÁC BẢNG LỊCH SỬ / BIẾN ĐỘNG SỐ DƯ
      ======================================================== */
   .history-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin: 20px 16px; }
   .history-card h2 { color: #1e293b; font-size: 24px; font-weight: 700; margin-bottom: 20px; }
@@ -266,6 +260,47 @@
   .hist-btn:hover { background: #f1f5f9; }
   .hist-btn.prev { border-radius: 4px 0 0 4px; border-right: none; }
   .hist-btn.next { border-radius: 0 4px 4px 0; }
+
+  /* ========================================================
+     CSS CHO TRANG CÁ NHÂN (PROFILE)
+     ======================================================== */
+  .profile-wrapper { padding: 20px 16px; max-width: 1000px; margin: 0 auto; }
+  .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
+  @media (max-width: 900px) { .profile-grid { grid-template-columns: 1fr; } }
+  
+  .profile-left { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; height: fit-content; }
+  .profile-header-bg { background: var(--blue); padding: 30px 20px; text-align: center; color: #fff; }
+  .profile-avatar-large { width: 80px; height: 80px; background: #fff; border-radius: 10px; margin: 0 auto 10px; display: flex; justify-content: center; align-items: center; font-size: 40px; }
+  .profile-name-large { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+  .profile-balance-large { font-size: 14px; opacity: 0.9; }
+  .profile-left-info { padding: 20px; }
+  .pl-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; color: #475569; font-size: 13px; font-weight: 500; background: #f8fafc; padding: 10px; border-radius: 8px; }
+  .pl-icon { width: 30px; height: 30px; background: #e0e7ff; color: var(--blue); border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 14px; flex-shrink: 0; }
+  .pl-socials { display: flex; justify-content: center; gap: 15px; margin-top: 20px; font-size: 18px; color: #64748b; }
+  
+  .profile-right { display: flex; flex-direction: column; gap: 20px; }
+  .pr-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+  @media (max-width: 768px) { .pr-stats { grid-template-columns: 1fr; } }
+  .pr-stat-card { background: #fff; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .pr-stat-val { font-size: 24px; font-weight: 800; margin-bottom: 5px; }
+  .pr-stat-val.blue { color: var(--blue); }
+  .pr-stat-val.green { color: var(--green); }
+  .pr-stat-val.orange { color: #f59e0b; }
+  .pr-stat-label { color: #64748b; font-size: 14px; font-weight: 600; }
+  
+  .pr-form-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .pr-form-title { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 20px; }
+  .pr-form-group { display: flex; margin-bottom: 15px; align-items: center; }
+  @media (max-width: 600px) { .pr-form-group { flex-direction: column; align-items: flex-start; gap: 8px; } .pr-form-label { width: 100%; margin-bottom: 0; } }
+  .pr-form-label { width: 200px; font-size: 13px; font-weight: 600; color: #475569; flex-shrink: 0; }
+  .pr-form-input { flex: 1; width: 100%; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 12px; font-size: 13px; color: #1e293b; outline: none; background: #f8fafc; }
+  .pr-form-input:not([readonly]):focus { border-color: var(--blue); background: #fff; }
+  .pr-form-actions { margin-top: 20px; display: flex; gap: 10px; }
+  .pr-btn { padding: 10px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; color: #fff; transition: 0.2s; }
+  .pr-btn.save { background: #3b82f6; }
+  .pr-btn.save:hover { background: #2563eb; }
+  .pr-btn.close { background: #ef4444; }
+  .pr-btn.close:hover { background: #dc2626; }
 </style>
 </head>
 <body>
@@ -367,7 +402,7 @@
 </div>
 
 <div id="view-history" style="display: none;">
-    <button class="btn btn-red" onclick="setActiveMenu(document.querySelectorAll('.menu-item')[0], 'home')" style="margin: 20px 16px 0 16px; border-radius: 4px; padding: 8px 16px; background: #e8192c; color: white; border: none; cursor: pointer;">
+    <button class="btn btn-red" onclick="showMainView('home')" style="margin: 20px 16px 0 16px; border-radius: 4px; padding: 8px 16px; background: #e8192c; color: white; border: none; cursor: pointer;">
         ← Quay Lại
     </button>
     
@@ -415,6 +450,152 @@
         </div>
     </div>
 </div>
+
+<div id="view-profile" style="display: none;">
+  <div class="profile-wrapper">
+    <div class="profile-grid">
+      <div class="profile-left">
+        <div class="profile-header-bg">
+          <div class="profile-avatar-large">🧑</div>
+          <div class="profile-name-large" id="prof-display-name">...</div>
+          <div class="profile-balance-large" id="prof-display-bal">...</div>
+        </div>
+        <div class="profile-left-info">
+          <div class="pl-item"><div class="pl-icon">✉️</div><span id="prof-side-email">...</span></div>
+          <div class="pl-item"><div class="pl-icon">📞</div><span id="prof-side-phone">Chưa cập nhật</span></div>
+          <div class="pl-item"><div class="pl-icon">🛡️</div><span>Đang tắt bảo mật</span></div>
+          <div class="pl-socials">
+            <span style="cursor:pointer">f</span>
+            <span style="cursor:pointer">🐦</span>
+            <span style="cursor:pointer">▶</span>
+            <span style="cursor:pointer">P</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="profile-right">
+        <div class="pr-stats">
+          <div class="pr-stat-card">
+            <div class="pr-stat-val blue">0đ</div>
+            <div class="pr-stat-label">Tổng Tiền Nạp</div>
+          </div>
+          <div class="pr-stat-card">
+            <div class="pr-stat-val green">0đ</div>
+            <div class="pr-stat-label">Số Dư Sử Dụng</div>
+          </div>
+          <div class="pr-stat-card">
+            <div class="pr-stat-val orange" id="prof-stat-bal">0đ</div>
+            <div class="pr-stat-label">Số Dư Hiện Tại</div>
+          </div>
+        </div>
+        
+        <div class="pr-form-card">
+          <div class="pr-form-title">Thông Tin Cá Nhân</div>
+          <div class="pr-form-group">
+            <div class="pr-form-label">Họ và Tên</div>
+            <input type="text" class="pr-form-input" id="prof-fullname" placeholder="Nhập họ và tên">
+          </div>
+          <div class="pr-form-group">
+            <div class="pr-form-label">Tên đăng nhập</div>
+            <input type="text" class="pr-form-input" id="prof-username" readonly>
+          </div>
+          <div class="pr-form-group">
+            <div class="pr-form-label">Số điện thoại</div>
+            <input type="text" class="pr-form-input" id="prof-phone" placeholder="Nhập số điện thoại">
+          </div>
+          <div class="pr-form-group">
+            <div class="pr-form-label">Địa chỉ Email (*)</div>
+            <input type="text" class="pr-form-input" id="prof-email" readonly>
+          </div>
+          <div class="pr-form-group">
+            <div class="pr-form-label">Thời gian đăng ký</div>
+            <input type="text" class="pr-form-input" id="prof-created" readonly>
+          </div>
+          <div class="pr-form-group">
+            <div class="pr-form-label">Đăng nhập gần đây</div>
+            <input type="text" class="pr-form-input" id="prof-lastlogin" readonly>
+          </div>
+          
+          <div class="pr-form-actions">
+            <button class="pr-btn save" onclick="saveProfileData()">Lưu Thay Đổi</button>
+            <button class="pr-btn close" onclick="showMainView('home')">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="view-changepass" style="display: none;">
+  <div class="profile-wrapper">
+    <div class="pr-form-card">
+      <div class="pr-form-title">Thay đổi mật khẩu</div>
+      <div class="pr-form-group">
+        <div class="pr-form-label">Mật khẩu hiện tại</div>
+        <input type="password" class="pr-form-input" id="cp-current" placeholder="Vui lòng nhập mật khẩu hiện tại">
+      </div>
+      <div class="pr-form-group">
+        <div class="pr-form-label">Mật khẩu mới</div>
+        <input type="password" class="pr-form-input" id="cp-new" placeholder="Vui lòng nhập mật khẩu mới">
+      </div>
+      <div class="pr-form-group">
+        <div class="pr-form-label">Nhập lại mật khẩu mới</div>
+        <input type="password" class="pr-form-input" id="cp-confirm" placeholder="Vui lòng nhập lại mật khẩu mới">
+      </div>
+      
+      <div class="pr-form-actions">
+        <button class="pr-btn save" onclick="saveNewPassword()">Lưu Thay Đổi</button>
+        <button class="pr-btn close" onclick="showMainView('home')">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="view-transactions" style="display: none;">
+  <div class="history-card">
+      <h2>Biến động số dư</h2>
+      <div class="history-controls">
+          <div>
+              Show 
+              <select>
+                  <option>10</option>
+                  <option>25</option>
+                  <option>50</option>
+              </select> 
+              entries
+          </div>
+          <div>
+              Search: <input type="text">
+          </div>
+      </div>
+      
+      <div style="overflow-x: auto;">
+          <table class="hist-table">
+              <thead>
+                  <tr>
+                      <th># ↕</th>
+                      <th>Số tiền trước ↕</th>
+                      <th>Số tiền thay đổi ↕</th>
+                      <th>Số tiền hiện tại ↕</th>
+                      <th>Thời gian ↕</th>
+                      <th>Nội dung ↕</th>
+                  </tr>
+              </thead>
+              <tbody id="trans-tbody">
+                  <tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Vui lòng đăng nhập để xem lịch sử</td></tr>
+              </tbody>
+          </table>
+      </div>
+      
+      <div class="hist-footer">
+          <div id="trans-info">Showing 0 to 0 of 0 entries</div>
+          <div>
+              <button class="hist-btn prev">Previous</button><button class="hist-btn next">Next</button>
+          </div>
+      </div>
+  </div>
+</div>
+
 
 <div class="footer">
   © 2025 TàiNguyênMMO &nbsp;|&nbsp; <a href="#">Điều khoản</a> &nbsp;|&nbsp; <a href="#">Liên hệ</a> &nbsp;|&nbsp; Hỗ trợ: <a href="#">Telegram</a>
@@ -511,18 +692,45 @@ function toggleMenu() {
   }
 }
 
+// CẬP NHẬT: HÀM QUẢN LÝ CHUYỂN TRANG
+function showMainView(viewName) {
+  // Ẩn tất cả các màn hình
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-history').style.display = 'none';
+  document.getElementById('view-profile').style.display = 'none';
+  document.getElementById('view-changepass').style.display = 'none';
+  document.getElementById('view-transactions').style.display = 'none';
+
+  // Hiển thị màn hình được yêu cầu
+  if (viewName === 'home') document.getElementById('view-home').style.display = 'block';
+  if (viewName === 'history') {
+      document.getElementById('view-history').style.display = 'block';
+      loadHistoryData();
+  }
+  if (viewName === 'profile') {
+      document.getElementById('view-profile').style.display = 'block';
+      loadProfileData();
+  }
+  if (viewName === 'changepass') {
+      document.getElementById('view-changepass').style.display = 'block';
+  }
+  if (viewName === 'transactions') {
+      document.getElementById('view-transactions').style.display = 'block';
+      loadTransactionsData();
+  }
+  
+  // Đóng menu thả xuống của user nếu đang mở
+  const menu = document.getElementById('user-dropdown-menu');
+  if (menu && menu.classList.contains('show')) {
+      menu.classList.remove('show');
+  }
+}
+
 function setActiveMenu(element, view) {
   document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
   if(element) element.classList.add('active');
   
-  if (view === 'history') {
-      document.getElementById('view-home').style.display = 'none';
-      document.getElementById('view-history').style.display = 'block';
-      loadHistoryData();
-  } else {
-      document.getElementById('view-home').style.display = 'block';
-      document.getElementById('view-history').style.display = 'none';
-  }
+  showMainView(view);
   
   if (window.innerWidth <= 900) {
       document.getElementById('app-sidebar').classList.remove('open');
@@ -530,7 +738,7 @@ function setActiveMenu(element, view) {
   }
 }
 
-// HÀM MỚI: TẮT BẬT DROPDOWN USER MENU
+// TẮT BẬT DROPDOWN USER MENU
 function toggleUserDropdown(event) {
   event.stopPropagation();
   const dropdown = document.getElementById('user-dropdown-menu');
@@ -539,7 +747,6 @@ function toggleUserDropdown(event) {
   }
 }
 
-// Bấm ra ngoài là tự đóng menu user
 window.addEventListener('click', function(e) {
   const menu = document.getElementById('user-dropdown-menu');
   if (menu && menu.classList.contains('show')) {
@@ -597,7 +804,7 @@ function sendTelegramMsg(message) {
   }).catch(err => console.log("Lỗi gửi Tele:", err));
 }
 
-// CẬP NHẬT: THÊM DROPDOWN VÀO HÀM RENDER HEADER KHI ĐÃ LOGGED IN
+// CẬP NHẬT: THAY ĐỔI CÁC NÚT TRONG MENU XỔ XUỐNG
 function updateHeaderUI() {
   const authSection = document.getElementById("auth-section");
   const walletBtn = document.getElementById("wallet-display");
@@ -615,17 +822,13 @@ function updateHeaderUI() {
         </div>
         
         <div class="user-dropdown" id="user-dropdown-menu">
-          <button class="dropdown-item"><span class="dropdown-icon">👤</span> Trang cá nhân</button>
-          <button class="dropdown-item"><span class="dropdown-icon">✏️</span> Thay đổi mật khẩu</button>
-          <button class="dropdown-item"><span class="dropdown-icon">📄</span> Nhật ký hoạt động</button>
-          <button class="dropdown-item"><span class="dropdown-icon">💲</span> Biến động số dư</button>
-          <button class="dropdown-item"><span class="dropdown-icon">🛡️</span> Bảo mật</button>
+          <button class="dropdown-item" onclick="showMainView('profile')"><span class="dropdown-icon">👤</span> Trang cá nhân</button>
+          <button class="dropdown-item" onclick="showMainView('changepass')"><span class="dropdown-icon">✏️</span> Thay đổi mật khẩu</button>
+          <button class="dropdown-item" onclick="showMainView('transactions')"><span class="dropdown-icon">💲</span> Biến động số dư</button>
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="submitLogout()"><span class="dropdown-icon">🚪</span> Đăng xuất</button>
         </div>
       </div>
-      
-      <button class="wallet-btn danger no-icon" onclick="submitLogout()">Thoát</button>
     `;
     walletBtn.style.display = "flex";
 
@@ -706,6 +909,7 @@ function submitLogout() {
   updateHeaderUI();
   const sbBalance = document.getElementById("sidebar-balance");
   if(sbBalance) sbBalance.textContent = "0Đ";
+  showMainView('home'); 
 }
 
 /* =========================================
@@ -814,8 +1018,7 @@ function handleCategoryClick(e) {
   document.querySelectorAll(`.cat-btn[data-cat="${cat}"]`).forEach(b => b.classList.add('active'));
   document.querySelector('.search-bar input').value = '';
   
-  document.getElementById('view-home').style.display = 'block';
-  document.getElementById('view-history').style.display = 'none';
+  showMainView('home');
   document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
   document.querySelector('.menu-item').classList.add('active'); 
   
@@ -926,6 +1129,144 @@ async function loadHistoryData() {
 
   } catch (err) {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color:red;">Lỗi tải dữ liệu: ${err.message}</td></tr>`;
+  }
+}
+
+async function loadProfileData() {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) { alert("Vui lòng đăng nhập!"); return; }
+  
+  try {
+      const docSnap = await db.collection("users").doc(currentUser).get();
+      if (docSnap.exists) {
+          const data = docSnap.data();
+          const balStr = (data.balance || 0).toLocaleString('vi-VN') + 'đ';
+          
+          document.getElementById('prof-display-name').textContent = currentUser;
+          document.getElementById('prof-display-bal').textContent = balStr;
+          document.getElementById('prof-stat-bal').textContent = balStr;
+          
+          document.getElementById('prof-side-email').textContent = data.email || 'Chưa cập nhật';
+          document.getElementById('prof-side-phone').textContent = data.phone || 'Chưa cập nhật';
+          
+          document.getElementById('prof-fullname').value = data.fullname || '';
+          document.getElementById('prof-username').value = currentUser;
+          document.getElementById('prof-phone').value = data.phone || '';
+          document.getElementById('prof-email').value = data.email || '';
+          
+          const createdTime = data.createdAt ? new Date(data.createdAt.toDate()).toLocaleString('vi-VN') : 'Không rõ';
+          document.getElementById('prof-created').value = createdTime;
+          document.getElementById('prof-lastlogin').value = new Date().toLocaleString('vi-VN');
+      }
+  } catch(e) { console.error(e); }
+}
+
+async function saveProfileData() {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) return;
+  
+  const fullname = document.getElementById('prof-fullname').value.trim();
+  const phone = document.getElementById('prof-phone').value.trim();
+  
+  try {
+      await db.collection("users").doc(currentUser).update({
+          fullname: fullname,
+          phone: phone
+      });
+      alert("✅ Cập nhật thông tin thành công!");
+      loadProfileData(); 
+  } catch(e) { alert("Lỗi cập nhật: " + e.message); }
+}
+
+// MỚI: HÀM LƯU MẬT KHẨU MỚI
+async function saveNewPassword() {
+  const currentUser = localStorage.getItem("currentUser");
+  if(!currentUser) return;
+  
+  const currentPass = document.getElementById('cp-current').value;
+  const newPass = document.getElementById('cp-new').value;
+  const confirmPass = document.getElementById('cp-confirm').value;
+
+  if(!currentPass || !newPass || !confirmPass) return alert("Vui lòng điền đủ thông tin!");
+  if(newPass !== confirmPass) return alert("Mật khẩu mới không khớp!");
+
+  try {
+      const userRef = db.collection("users").doc(currentUser);
+      const doc = await userRef.get();
+      
+      if(doc.exists && doc.data().password === currentPass) {
+          await userRef.update({ password: newPass });
+          alert("✅ Đổi mật khẩu thành công!");
+          document.getElementById('cp-current').value = '';
+          document.getElementById('cp-new').value = '';
+          document.getElementById('cp-confirm').value = '';
+          showMainView('home');
+      } else {
+          alert("❌ Mật khẩu hiện tại không đúng!");
+      }
+  } catch(e) {
+      alert("Lỗi: " + e.message);
+  }
+}
+
+// MỚI: HÀM LOAD DỮ LIỆU BIẾN ĐỘNG SỐ DƯ (TRỪ TIỀN TỪ ĐƠN HÀNG)
+async function loadTransactionsData() {
+  const currentUser = localStorage.getItem("currentUser");
+  const tbody = document.getElementById("trans-tbody");
+  
+  if(!currentUser) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Vui lòng đăng nhập</td></tr>';
+      document.getElementById('trans-info').innerText = 'Showing 0 to 0 of 0 entries';
+      return;
+  }
+  
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Đang tải dữ liệu...</td></tr>';
+  
+  try {
+      // 1. Lấy số dư hiện tại
+      const userDoc = await db.collection("users").doc(currentUser).get();
+      let currentBal = userDoc.exists ? (userDoc.data().balance || 0) : 0;
+
+      // 2. Lấy lịch sử đơn hàng làm giao dịch trừ tiền
+      const snap = await db.collection("orders").where("username", "==", currentUser).get();
+      let trans = [];
+      snap.forEach(doc => trans.push(doc.data()));
+      
+      // Sắp xếp mới nhất lên đầu
+      trans.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+      if(trans.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Không có giao dịch nào</td></tr>';
+          document.getElementById('trans-info').innerText = 'Showing 0 to 0 of 0 entries';
+          return;
+      }
+
+      let html = '';
+      let runningBal = currentBal; // Bắt đầu tính ngược từ số dư hiện tại
+
+      trans.forEach((t, i) => {
+          const timeStr = t.createdAt ? new Date(t.createdAt.toDate()).toLocaleString('vi-VN') : 'Vừa xong';
+          const changeAmount = t.total || 0; 
+          const balAfter = runningBal; // Dư sau khi trừ
+          const balBefore = runningBal + changeAmount; // Dư trước khi trừ = dư sau + tiền bị trừ
+          runningBal = balBefore; // Gán lại để tính cho giao dịch cũ hơn tiếp theo
+
+          html += `
+          <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;">
+              <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:#475569;">${i}</td>
+              <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--green); font-weight:700">${balBefore.toLocaleString('vi-VN')}đ</td>
+              <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--red); font-weight:700">-${changeAmount.toLocaleString('vi-VN')}đ</td>
+              <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--blue); font-weight:700">${balAfter.toLocaleString('vi-VN')}đ</td>
+              <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--text-muted)">${timeStr}</td>
+              <td style="padding: 12px; font-style: italic; color:#334155;">Thanh toán đơn hàng mua tài khoản ${t.productName} #${t.id}</td>
+          </tr>
+          `;
+      });
+      tbody.innerHTML = html;
+      document.getElementById('trans-info').innerText = `Showing 1 to ${trans.length} of ${trans.length} entries`;
+
+  } catch(e) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Lỗi tải dữ liệu: ${e.message}</td></tr>`;
   }
 }
 
