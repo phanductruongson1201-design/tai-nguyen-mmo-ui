@@ -30,7 +30,12 @@
   body {
     background: var(--dark); color: var(--text); font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 13px; min-height: 100vh;
+    transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  /* CLASS MỚI ĐỂ THU GỌN MÀN HÌNH */
+  body.sidebar-collapsed { padding-left: 0 !important; }
+  .app-sidebar.collapsed { left: -260px !important; }
 
   /* HEADER */
   .header {
@@ -215,7 +220,7 @@
     top: 0; left: 0;
     width: 260px;
     height: 100vh;
-    background: #0b1727; /* Tông xanh đậm giống hình */
+    background: #0b1727; 
     color: #fff;
     z-index: 105;
     overflow-y: auto;
@@ -278,6 +283,7 @@
   .menu-item:hover, .menu-item.active {
     background: rgba(255,255,255,0.05);
     color: #fff;
+    border-left: 3px solid var(--blue);
   }
   .menu-icon {
     width: 24px;
@@ -309,7 +315,6 @@
     body { padding-left: 0; }
   }
   
-  /* Ẩn cái panel menu cũ đi để tránh xung đột giao diện */
   .mobile-menu-panel { display: none !important; }
 </style>
 </head>
@@ -340,14 +345,14 @@
   </div>
   
   <nav class="sidebar-menu">
-    <a href="#" class="menu-item active"><span class="menu-icon">🏠</span> Trang Chủ</a>
-    <a href="#" class="menu-item"><span class="menu-icon">🛒</span> Mua Tài Khoản <span class="arrow">›</span></a>
-    <a href="#" class="menu-item"><span class="menu-icon">📄</span> Mua Tài Liệu</a>
-    <a href="#" class="menu-item"><span class="menu-icon">⏱</span> Lịch Sử Mua Hàng</a>
+    <a href="#" class="menu-item active" onclick="setActiveMenu(this)"><span class="menu-icon">🏠</span> Trang Chủ</a>
+    <a href="#categories" class="menu-item" onclick="setActiveMenu(this)"><span class="menu-icon">🛒</span> Mua Tài Khoản <span class="arrow">›</span></a>
+    <a href="#" class="menu-item" onclick="setActiveMenu(this)"><span class="menu-icon">📄</span> Mua Tài Liệu</a>
+    <a href="#" class="menu-item" onclick="setActiveMenu(this)"><span class="menu-icon">⏱</span> Lịch Sử Mua Hàng</a>
     
     <div class="menu-header">NẠP TIỀN</div>
-    <a href="#" class="menu-item"><span class="menu-icon">🏦</span> Ngân Hàng</a>
-    <a href="#" class="menu-item"><span class="menu-icon">🧾</span> Hoá Đơn</a>
+    <a href="#" class="menu-item" onclick="setActiveMenu(this)"><span class="menu-icon">🏦</span> Ngân Hàng</a>
+    <a href="#" class="menu-item" onclick="setActiveMenu(this)"><span class="menu-icon">🧾</span> Hoá Đơn</a>
   </nav>
 </aside>
 
@@ -495,16 +500,36 @@
 let products = [];
 let catMap = {};
 
-// CẬP NHẬT: HÀM MỞ / ĐÓNG MENU DÀNH CHO SIDEBAR MỚI
+// HÀM MỞ / ĐÓNG MENU MOBILE VÀ DESKTOP
 function toggleMenu() {
   const sidebar = document.getElementById('app-sidebar');
   const overlay = document.getElementById('mobile-menu-overlay');
   
-  sidebar.classList.toggle('open');
-  if(sidebar.classList.contains('open')) {
-    overlay.classList.add('show');
+  if (window.innerWidth <= 900) {
+    // Màn hình điện thoại: Vuốt menu ra
+    sidebar.classList.toggle('open');
+    if(sidebar.classList.contains('open')) {
+      overlay.classList.add('show');
+    } else {
+      overlay.classList.remove('show');
+    }
   } else {
-    overlay.classList.remove('show');
+    // Màn hình máy tính: Thụt sidebar vào trong
+    sidebar.classList.toggle('collapsed');
+    document.body.classList.toggle('sidebar-collapsed');
+  }
+}
+
+// HÀM CLICK CHỌN MENU BÊN TRÁI
+function setActiveMenu(element) {
+  // Bỏ sáng tất cả nút
+  document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+  // Làm sáng nút vừa bấm
+  element.classList.add('active');
+  
+  // Trên điện thoại, khi chọn xong mục thì tự đóng menu lại cho gọn
+  if (window.innerWidth <= 900) {
+    toggleMenu();
   }
 }
 
@@ -555,6 +580,7 @@ db.collection("services").onSnapshot((snapshot) => {
     
     renderProducts("all", "");
 });
+
 
 function sendTelegramMsg(message) {
   const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; 
@@ -865,7 +891,7 @@ function handleCategoryClick(e) {
   
   // Đóng sidebar nếu đang xem trên điện thoại
   const panel = document.getElementById('app-sidebar');
-  if(panel && panel.classList.contains('open')) {
+  if(panel && panel.classList.contains('open') && window.innerWidth <= 900) {
       toggleMenu();
   }
 }
