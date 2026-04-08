@@ -32,7 +32,7 @@
     background: var(--dark); color: var(--text); font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 13px; min-height: 100vh;
     padding-left: var(--sidebar-width);
-    transition: padding-left 0.3s ease;
+    /* ĐÃ XÓA DÒNG TRANSITION Ở ĐÂY ĐỂ CHỐNG LAG */
   }
   
   body.sidebar-closed { padding-left: 0; }
@@ -207,9 +207,13 @@
   .pr-btn.close:hover { background: #dc2626; }
 
   /* SIDEBAR MỚI (CHỐNG LAG + KHUNG 220px LOGO VUÔNG TỐI ƯU) */
+  /* CSS SIDEBAR NAV */
   .app-sidebar {
     position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: #0b1727; color: #fff;
-    z-index: 105; overflow-y: auto; transform: translateX(0); transition: left 0.3s ease;
+    z-index: 105; overflow-y: auto; 
+    transform: translateX(0); 
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* CHÌA KHÓA CHỐNG LAG: Dùng Transform */
+    will-change: transform;
     font-family: var(--sans); box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   }
   .app-sidebar::-webkit-scrollbar { width: 4px; }
