@@ -32,7 +32,6 @@
     background: var(--dark); color: var(--text); font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 13px; min-height: 100vh;
     padding-left: var(--sidebar-width);
-    /* ĐÃ XÓA DÒNG TRANSITION Ở ĐÂY ĐỂ CHỐNG LAG */
   }
   
   body.sidebar-closed { padding-left: 0; }
@@ -206,15 +205,11 @@
   .pr-btn.close { background: #ef4444; }
   .pr-btn.close:hover { background: #dc2626; }
 
-  /* SIDEBAR MỚI (CHỐNG LAG + KHUNG 220px LOGO VUÔNG TỐI ƯU) */
-  /* CSS SIDEBAR NAV */
+  /* SIDEBAR CHỐNG LAG */
   .app-sidebar {
     position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: #0b1727; color: #fff;
-    z-index: 105; overflow-y: auto; 
-    transform: translateX(0); 
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* CHÌA KHÓA CHỐNG LAG: Dùng Transform */
-    will-change: transform;
-    font-family: var(--sans); box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    z-index: 105; overflow-y: auto; transform: translateX(0); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform; font-family: var(--sans); box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   }
   .app-sidebar::-webkit-scrollbar { width: 4px; }
   .app-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
@@ -232,15 +227,42 @@
   .menu-item .arrow { margin-left: auto; font-size: 16px; }
   .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
   @media (min-width: 901px) {
-    body { padding-left: 260px; } /* Đã xóa transition gây lag */
+    body { padding-left: 260px; }
     body.sidebar-closed { padding-left: 0 !important; }
-    .app-sidebar.collapsed { transform: translateX(-100%) !important; } /* Chuyển từ left sang transform */
+    .app-sidebar.collapsed { transform: translateX(-100%) !important; }
   }
   @media (max-width: 900px) {
-    .app-sidebar { transform: translateX(-100%); } /* Chuyển từ left sang transform */
-    .app-sidebar.open { transform: translateX(0); } /* Chuyển từ left sang transform */
+    .app-sidebar { transform: translateX(-100%); }
+    .app-sidebar.open { transform: translateX(0); }
     body { padding-left: 0; }
   }
+
+  /* CSS NẠP TIỀN NGÂN HÀNG (MỚI THÊM) */
+  .bank-grid { display: flex; gap: 20px; flex-wrap: wrap; padding: 20px 16px; }
+  .bank-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 20px; width: 220px; height: 140px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+  .bank-card:hover { border-color: var(--blue); box-shadow: 0 4px 12px rgba(59,130,246,0.15); transform: translateY(-3px); }
+  .bank-card img { max-width: 80%; max-height: 80%; object-fit: contain; }
+
+  /* CSS TRANG HOÁ ĐƠN QR (MỚI THÊM) */
+  .invoice-wrapper { max-width: 850px; margin: 30px auto; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; overflow: hidden; border: 1px solid var(--border); }
+  @media (max-width: 768px) { .invoice-wrapper { flex-direction: column; } }
+  .inv-left { background: #262626; color: #fff; width: 320px; padding: 30px 24px; flex-shrink: 0; }
+  .inv-right { flex: 1; padding: 40px 20px; text-align: center; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .inv-logo-box { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 30px; text-align: center; }
+  .inv-logo-box img { max-width: 120px; }
+  .inv-info-row { margin-bottom: 24px; }
+  .inv-info-label { font-size: 13px; color: #a1a1aa; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+  .inv-info-val { font-size: 16px; font-weight: 700; color: #fff; }
+  .inv-info-val.green { color: #4ade80; }
+  .inv-info-val.blue { color: #38bdf8; }
+  .inv-info-val.yellow { color: #fbbf24; }
+  .inv-copy { cursor: pointer; color: #a1a1aa; margin-left: 10px; transition: 0.2s; font-size: 16px; }
+  .inv-copy:hover { color: #fff; }
+  .qr-title { color: #0f766e; font-size: 24px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; }
+  .qr-desc { color: #475569; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+  .qr-image-box { border: 2px dashed #cbd5e1; padding: 15px; border-radius: 16px; display: inline-block; margin-bottom: 20px; }
+  .qr-image-box img { width: 280px; display: block; border-radius: 8px; }
+  .inv-status { display: inline-flex; align-items: center; gap: 8px; background: #f59e0b; color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-top: 10px; }
 
   /* MODALS & GIAO DIỆN NÚT GOOGLE */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 200; display: none; align-items: center; justify-content: center; }
@@ -294,7 +316,7 @@
     <a class="menu-item"><span class="menu-icon">📄</span> Mua Tài Liệu</a>
     <a onclick="setActiveMenu(this, 'history')" class="menu-item"><span class="menu-icon">⏱</span> Lịch Sử Mua Hàng</a>
     <div class="menu-header">NẠP TIỀN</div>
-    <a class="menu-item"><span class="menu-icon">🏦</span> Ngân Hàng</a>
+    <a onclick="setActiveMenu(this, 'bank')" class="menu-item"><span class="menu-icon">🏦</span> Ngân Hàng</a>
     <a class="menu-item"><span class="menu-icon">🧾</span> Hoá Đơn</a>
   </nav>
 </aside>
@@ -435,9 +457,101 @@
   </div>
 </div>
 
-<div class="footer">© 2025 TàiNguyênMMO &nbsp;|&nbsp; <a href="#">Điều khoản</a></div>
+<div id="view-bank" style="display: none;">
+  <div class="section-title">Nạp tiền theo hoá đơn</div>
+  <div class="bank-grid">
+      <div class="bank-card" onclick="openAmountModal('MBBank')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Logo_MB_new.png/1200px-Logo_MB_new.png" alt="MB Bank">
+      </div>
+  </div>
+</div>
+
+<div id="view-invoice" style="display: none;">
+  <div style="text-align:center; padding-top:20px;">
+    <button class="pr-btn close" onclick="showMainView('bank')" style="background: none; color: #e8192c; font-weight: bold; border: none;">← Quay Lại</button>
+  </div>
+  
+  <div class="invoice-wrapper">
+    <div class="inv-left">
+      <div class="inv-logo-box">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Logo">
+      </div>
+      
+      <div class="inv-info-row">
+        <div class="inv-info-label">🏦 Ngân Hàng</div>
+        <div class="inv-info-val">MBBank</div>
+      </div>
+      
+      <div class="inv-info-row">
+        <div class="inv-info-label">💳 Số tài khoản</div>
+        <div class="inv-info-val green">0901429699 <span class="inv-copy" onclick="copyText('0901429699')">📋</span></div>
+      </div>
+      
+      <div class="inv-info-row">
+        <div class="inv-info-label">👤 Chủ tài khoản</div>
+        <div class="inv-info-val">TRAN THU HIEN</div>
+      </div>
+      
+      <div class="inv-info-row">
+        <div class="inv-info-label">💵 Số tiền cần thanh toán</div>
+        <div class="inv-info-val blue" id="inv-amount">0đ</div>
+      </div>
+      
+      <div class="inv-info-row">
+        <div class="inv-info-label">💬 Nội dung chuyển khoản</div>
+        <div class="inv-info-val yellow"><span id="inv-content">...</span> <span class="inv-copy" onclick="copyText(document.getElementById('inv-content').innerText)">📋</span></div>
+      </div>
+      
+      <div class="inv-info-row">
+        <div class="inv-info-label">|||| Trạng thái</div>
+        <div class="inv-status">⏳ Waiting</div>
+      </div>
+    </div>
+    
+    <div class="inv-right">
+      <div class="qr-title">QUÉT MÃ QR ĐỂ THANH TOÁN</div>
+      <div class="qr-desc">Sử dụng <strong>App Internet Banking</strong> hoặc ứng dụng camera hỗ trợ<br>QR code để quét mã</div>
+      
+      <img src="https://vietqr.net/portal/v1/images/vietqr-logo.svg" alt="VietQR" style="height:25px; margin-bottom: 10px;">
+      
+      <div class="qr-image-box">
+        <img id="inv-qr" src="" alt="Mã QR Thanh Toán">
+      </div>
+      
+      <div style="display:flex; justify-content:center; align-items:center; gap: 15px; margin-top: 10px;">
+        <img src="https://vietqr.net/portal/v1/images/napas247-logo.svg" alt="Napas" style="height: 20px;">
+        <span style="color:#cbd5e1;">|</span>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Logo_MB_new.png/1200px-Logo_MB_new.png" alt="MB" style="height: 20px;">
+      </div>
+      
+      <p style="color: #64748b; font-size: 13px; margin-top: 25px;">Vui lòng thanh toán vào thông tin tài khoản trên để hệ thống xử lý hoá đơn tự động.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="footer" style="margin-top: 40px;">© 2025 TàiNguyênMMO &nbsp;|&nbsp; <a href="#">Điều khoản</a></div>
 
 <button class="support-float" onclick="window.open('https://zalo.me/0935748199', '_blank')">💬 LIÊN HỆ HỖ TRỢ</button>
+
+<div class="modal-overlay" id="amount-modal">
+  <div class="modal" style="max-width: 450px;">
+    <button class="modal-close" onclick="closeAuthModal('amount')">✕</button>
+    <div class="modal-title" style="text-transform: none; text-align: left; font-size: 18px; border-bottom: 1px solid #f1f5f9; padding-bottom: 15px;">Nhập số tiền cần nạp</div>
+    
+    <input type="number" id="deposit-amount" class="auth-input" placeholder="Nhập số tiền bạn cần nạp vào hệ thống" style="padding: 15px; font-size: 15px; margin-top: 10px;" oninput="updateDepositPreview()">
+    
+    <div style="display: flex; justify-content: space-between; margin-top: 15px; margin-bottom: 25px; padding: 0 5px;">
+      <div style="color: #475569; font-size: 13px;">Số tiền cần thanh toán<br><strong style="color:var(--blue); font-size: 16px; display:block; margin-top:5px;" id="pay-amount">0</strong></div>
+      <div style="color: #475569; font-size: 13px; text-align: right;">Số tiền nhận được<br><strong style="color:var(--red); font-size: 16px; display:block; margin-top:5px;" id="receive-amount">0</strong></div>
+    </div>
+    
+    <div style="display:flex; gap: 10px; justify-content: flex-end; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+      <button class="auth-btn" style="background:#94a3b8; width: auto; padding: 10px 24px; margin-top: 0; color: #fff;" onclick="closeAuthModal('amount')">Đóng</button>
+      <button class="auth-btn" style="width: auto; padding: 10px 24px; margin-top: 0;" onclick="createInvoice()">Tạo hoá đơn</button>
+    </div>
+  </div>
+</div>
 
 <div class="modal-overlay" id="buy-modal">
   <div class="modal">
@@ -532,17 +646,17 @@ function toggleMenu() {
 }
 
 function showMainView(viewName) {
-  document.getElementById('view-home').style.display = 'none';
-  document.getElementById('view-history').style.display = 'none';
-  document.getElementById('view-profile').style.display = 'none';
-  document.getElementById('view-changepass').style.display = 'none';
-  document.getElementById('view-transactions').style.display = 'none';
+  // Ẩn tất cả các view
+  const views = ['view-home', 'view-history', 'view-profile', 'view-changepass', 'view-transactions', 'view-bank', 'view-invoice'];
+  views.forEach(v => document.getElementById(v).style.display = 'none');
 
-  if (viewName === 'home') document.getElementById('view-home').style.display = 'block';
-  if (viewName === 'history') { document.getElementById('view-history').style.display = 'block'; loadHistoryData(); }
-  if (viewName === 'profile') { document.getElementById('view-profile').style.display = 'block'; loadProfileData(); }
-  if (viewName === 'changepass') { document.getElementById('view-changepass').style.display = 'block'; }
-  if (viewName === 'transactions') { document.getElementById('view-transactions').style.display = 'block'; loadTransactionsData(); }
+  // Hiển thị view được chọn
+  document.getElementById('view-' + viewName).style.display = 'block';
+
+  // Load data nếu cần
+  if (viewName === 'history') loadHistoryData();
+  if (viewName === 'profile') loadProfileData();
+  if (viewName === 'transactions') loadTransactionsData();
   
   const menu = document.getElementById('user-dropdown-menu');
   if (menu && menu.classList.contains('show')) menu.classList.remove('show');
@@ -569,7 +683,70 @@ window.addEventListener('click', function(e) {
   if (menu && menu.classList.contains('show')) menu.classList.remove('show');
 });
 
-/* KẾT NỐI FIREBASE */
+/* =========================================
+   JS MỚI: XỬ LÝ NẠP TIỀN & VIETQR
+   ========================================= */
+function openAmountModal(bankCode) {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+      alert("⚠️ Bạn cần đăng nhập tài khoản để thực hiện nạp tiền!");
+      openAuthModal('login');
+      return;
+  }
+  
+  document.getElementById('deposit-amount').value = '';
+  document.getElementById('pay-amount').innerText = '0';
+  document.getElementById('receive-amount').innerText = '0';
+  openAuthModal('amount');
+}
+
+function updateDepositPreview() {
+  let val = parseInt(document.getElementById('deposit-amount').value);
+  if (isNaN(val) || val < 0) val = 0;
+  document.getElementById('pay-amount').innerText = val.toLocaleString('vi-VN');
+  document.getElementById('receive-amount').innerText = val.toLocaleString('vi-VN');
+}
+
+function createInvoice() {
+  const amount = parseInt(document.getElementById('deposit-amount').value);
+  if (!amount || amount < 10000) {
+      alert("⚠️ Số tiền nạp tối thiểu là 10.000đ");
+      return;
+  }
+
+  const currentUser = localStorage.getItem("currentUser");
+  
+  // Tạo cú pháp chuyển khoản ngẫu nhiên (Ví dụ: NAP sonphan 8B3X)
+  const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const transferContent = `NAP ${currentUser} ${randomCode}`;
+
+  // Đổ dữ liệu vào trang Hóa Đơn
+  document.getElementById('inv-amount').innerText = amount.toLocaleString('vi-VN') + 'đ';
+  document.getElementById('inv-content').innerText = transferContent;
+
+  // Tạo link ảnh VietQR
+  // Cấu trúc: https://img.vietqr.io/image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png?amount=<AMOUNT>&addInfo=<CONTENT>&accountName=<ACCOUNT_NAME>
+  const bankId = "MB"; // Mã ngân hàng MB
+  const accNo = "0901429699"; // Số tài khoản của bạn
+  const accName = "TRAN THU HIEN"; // Tên chủ tài khoản
+  
+  const qrUrl = `https://img.vietqr.io/image/${bankId}-${accNo}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(transferContent)}&accountName=${encodeURIComponent(accName)}`;
+  
+  document.getElementById('inv-qr').src = qrUrl;
+
+  closeAuthModal('amount');
+  showMainView('invoice');
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert("📋 Đã sao chép: " + text);
+  });
+}
+
+/* =========================================
+   KẾT NỐI FIREBASE & XỬ LÝ AUTH (GỐC)
+   ========================================= */
 const firebaseConfig = {
   apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
   authDomain: "tainguyenmmo-1a233.firebaseapp.com",
@@ -643,7 +820,7 @@ function updateHeaderUI() {
 function openAuthModal(type) { document.getElementById(`${type}-modal`).classList.add("open"); }
 function closeAuthModal(type) { document.getElementById(`${type}-modal`).classList.remove("open"); }
 function switchAuthModal(to) {
-  closeAuthModal('login'); closeAuthModal('register'); closeAuthModal('buy');
+  closeAuthModal('login'); closeAuthModal('register'); closeAuthModal('buy'); closeAuthModal('amount');
   if(to === 'forgot') {
     document.getElementById("forgot-step-1").style.display = "block";
     document.getElementById("forgot-user").value = "";
