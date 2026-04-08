@@ -213,7 +213,7 @@
   .footer a { color: var(--blue); text-decoration: none; }
 
   /* ========================================================
-     CSS SIDEBAR NAV MỚI (TÍCH HỢP CHO PC & MOBILE)
+     CSS SIDEBAR NAV MỚI (TỐI ƯU HÓA GPU CHỐNG LAG)
      ======================================================== */
   .app-sidebar {
     position: fixed;
@@ -224,7 +224,12 @@
     color: #fff;
     z-index: 105;
     overflow-y: auto;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* CHÌA KHÓA CHỐNG LAG NẰM Ở ĐÂY: Dùng transform thay vì left */
+    transform: translateX(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform; /* Báo cho trình duyệt biết để bật tăng tốc phần cứng (GPU) */
+    
     font-family: var(--sans);
   }
   .app-sidebar::-webkit-scrollbar { width: 4px; }
@@ -303,6 +308,21 @@
     text-transform: uppercase;
     letter-spacing: 1px;
   }
+  
+  /* XỬ LÝ LUI/TỚI BẰNG TRANSFORM */
+  @media (min-width: 901px) {
+    body { padding-left: 260px; transition: padding-left 0.3s ease; }
+    body.sidebar-collapsed { padding-left: 0 !important; }
+    .app-sidebar.collapsed { transform: translateX(-100%) !important; }
+  }
+  
+  @media (max-width: 900px) {
+    .app-sidebar { transform: translateX(-100%); }
+    .app-sidebar.open { transform: translateX(0); }
+    body { padding-left: 0; }
+  }
+  
+  .mobile-menu-panel { display: none !important; }
   
   /* Căn lề màn hình để chừa chỗ cho Sidebar mới */
   @media (min-width: 901px) {
