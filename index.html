@@ -23,7 +23,6 @@
     --green: #22c55e;
     --blue: #3b82f6;
     --blue-dark: #1e293b;
-    --sidebar-width: 260px; /* Định nghĩa chiều rộng sidebar */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,11 +30,7 @@
   body {
     background: var(--dark); color: var(--text); font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 13px; min-height: 100vh;
-    padding-left: var(--sidebar-width); /* Căn lề trái mặc định cho PC */
-    transition: padding-left 0.3s ease;
   }
-  
-  body.sidebar-closed { padding-left: 0; } /* Class để thụt lề khi đóng menu trên PC */
 
   /* HEADER */
   .header {
@@ -67,7 +62,7 @@
   /* OVERLAY BẢN CŨ */
   .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 101; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(2px); }
   .mobile-menu-overlay.show { display: block; opacity: 1; }
-  .mobile-menu-panel { display: none !important; } /* ĐÃ ẨN CÁI NÀY DO CHUYỂN SANG BẢN MỚI BÊN DƯỚI */
+  .mobile-menu-panel { display: none !important; }
   
   /* BANNERS */
   .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59,130,246,0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
@@ -91,10 +86,6 @@
   .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
   .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
   
-  .mobile-menu-content .cat-btn { border: none; border-radius: 0; border-bottom: 1px solid var(--border); background: transparent; padding: 14px 20px; }
-  .mobile-menu-content .cat-btn:hover { background: #f8fafc; }
-  .mobile-menu-content .cat-btn.active { background: #eff6ff; border-left: 4px solid var(--blue); padding-left: 16px; color: var(--blue); }
-
   /* SEARCH BAR */
   .search-wrap { padding: 12px 16px; }
   .search-bar { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
@@ -210,20 +201,21 @@
   .hist-btn.next { border-radius: 0 4px 4px 0; }
 
   /* ========================================================
-     CSS CHO SIDEBAR MỚI
+     CSS CHO SIDEBAR MỚI CHỐNG LAG BẰNG THUỘC TÍNH "LEFT"
      ======================================================== */
   .app-sidebar {
     position: fixed;
-    top: 0; left: 0;
-    width: var(--sidebar-width);
+    top: 0; 
+    left: 0; /* Mặc định trên PC là mở */
+    width: 260px;
     height: 100vh;
     background: #0b1727; 
     color: #fff;
     z-index: 105;
     overflow-y: auto;
     
-    transform: translateX(0);
-    transition: transform 0.3s ease;
+    /* Chống lag bằng cách sử dụng left */
+    transition: left 0.3s ease;
     
     font-family: var(--sans);
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
@@ -271,11 +263,17 @@
   .menu-item .arrow { margin-left: auto; font-size: 16px; }
   .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
   
-  /* Responsive Mobile */
+  /* LƯỚI CHO MÁY TÍNH VÀ ĐIỆN THOẠI */
+  @media (min-width: 901px) {
+    body { padding-left: 260px; transition: padding-left 0.3s ease; }
+    body.sidebar-closed { padding-left: 0 !important; }
+    .app-sidebar.collapsed { left: -260px !important; }
+  }
+  
   @media (max-width: 900px) {
     body { padding-left: 0; }
-    .app-sidebar { transform: translateX(-100%); }
-    .app-sidebar.open { transform: translateX(0); }
+    .app-sidebar { left: -260px; } /* Mặc định đóng trên mobile */
+    .app-sidebar.open { left: 0; }
   }
 </style>
 </head>
@@ -285,7 +283,7 @@
 
 <aside class="app-sidebar" id="app-sidebar">
   <div class="sidebar-logo-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Logo" class="sidebar-logo-img">
+    <img src="https://sf-static.upanhlaylink.com/img/image_20260408dd1304cbd9722bfd47faba06e4745cce.jpg" id="my-logo">
   </div>
   
   <div class="sidebar-settings">
@@ -505,17 +503,15 @@
 let products = [];
 let catMap = {};
 
+// HÀM MỞ / ĐÓNG MENU DÙNG THUỘC TÍNH LEFT 
 function toggleMenu() {
   const sidebar = document.getElementById('app-sidebar');
   const overlay = document.getElementById('mobile-menu-overlay');
   
   if (window.innerWidth <= 900) {
     sidebar.classList.toggle('open');
-    if(sidebar.classList.contains('open')) {
-      overlay.classList.add('show');
-    } else {
-      overlay.classList.remove('show');
-    }
+    if(sidebar.classList.contains('open')) overlay.classList.add('show');
+    else overlay.classList.remove('show');
   } else {
     sidebar.classList.toggle('collapsed');
     document.body.classList.toggle('sidebar-closed');
