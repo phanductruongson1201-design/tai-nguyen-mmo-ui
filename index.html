@@ -40,7 +40,7 @@
   }
   .header-left { display: flex; align-items: center; gap: 12px; }
   .menu-btn { background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; display: flex; flex-direction: column; gap: 4px; }
-  .menu-btn span { display: block; width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
+  .menu-btn span { display: block; width: 20px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
   .wallet-btn {
     background: var(--dark3); border: 1px solid var(--border); color: var(--text);
     padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: inherit;
@@ -59,6 +59,16 @@
   .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ef4444); display: flex; align-items: center; justify-content: center; font-size: 18px; }
   .username { font-weight: 600; font-size: 13px; }
 
+  /* OVERLAY & MENU BẢN CŨ */
+  .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 101; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(2px); }
+  .mobile-menu-overlay.show { display: block; opacity: 1; }
+  .mobile-menu-panel { position: fixed; top: 0; left: -280px; width: 260px; height: 100vh; background: var(--dark2); z-index: 102; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 2px 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+  .mobile-menu-panel.open { left: 0; }
+  .mobile-menu-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .mobile-menu-title { font-weight: 800; font-size: 16px; color: var(--blue); }
+  .mobile-menu-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
+  .mobile-menu-content { flex: 1; overflow-y: auto; padding: 10px 0; }
+  
   /* BANNERS */
   .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59,130,246,0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
   .warning-bar { background: var(--red); padding: 10px 16px; text-align: center; font-weight: 700; font-size: 13px; letter-spacing: 0.3px; color: #fff; text-transform: uppercase; }
@@ -80,6 +90,31 @@
   .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
   .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
   .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
+  
+  .mobile-menu-content .cat-btn { border: none; border-radius: 0; border-bottom: 1px solid var(--border); background: transparent; padding: 14px 20px; }
+  .mobile-menu-content .cat-btn:hover { background: #f8fafc; }
+  .mobile-menu-content .cat-btn.active { background: #eff6ff; border-left: 4px solid var(--blue); padding-left: 16px; color: var(--blue); }
+
+  /* icon colors */
+  .icon-cart { background: transparent; color: var(--blue) !important; font-size: 18px !important; }
+  .icon-fb { background: #1877f2; }
+  .icon-page { background: #f97316; }
+  .icon-bm { background: #6366f1; }
+  .icon-ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .icon-via { background: #dc2626; }
+  .icon-clone { background: #16a34a; }
+  .icon-902 { background: #059669; }
+  .icon-vn { background: transparent; font-size: 18px !important; color: initial !important;}
+  .icon-phi { background: transparent; font-size: 18px !important; color: initial !important;}
+  .icon-indo { background: transparent; font-size: 18px !important; color: initial !important;}
+  .icon-thai { background: transparent; font-size: 18px !important; color: initial !important;}
+  .icon-proxy { background: #0369a1; }
+  .icon-tool { background: #7c3aed; }
+  .icon-gpt { background: #10b981; }
+  .icon-cap { background: #ef4444; }
+  .icon-gem { background: #3b82f6; }
+  .icon-ms { background: #0078d4; }
+  .icon-canva { background: #00c4cc; }
 
   /* SEARCH BAR */
   .search-wrap { padding: 12px 16px; }
@@ -171,13 +206,154 @@
   @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
   .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
   .footer a { color: var(--blue); text-decoration: none; }
+
+  /* ========================================================
+     CSS SIDEBAR NAV MỚI (TÍCH HỢP CHO PC & MOBILE)
+     ======================================================== */
+  .app-sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #0b1727; /* Tông xanh đậm giống hình */
+    color: #fff;
+    z-index: 105;
+    overflow-y: auto;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: var(--sans);
+  }
+  .app-sidebar::-webkit-scrollbar { width: 4px; }
+  .app-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+  
+  .sidebar-logo-container {
+    background: #fff;
+    margin: 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    overflow: hidden;
+  }
+  .sidebar-logo-img {
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  .sidebar-settings {
+    padding: 0 20px;
+    font-size: 12px;
+    line-height: 2.2;
+    color: #cbd5e1;
+  }
+  .sidebar-settings strong { color: #fff; font-weight: 600; }
+  
+  .sidebar-balance {
+    padding: 15px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 10px;
+  }
+  .text-yellow { color: #facc15; }
+  .text-red { color: #ef4444; }
+  
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+  }
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+  .menu-item:hover, .menu-item.active {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+  }
+  .menu-icon {
+    width: 24px;
+    font-size: 16px;
+    margin-right: 12px;
+    text-align: center;
+  }
+  .menu-item .arrow {
+    margin-left: auto;
+    font-size: 16px;
+  }
+  .menu-header {
+    padding: 20px 20px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Căn lề màn hình để chừa chỗ cho Sidebar mới */
+  @media (min-width: 901px) {
+    body { padding-left: 260px; }
+  }
+  
+  @media (max-width: 900px) {
+    .app-sidebar { left: -260px; }
+    .app-sidebar.open { left: 0; }
+    body { padding-left: 0; }
+  }
+  
+  /* Ẩn cái panel menu cũ đi để tránh xung đột giao diện */
+  .mobile-menu-panel { display: none !important; }
 </style>
 </head>
 <body>
 
+<div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="toggleMenu()"></div>
+
+<div class="mobile-menu-panel" id="mobile-menu-panel">
+  <div class="mobile-menu-header">
+    <div class="mobile-menu-title">TàiNguyênMMO</div>
+    <button class="mobile-menu-close" onclick="toggleMenu()">✕</button>
+  </div>
+  <div class="mobile-menu-content" id="mobile-categories"></div>
+</div>
+
+<aside class="app-sidebar" id="app-sidebar">
+  <div class="sidebar-logo-container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Logo" class="sidebar-logo-img">
+  </div>
+  
+  <div class="sidebar-settings">
+    <div class="setting-item"><strong>Select Language:</strong> Vietnamese</div>
+    <div class="setting-item"><strong>Select Currency:</strong> VND ▾</div>
+  </div>
+  
+  <div class="sidebar-balance">
+    SỐ DƯ <span class="text-yellow" id="sidebar-balance">0Đ</span> - GIẢM: <span class="text-red">0%</span>
+  </div>
+  
+  <nav class="sidebar-menu">
+    <a href="#" class="menu-item active"><span class="menu-icon">🏠</span> Trang Chủ</a>
+    <a href="#" class="menu-item"><span class="menu-icon">🛒</span> Mua Tài Khoản <span class="arrow">›</span></a>
+    <a href="#" class="menu-item"><span class="menu-icon">📄</span> Mua Tài Liệu</a>
+    <a href="#" class="menu-item"><span class="menu-icon">⏱</span> Lịch Sử Mua Hàng</a>
+    
+    <div class="menu-header">NẠP TIỀN</div>
+    <a href="#" class="menu-item"><span class="menu-icon">🏦</span> Ngân Hàng</a>
+    <a href="#" class="menu-item"><span class="menu-icon">🧾</span> Hoá Đơn</a>
+  </nav>
+</aside>
+
 <header class="header">
   <div class="header-left">
-    <button class="menu-btn"><span></span><span></span><span></span></button>
+    <button class="menu-btn" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     <button class="wallet-btn" id="wallet-display" style="display: none;">Ví: <span id="user-balance">0</span>đ</button>
   </div>
   <div class="header-right" id="auth-section"></div>
@@ -319,6 +495,19 @@
 let products = [];
 let catMap = {};
 
+// CẬP NHẬT: HÀM MỞ / ĐÓNG MENU DÀNH CHO SIDEBAR MỚI
+function toggleMenu() {
+  const sidebar = document.getElementById('app-sidebar');
+  const overlay = document.getElementById('mobile-menu-overlay');
+  
+  sidebar.classList.toggle('open');
+  if(sidebar.classList.contains('open')) {
+    overlay.classList.add('show');
+  } else {
+    overlay.classList.remove('show');
+  }
+}
+
 /* =========================================
    KẾT NỐI FIREBASE & XỬ LÝ AUTH/USER
    ========================================= */
@@ -346,6 +535,7 @@ db.collection("services").onSnapshot((snapshot) => {
     
     // Tự động tạo danh mục từ dữ liệu tải về
     const categoriesDiv = document.getElementById("categories");
+    const mobileCategoriesDiv = document.getElementById("mobile-categories");
     const uniqueCats = [...new Set(products.map(p => p.cat))]; 
     
     catMap = {};
@@ -360,11 +550,11 @@ db.collection("services").onSnapshot((snapshot) => {
     });
     
     categoriesDiv.innerHTML = catHtml;
+    // Vẫn đổ vào menu mobile dự phòng dù đã ẩn
+    if(mobileCategoriesDiv) mobileCategoriesDiv.innerHTML = catHtml; 
     
-    // In danh sách sản phẩm ra màn hình
     renderProducts("all", "");
 });
-
 
 function sendTelegramMsg(message) {
   const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; 
@@ -400,7 +590,12 @@ function updateHeaderUI() {
     db.collection("users").doc(currentUser).onSnapshot((doc) => {
       if (doc.exists) {
         const balance = doc.data().balance || 0;
+        // Cập nhật số dư ở nút trên header
         document.getElementById("user-balance").textContent = balance.toLocaleString('vi-VN');
+        
+        // Cập nhật số dư ở thanh Sidebar Mới
+        const sbBalance = document.getElementById("sidebar-balance");
+        if(sbBalance) sbBalance.textContent = balance.toLocaleString('vi-VN') + 'Đ';
       }
     });
 
@@ -498,6 +693,10 @@ async function submitLogin() {
 function submitLogout() {
   localStorage.removeItem("currentUser");
   updateHeaderUI();
+  
+  // Trả số dư sidebar về 0 khi logout
+  const sbBalance = document.getElementById("sidebar-balance");
+  if(sbBalance) sbBalance.textContent = "0Đ";
 }
 
 /* =========================================
@@ -652,21 +851,31 @@ function renderProducts(catFilter, searchQuery = "") {
   countDisplay.textContent = `${totalCount} sản phẩm`;
 }
 
-// Gắn sự kiện động cho các nút danh mục mới tạo
-document.getElementById('categories').addEventListener('click', function(e) {
+function handleCategoryClick(e) {
   const btn = e.target.closest('.cat-btn');
   if (!btn) return;
   
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  
+  const cat = btn.dataset.cat;
+  document.querySelectorAll(`.cat-btn[data-cat="${cat}"]`).forEach(b => b.classList.add('active'));
+  
   document.querySelector('.search-bar input').value = '';
-  renderProducts(btn.dataset.cat, "");
-});
+  renderProducts(cat, "");
+  
+  // Đóng sidebar nếu đang xem trên điện thoại
+  const panel = document.getElementById('app-sidebar');
+  if(panel && panel.classList.contains('open')) {
+      toggleMenu();
+  }
+}
+
+document.getElementById('categories').addEventListener('click', handleCategoryClick);
 
 // Event Tìm kiếm
 document.querySelector('.search-bar input').addEventListener('input', function() {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('[data-cat="all"]').classList.add('active');
+  document.querySelectorAll('[data-cat="all"]').forEach(b => b.classList.add('active'));
   renderProducts("all", this.value.toLowerCase());
 });
 
@@ -699,7 +908,6 @@ async function handleBuy() {
   const qty = parseInt(document.getElementById("modal-qty").value);
   const currentUser = localStorage.getItem("currentUser");
   
-  // Tính tổng tiền an toàn (hỗ trợ cả giá dạng số và giá dạng chuỗi "567.890đ")
   let priceNumber = 0;
   if(typeof currentProduct.price === 'string') {
     priceNumber = parseInt(currentProduct.price.replace(/\D/g, '')) || 0;
@@ -719,7 +927,6 @@ async function handleBuy() {
           alert(`✅ Bạn đã đặt lệnh mua ${qty} x "${currentProduct.name}".\n\nTuy nhiên số dư của bạn (${currentBalance.toLocaleString('vi-VN')}đ) không đủ để thanh toán đơn hàng trị giá ${totalPrice.toLocaleString('vi-VN')}đ. Vui lòng nạp thêm tiền!`);
       } else {
           alert(`✅ Thanh toán thành công ${qty} x "${currentProduct.name}".\nTổng tiền: ${totalPrice.toLocaleString('vi-VN')}đ`);
-          // Tại đây bạn có thể thêm logic trừ tiền (userRef.update({ balance: currentBalance - totalPrice }))
       }
     }
     sendTelegramMsg(`🛒 KHÁCH BẤM MUA HÀNG 🛒\n- Khách: ${currentUser}\n- Sản phẩm: ${qty} x ${currentProduct.name}\n- Tổng tiền: ${totalPrice.toLocaleString('vi-VN')}đ\n⚠️ Trạng thái: Số dư không đủ!`);
