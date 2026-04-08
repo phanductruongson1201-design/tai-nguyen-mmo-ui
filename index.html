@@ -232,13 +232,13 @@
   .menu-item .arrow { margin-left: auto; font-size: 16px; }
   .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
   @media (min-width: 901px) {
-    body { padding-left: 260px; transition: padding-left 0.3s ease; }
+    body { padding-left: 260px; } /* Đã xóa transition gây lag */
     body.sidebar-closed { padding-left: 0 !important; }
-    .app-sidebar.collapsed { left: -260px !important; }
+    .app-sidebar.collapsed { transform: translateX(-100%) !important; } /* Chuyển từ left sang transform */
   }
   @media (max-width: 900px) {
-    .app-sidebar { left: -260px; }
-    .app-sidebar.open { left: 0; }
+    .app-sidebar { transform: translateX(-100%); } /* Chuyển từ left sang transform */
+    .app-sidebar.open { transform: translateX(0); } /* Chuyển từ left sang transform */
     body { padding-left: 0; }
   }
 
