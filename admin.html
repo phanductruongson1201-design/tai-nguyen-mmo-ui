@@ -28,10 +28,11 @@
   --amber: #f59e0b;
   --mono: 'JetBrains Mono', monospace;
   --sans: 'Be Vietnam Pro', sans-serif;
+  --sidebar-w: 240px;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--sans); font-size:13px; min-height:100vh; display:flex; }
+body { background:var(--bg); color:var(--text); font-family:var(--sans); font-size:13px; min-height:100vh; display:flex; overflow-x:hidden; }
 
 /* ── LOGIN SCREEN ── */
 #login-screen {
@@ -60,9 +61,11 @@ body { background:var(--bg); color:var(--text); font-family:var(--sans); font-si
 
 /* ── SIDEBAR ── */
 .sidebar {
-  width:220px; flex-shrink:0; background:var(--bg2); border-right:1px solid var(--border);
-  display:flex; flex-direction:column; height:100vh; position:sticky; top:0; overflow:hidden;
+  width:var(--sidebar-w); flex-shrink:0; background:var(--bg2); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; height:100vh; position:fixed; top:0; left:0; z-index:100;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.sidebar.collapsed { transform: translateX(-100%); }
 .sidebar-logo { padding:20px 18px 16px; border-bottom:1px solid var(--border); }
 .sidebar-logo-txt { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
 .sidebar-logo-name { font-size:15px; font-weight:800; color:var(--text); margin-top:2px; }
@@ -83,17 +86,41 @@ body { background:var(--bg); color:var(--text); font-family:var(--sans); font-si
 .btn-logout { background:var(--bg3); border:1px solid var(--border2); color:var(--muted2); font-family:var(--sans); font-size:12px; padding:7px 12px; border-radius:7px; cursor:pointer; width:100%; text-align:center; margin-top:8px; transition:.2s; }
 .btn-logout:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
 
+/* ── OVERLAY (Cho Mobile) ── */
+.sidebar-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(2px); z-index:99; display:none; opacity:0; transition:opacity 0.3s; }
+.sidebar-overlay.show { display:block; opacity:1; }
+
 /* ── MAIN ── */
-.main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+.main {
+  flex:1; display:flex; flex-direction:column; min-height:100vh;
+  margin-left:var(--sidebar-w); transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1); width: calc(100% - var(--sidebar-w));
+}
+.main.expanded { margin-left: 0; width: 100%; }
+
 .topbar {
   background:var(--bg2); border-bottom:1px solid var(--border); padding:0 24px; height:56px;
-  display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+  display:flex; align-items:center; justify-content:space-between; flex-shrink:0; position:sticky; top:0; z-index:40;
 }
+.hamburger-btn {
+  background:var(--bg3); border:1px solid var(--border2); color:var(--text);
+  width:32px; height:32px; border-radius:6px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; font-size:18px; margin-right:12px; transition:0.2s;
+}
+.hamburger-btn:hover { border-color:var(--accent); background:var(--bg4); color:var(--accent); }
 .topbar-title { font-size:14px; font-weight:700; color:var(--text); }
 .topbar-date { font-family:var(--mono); font-size:11px; color:var(--muted2); }
 .content { flex:1; overflow-y:auto; padding:24px; }
 .content::-webkit-scrollbar { width:4px; }
 .content::-webkit-scrollbar-thumb { background:var(--bg4); border-radius:4px; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; width: 100%; }
+  .main.expanded { margin-left: 0; }
+  .topbar { padding: 0 16px; }
+}
 
 /* ── VIEWS ── */
 .view { display:none; }
@@ -143,7 +170,7 @@ tbody td { padding:12px 14px; font-size:12.5px; color:var(--text); vertical-alig
 /* ── FORMS ── */
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 .form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
-.form-group { display:flex; flex-direction:column; gap:5px; }
+.form-group { display:flex; flex-direction:column; gap:5px; margin-bottom: 12px; }
 .form-label { font-family:var(--mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; }
 .form-input {
   background:var(--bg3); border:1px solid var(--border2); color:var(--text); font-family:var(--sans);
@@ -199,10 +226,10 @@ select.form-input option { background:var(--bg3); }
 /* ── TOAST ── */
 .toast-wrap { position:fixed; bottom:20px; right:20px; z-index:9999; display:flex; flex-direction:column; gap:8px; }
 .toast {
-  background:var(--bg3); border:1px solid var(--border2); border-radius:10px; padding:12px 16px;
+  background:var(--bg3); border-left:3px solid var(--green); border-radius:10px; padding:12px 16px;
   font-size:12.5px; color:var(--text); display:flex; align-items:center; gap:9px;
   transform:translateX(120%); transition:transform .25s cubic-bezier(.34,1.56,.64,1); max-width:320px;
-  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
 }
 .toast.show { transform:translateX(0); }
 .toast.ok { border-left:3px solid var(--green); }
@@ -218,16 +245,6 @@ select.form-input option { background:var(--bg3); }
 .inline-form { display:flex; align-items:center; gap:8px; }
 .mono { font-family:var(--mono); }
 .balance-badge { background:rgba(0,208,132,.1); border:1px solid rgba(0,208,132,.2); color:var(--green); font-family:var(--mono); font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:20px; }
-
-/* ── ADDED FEATURES (HAMBURGER & OVERLAY) ── */
-.hamburger-btn { background:var(--bg3); border:1px solid var(--border2); color:var(--text); width:32px; height:32px; border-radius:6px; cursor:pointer; display:none; align-items:center; justify-content:center; font-size:18px; margin-right: 12px; }
-.sidebar-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(2px); z-index:99; display:none; opacity:0; transition:opacity 0.3s; }
-.sidebar-overlay.show { display:block; opacity:1; }
-@media (max-width: 900px) {
-  .sidebar { position: fixed; z-index: 100; transform: translateX(-100%); transition: transform 0.3s ease; }
-  .sidebar.open { transform: translateX(0); }
-  .hamburger-btn { display: flex; }
-}
 </style>
 </head>
 <body>
@@ -239,18 +256,18 @@ select.form-input option { background:var(--bg3); }
       <div class="login-logo-txt">ADMIN PANEL</div>
       <div class="login-logo-name">TàiNguyênMMO</div>
     </div>
-    <input type="text" id="adm-user" class="input-field" placeholder="Tên đăng nhập admin" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('adm-pass').focus()">
-    <input type="password" id="adm-pass" class="input-field" placeholder="Mật khẩu" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
+    <input type="text" id="adm-user" class="input-field" placeholder="Tên đăng nhập admin" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('adm-pass').focus()" style="display:none">
+    <input type="password" id="adm-pass" class="input-field" placeholder="Mật khẩu (mặc định: admin123)" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="btn-login" onclick="doLogin()">🔐 Đăng nhập hệ thống</button>
     <div id="login-err"></div>
-
   </div>
 </div>
 
 <div id="app" style="display:none; width:100%;">
+
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <div class="sidebar-logo-txt">Admin Panel</div>
     <div class="sidebar-logo-name">TàiNguyênMMO</div>
@@ -276,11 +293,11 @@ select.form-input option { background:var(--bg3); }
   </div>
 </aside>
 
-<div class="main">
+<div class="main" id="main-content">
   <div class="topbar">
     <div style="display:flex; align-items:center;">
       <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
-      <div class="topbar-title" id="page-title">Dashboard</div>
+      <div class="topbar-title" id="page-title" style="margin-left: 8px;">Dashboard</div>
     </div>
     <div class="topbar-date mono" id="top-date"></div>
   </div>
@@ -478,20 +495,21 @@ select.form-input option { background:var(--bg3); }
     </div>
 
     <div id="view-config" class="view">
-      <div class="section-head"><div class="section-title">Cấu hình Telegram Bot</div></div>
+      <div class="section-head"><div class="section-title">Cấu hình API & Telegram</div></div>
       <div class="card" style="max-width:500px">
-        <div class="card-header"><div class="card-title"><span class="dot dot-blue"></span> Thiết lập nhận thông báo</div></div>
+        <div class="card-header"><div class="card-title"><span class="dot dot-blue"></span> Telegram Bot Notify</div></div>
         <div style="padding:20px">
-          <div class="form-group" style="margin-bottom:14px">
+          <p style="color:var(--muted); margin-bottom:15px;">Hệ thống sẽ tự động gửi thông báo qua Telegram khi bạn Cộng/trừ tiền hoặc sửa giá sản phẩm.</p>
+          <div class="form-group">
             <label class="form-label">Bot Token (Từ @BotFather)</label>
-            <input class="form-input" id="tg-token" placeholder="Ví dụ: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11">
+            <input class="form-input" id="tg-token" type="text" placeholder="Dán token vào đây...">
           </div>
-          <div class="form-group" style="margin-bottom:14px">
+          <div class="form-group">
             <label class="form-label">Chat ID (Từ @userinfobot)</label>
-            <input class="form-input" id="tg-chatid" placeholder="Ví dụ: 123456789">
+            <input class="form-input" id="tg-chatid" type="text" placeholder="Dán Chat ID vào đây...">
           </div>
-          <div style="display:flex; gap:10px; margin-top:20px;">
-            <button class="btn btn-red" onclick="saveTgConfig()">💾 Lưu Cấu hình</button>
+          <div style="display:flex;gap:10px;margin-top:20px;">
+            <button class="btn btn-red" onclick="saveTgConfig()">💾 Lưu Cấu Hình</button>
             <button class="btn btn-ghost" onclick="testTele()">🔔 Gửi Test</button>
           </div>
         </div>
@@ -593,68 +611,42 @@ const firebaseConfig = {
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* ─────────────────────────── SIDEBAR TOGGLE ────────────────────── */
-function toggleSidebar() {
-  const sidebar = document.querySelector('.sidebar');
-  const overlay = document.getElementById('sidebar-overlay');
-  sidebar.classList.toggle('open');
-  if(sidebar.classList.contains('open')) {
-    overlay.classList.add('show');
-  } else {
-    overlay.classList.remove('show');
-  }
-}
-
-/* ─────────────────────────── TELEGRAM CONFIG ───────────────────── */
-function loadTgConfig() {
-  document.getElementById('tg-token').value = localStorage.getItem('tg_token') || '';
-  document.getElementById('tg-chatid').value = localStorage.getItem('tg_chatid') || '';
-}
-function saveTgConfig() {
-  localStorage.setItem('tg_token', document.getElementById('tg-token').value.trim());
-  localStorage.setItem('tg_chatid', document.getElementById('tg-chatid').value.trim());
-  toast("Đã lưu cấu hình API Telegram!");
-}
-async function sendTele(text) {
-  const token = localStorage.getItem('tg_token');
-  const chatid = localStorage.getItem('tg_chatid');
-  if(!token || !chatid) return;
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ chat_id: chatid, text: text, parse_mode: 'Markdown' })
-    });
-  } catch(e) { console.error(e); }
-}
-function testTele() {
-  sendTele("🔔 *TEST KẾT NỐI:*\nBot Telegram của bạn đã kết nối thành công với Admin Dashboard! 🎉");
-  toast("Đã gửi tin nhắn test vào Telegram!");
-}
-
 /* ─────────────────────────── LOGIN ─────────────────────────────── */
-// ── ĐỔI MẬT KHẨU TẠI ĐÂY ──
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'admin123';
-// ────────────────────────────
 
 function doLogin() {
-  const u = document.getElementById('adm-user').value.trim();
   const p = document.getElementById('adm-pass').value.trim();
-  if (u === ADMIN_USER && p === ADMIN_PASS) {
+  if (p === ADMIN_PASS) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'flex';
-    document.getElementById('admin-tag').textContent = u;
+    document.getElementById('admin-tag').textContent = ADMIN_USER;
     initApp();
   } else {
-    document.getElementById('login-err').textContent = '⚠️ Sai tên đăng nhập hoặc mật khẩu!';
+    document.getElementById('login-err').textContent = '⚠️ Sai mật khẩu!';
   }
 }
+
 function doLogout() {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('app').style.display = 'none';
-  document.getElementById('adm-user').value = '';
   document.getElementById('adm-pass').value = '';
+}
+
+/* ─────────────────────────── SIDEBAR TOGGLE ────────────────────── */
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('main-content');
+  const overlay = document.getElementById('sidebar-overlay');
+  
+  if (window.innerWidth <= 900) {
+    sidebar.classList.toggle('open');
+    if (sidebar.classList.contains('open')) overlay.classList.add('show');
+    else overlay.classList.remove('show');
+  } else {
+    sidebar.classList.toggle('collapsed');
+    mainContent.classList.toggle('expanded');
+  }
 }
 
 /* ─────────────────────────── TOAST ─────────────────────────────── */
@@ -675,13 +667,14 @@ function switchView(id, btn) {
   document.getElementById('view-' + id).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   if (btn) btn.classList.add('active');
-  const titles = { dashboard: 'Dashboard', products: 'Quản lý sản phẩm', users: 'Khách hàng', topup: 'Nạp tiền thủ công', orders: 'Lịch sử mua hàng', revenue: 'Báo cáo doanh thu', config: 'Cấu hình API' };
-  document.getElementById('page-title').textContent = titles[id] || id;
-  if (id === 'revenue') renderRevenuePage();
   
-  // Tự động đóng sidebar trên mobile
+  const titles = { dashboard: 'Dashboard', products: 'Quản lý sản phẩm', users: 'Khách hàng', topup: 'Nạp tiền thủ công', orders: 'Lịch sử mua hàng', revenue: 'Báo cáo doanh thu', config: 'Cấu hình API' };
+  document.getElementById('page-title').textContent = titles[id] || id.toUpperCase();
+  
+  if (id === 'revenue') renderRevenuePage();
+
   if (window.innerWidth <= 900) {
-    document.querySelector('.sidebar').classList.remove('open');
+    document.getElementById('sidebar').classList.remove('open');
     document.getElementById('sidebar-overlay').classList.remove('show');
   }
 }
@@ -711,7 +704,7 @@ db.collection('services').onSnapshot(snap => {
   allProducts = snap.docs.map(d => ({ _docId: d.id, ...d.data() }));
   document.getElementById('kpi-products').textContent = allProducts.length;
   document.getElementById('prod-count').textContent = allProducts.length;
-  // populate cat filter
+  
   const cats = [...new Set(allProducts.map(p => p.cat))];
   const cf = document.getElementById('prod-cat-filter');
   const cur = cf.value;
@@ -793,17 +786,17 @@ async function saveProduct() {
   btn.textContent = '💾 Lưu sản phẩm'; btn.disabled = false;
 }
 
-function quickEditPrice(docId, name, curPrice) {
+// ── SỬA GIÁ & BÁO TELEGRAM ──
+async function quickEditPrice(docId, name, curPrice) {
   const np = prompt(`Sửa giá "${name}"\nGiá hiện tại: ${curPrice.toLocaleString('vi-VN')}đ\n\nNhập giá mới (VNĐ):`);
   if (np === null || np.trim() === '') return;
   const n = parseInt(np);
   if (isNaN(n) || n < 0) { toast('Giá không hợp lệ!', 'err'); return; }
-  db.collection('services').doc(docId).update({ price: n })
-    .then(() => {
+  try {
+      await db.collection('services').doc(docId).update({ price: n });
       toast(`Đã cập nhật giá "${name}" → ${n.toLocaleString('vi-VN')}đ`);
-      sendTele(`📦 *THÔNG BÁO THAY ĐỔI GIÁ BÁN*\n━━━━━━━━━━━━━━━━━\n🛠 Sản phẩm: \`${name}\`\n📉 Giá cũ: \`${curPrice.toLocaleString('vi-VN')}đ\`\n📈 Giá mới: \`${n.toLocaleString('vi-VN')}đ\`\n\n_📌 Admin vừa cập nhật giá mới trên hệ thống._`);
-    })
-    .catch(e => toast('Lỗi: ' + e.message, 'err'));
+      sendTele(`📦 *THÔNG BÁO ĐỔI GIÁ SẢN PHẨM*\n━━━━━━━━━━━━━━━━━\n🛠 Sản phẩm: \`${name}\`\n📉 Giá cũ: \`${curPrice.toLocaleString('vi-VN')}đ\`\n📈 Giá mới: \`${n.toLocaleString('vi-VN')}đ\`\n\n_📌 Admin vừa cập nhật trên hệ thống._`);
+  } catch(e) { toast('Lỗi: ' + e.message, 'err'); }
 }
 
 function editStock(docId, name, cur) {
@@ -839,15 +832,15 @@ function renderUserTable(list) {
     let ts = '—';
     if (u.createdAt && u.createdAt.toDate) ts = u.createdAt.toDate().toLocaleDateString('vi-VN');
     return `<tr>
-      <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar-sm">${(u.username||'?')[0].toUpperCase()}</div><div><div style="font-weight:700">${u.username||'—'}</div></div></div></td>
+      <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar-sm">${(u.username||u._docId||'?')[0].toUpperCase()}</div><div><div style="font-weight:700">${u.username||u._docId||'—'}</div></div></div></td>
       <td style="color:var(--muted2)">${u.email||'—'}</td>
       <td><span class="balance-badge">${(u.balance||0).toLocaleString('vi-VN')}đ</span></td>
       <td class="mono" style="color:var(--muted2);font-size:11px">${ts}</td>
       <td>
         <div style="display:flex;gap:6px">
           <button class="btn btn-blue btn-sm" onclick="openUserEdit('${u._docId}')">✏️ Sửa</button>
-          <button class="btn btn-green btn-sm" onclick="quickTopUp('${u._docId}','${u.username}',${u.balance||0})">💰 Nạp</button>
-          <button class="btn btn-red btn-sm" onclick="deleteUser('${u._docId}','${u.username}')">🗑</button>
+          <button class="btn btn-green btn-sm" onclick="quickTopUp('${u._docId}','${u.username||u._docId}',${u.balance||0})">💰 Nạp/Trừ tiền</button>
+          <button class="btn btn-red btn-sm" onclick="deleteUser('${u._docId}','${u.username||u._docId}')">🗑</button>
         </div>
       </td>
     </tr>`;
@@ -857,7 +850,7 @@ function renderUserTable(list) {
 function filterUsers() {
   const q = document.getElementById('user-search').value.toLowerCase();
   renderUserTable(allUsers.filter(u =>
-    !q || (u.username||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q)
+    !q || (u.username||u._docId||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q)
   ));
 }
 
@@ -886,20 +879,24 @@ async function saveUserEdit() {
   } catch(e) { toast('Lỗi: ' + e.message, 'err'); }
 }
 
-function quickTopUp(docId, username, cur) {
-  const amt = prompt(`Nạp tiền nhanh cho "${username}"\nSố dư hiện tại: ${cur.toLocaleString('vi-VN')}đ\n\nNhập số tiền CỘNG (Thêm dấu - đằng trước nếu muốn TRỪ):`);
+// ── CỘNG TIỀN & BÁO TELEGRAM ──
+async function quickTopUp(docId, username, cur) {
+  const amt = prompt(`Nạp tiền nhanh cho "${username}"\nSố dư hiện tại: ${cur.toLocaleString('vi-VN')}đ\n\nNhập số tiền muốn CỘNG (Thêm dấu - đằng trước nếu muốn TRỪ):`);
   if (amt === null || amt.trim() === '') return;
   const n = parseInt(amt);
   if (isNaN(n)) { toast('Số tiền không hợp lệ!', 'err'); return; }
+  
   const newBal = cur + n;
-  db.collection('users').doc(docId).update({ balance: newBal })
-    .then(() => {
+  try {
+      await db.collection('users').doc(docId).update({ balance: newBal });
       if (n > 0) logTopUp(username, n, 'Nạp nhanh từ admin panel');
-      toast(`Đã ${n >= 0 ? 'cộng' : 'trừ'} ${Math.abs(n).toLocaleString('vi-VN')}đ cho "${username}"`);
+      toast(`Đã ${n > 0 ? 'cộng' : 'trừ'} ${Math.abs(n).toLocaleString('vi-VN')}đ cho "${username}"`);
+      
       const sign = n > 0 ? '+' : '';
-      sendTele(`💰 *THÔNG BÁO BIẾN ĐỘNG SỐ DƯ*\n━━━━━━━━━━━━━━━━━\n👤 Khách hàng: \`${username}\`\n💵 Lệnh: \`${sign}${n.toLocaleString('vi-VN')}đ\`\n💎 Số dư mới: \`${newBal.toLocaleString('vi-VN')}đ\`\n\n_📌 Lệnh thủ công từ Admin._`);
-    })
-    .catch(e => toast('Lỗi: ' + e.message, 'err'));
+      sendTele(`💰 *THÔNG BÁO BIẾN ĐỘNG SỐ DƯ*\n━━━━━━━━━━━━━━━━━\n👤 Khách hàng: \`${username}\`\n💵 Lệnh: \`${sign}${n.toLocaleString('vi-VN')}đ\`\n💎 Số dư mới: \`${newBal.toLocaleString('vi-VN')}đ\`\n\n_📌 Admin vừa thao tác thủ công._`);
+  } catch(e) {
+      toast('Lỗi: ' + e.message, 'err');
+  }
 }
 
 async function deleteUser(docId, username) {
@@ -908,7 +905,7 @@ async function deleteUser(docId, username) {
   catch(e) { toast('Lỗi: ' + e.message, 'err'); }
 }
 
-/* ─────────────────────────── TOP UP LOGS ─────────────────────────────── */
+/* ─────────────────────────── TOP UP ─────────────────────────────── */
 async function doTopUp() {
   const username = document.getElementById('topup-user').value.trim();
   const amountStr = document.getElementById('topup-amount').value;
@@ -922,6 +919,7 @@ async function doTopUp() {
     if (!snap.exists) { toast('Không tìm thấy tài khoản này!', 'err'); return; }
     const cur = snap.data().balance || 0;
     const newBal = cur + amount;
+    
     await userRef.update({ balance: newBal });
     if (amount > 0) await logTopUp(username, amount, note);
     document.getElementById('topup-amount').value = '';
@@ -1141,9 +1139,35 @@ function renderBarChart(elId, days) {
   }).join('');
 }
 
+/* ─────────────────────────── TELEGRAM NOTIFY ───────────────────── */
+function saveTgConfig() {
+  localStorage.setItem('tg_token', document.getElementById('tg-token').value.trim());
+  localStorage.setItem('tg_chatid', document.getElementById('tg-chatid').value.trim());
+  toast("Đã lưu cấu hình Telegram!");
+}
+
+async function sendTele(text) {
+  const token = localStorage.getItem('tg_token');
+  const chatid = localStorage.getItem('tg_chatid');
+  if(!token || !chatid) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ chat_id: chatid, text: text, parse_mode: 'Markdown' })
+    });
+  } catch(e) { console.error("Lỗi gửi Tele:", e); }
+}
+
+function testTele() {
+  sendTele("🔔 *TEST KẾT NỐI CÀI ĐẶT TELEGRAM*\n━━━━━━━━━━━━━━━━━\nBot đã kết nối thành công với Admin Dashboard! 🎉");
+  toast("Đã gửi tin nhắn test qua Telegram!");
+}
+
 /* ─────────────────────────── INIT ──────────────────────────────── */
 function initApp() {
-  loadTgConfig();
+  document.getElementById('tg-token').value = localStorage.getItem('tg_token') || '';
+  document.getElementById('tg-chatid').value = localStorage.getItem('tg_chatid') || '';
   // collections already loaded via onSnapshot
   setTimeout(renderDashChart, 600);
 }
