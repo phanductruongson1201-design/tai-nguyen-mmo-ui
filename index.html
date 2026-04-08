@@ -55,14 +55,33 @@
   .theme-btn { background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 14px; font-size: 14px; transition: background 0.2s; }
   .theme-btn.active { background: var(--dark); }
   .notif-btn { background: none; border: none; cursor: pointer; color: var(--text); font-size: 18px; position: relative; padding: 4px; }
-  .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-  .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ef4444); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 4px 8px; border-radius: 8px; transition: 0.2s; }
+  .user-info:hover { background: var(--dark); }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ef4444); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: bold; }
   .username { font-weight: 600; font-size: 13px; }
 
-  /* OVERLAY BẢN CŨ */
+  /* MỚI: CSS CHO MENU XỔ XUỐNG KHI BẤM VÀO USER */
+  .user-menu-wrapper { position: relative; }
+  .user-dropdown {
+    position: absolute; top: 100%; right: 0; margin-top: 10px;
+    background: #fff; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    width: 240px; display: none; flex-direction: column; z-index: 1000;
+    padding: 8px 0; border: 1px solid var(--border);
+  }
+  .user-dropdown.show { display: flex; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  .dropdown-item {
+    display: flex; align-items: center; padding: 12px 20px;
+    color: #334155; text-decoration: none; font-size: 14px; font-weight: 600;
+    transition: background 0.2s; cursor: pointer; border: none; background: none; text-align: left; width: 100%;
+  }
+  .dropdown-item:hover { background: #f1f5f9; color: var(--blue); }
+  .dropdown-icon { font-size: 18px; margin-right: 12px; color: #64748b; width: 24px; text-align: center; }
+  .dropdown-divider { height: 1px; background: #e2e8f0; margin: 8px 0; }
+
+  /* OVERLAY (Cho Mobile) */
   .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 101; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(2px); }
   .mobile-menu-overlay.show { display: block; opacity: 1; }
-  .mobile-menu-panel { display: none !important; }
   
   /* BANNERS */
   .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59,130,246,0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
@@ -85,14 +104,14 @@
   .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
   .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
   .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
-  
+
   /* SEARCH BAR */
   .search-wrap { padding: 12px 16px; }
   .search-bar { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
   .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
   .search-bar input::placeholder { color: var(--text-muted); }
 
-  /* BẢNG SẢN PHẨM MỚI */
+  /* BẢNG SẢN PHẨM */
   .products-section { padding: 0 16px 16px; }
   .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
   .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
@@ -178,12 +197,60 @@
   .footer a { color: var(--blue); text-decoration: none; }
 
   /* ========================================================
+     CSS SIDEBAR NAV (TỐI ƯU HÓA GPU CHỐNG LAG TỐI ĐA)
+     ======================================================== */
+  .app-sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #0b1727; 
+    color: #fff;
+    z-index: 105;
+    overflow-y: auto;
+    transform: translateX(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform; 
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    font-family: var(--sans);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  }
+  .app-sidebar::-webkit-scrollbar { width: 4px; }
+  .app-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+  
+  .sidebar-logo-container { background: #fff; margin: 20px; border-radius: 8px; display: flex; justify-content: center; align-items: center; height: 120px; overflow: hidden; transform: translateZ(0); }
+  .sidebar-logo-img { width: 80%; height: auto; object-fit: contain; }
+  
+  .sidebar-settings { padding: 0 20px; font-size: 12px; line-height: 2.2; color: #cbd5e1; }
+  .sidebar-settings strong { color: #fff; font-weight: 600; }
+  
+  .sidebar-balance { padding: 15px 20px; font-size: 13px; font-weight: 600; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px; }
+  .text-yellow { color: #facc15; }
+  .text-red { color: #ef4444; }
+  
+  .sidebar-menu { display: flex; flex-direction: column; padding-bottom: 20px; }
+  .menu-item { display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 600; transition: background-color 0.2s, color 0.2s; }
+  .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.05); color: #fff; border-left: 3px solid var(--blue); }
+  .menu-icon { width: 24px; font-size: 16px; margin-right: 12px; text-align: center; }
+  .menu-item .arrow { margin-left: auto; font-size: 16px; }
+  .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+  
+  @media (min-width: 901px) {
+    body { padding-left: 260px; }
+    body.sidebar-closed { padding-left: 0 !important; }
+    .app-sidebar.collapsed { transform: translateX(-100%) !important; }
+  }
+  @media (max-width: 900px) {
+    .app-sidebar { transform: translateX(-100%); }
+    .app-sidebar.open { transform: translateX(0); }
+    body { padding-left: 0; }
+  }
+
+  /* ========================================================
      CSS CHO BẢNG LỊCH SỬ MUA HÀNG
      ======================================================== */
-  .history-card {
-    background: #fff; border-radius: 8px; padding: 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin: 20px 16px;
-  }
+  .history-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin: 20px 16px; }
   .history-card h2 { color: #1e293b; font-size: 24px; font-weight: 700; margin-bottom: 20px; }
   .history-controls { display: flex; justify-content: space-between; margin-bottom: 15px; align-items: center; color: #475569; font-size: 13px; }
   .history-controls select, .history-controls input { border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 8px; outline: none; }
@@ -199,83 +266,6 @@
   .hist-btn:hover { background: #f1f5f9; }
   .hist-btn.prev { border-radius: 4px 0 0 4px; border-right: none; }
   .hist-btn.next { border-radius: 0 4px 4px 0; }
-
-  /* ========================================================
-     CSS CHO SIDEBAR MỚI CHỐNG LAG BẰNG THUỘC TÍNH "LEFT"
-     ======================================================== */
-  .app-sidebar {
-    position: fixed;
-    top: 0; 
-    left: 0; /* Mặc định trên PC là mở */
-    width: 260px;
-    height: 100vh;
-    background: #0b1727; 
-    color: #fff;
-    z-index: 105;
-    overflow-y: auto;
-    
-    /* Chống lag bằng cách sử dụng left */
-    transition: left 0.3s ease;
-    
-    font-family: var(--sans);
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  }
-  
-  .app-sidebar::-webkit-scrollbar { width: 4px; }
-  .app-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
-  
-.sidebar-logo-container {
-    background: #fff;
-    margin: 20px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Có thể có height ở đây, ví dụ: height: 120px; hoặc height: auto; */
-    overflow: hidden;
-  }
-  .sidebar-logo-img { width: 80%; height: auto; object-fit: contain; }
-  
-  .sidebar-settings { padding: 0 20px; font-size: 12px; line-height: 2.2; color: #cbd5e1; }
-  .sidebar-settings strong { color: #fff; font-weight: 600; }
-  
-  .sidebar-balance {
-    padding: 15px 20px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #94a3b8;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    margin-bottom: 10px;
-  }
-  .text-yellow { color: #facc15; }
-  .text-red { color: #ef4444; }
-  
-  .sidebar-menu { display: flex; flex-direction: column; padding-bottom: 20px; }
-  .menu-item {
-    display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1;
-    text-decoration: none; font-size: 14px; font-weight: 600;
-    cursor: pointer; transition: background 0.2s, color 0.2s;
-  }
-  .menu-item:hover, .menu-item.active {
-    background: rgba(255,255,255,0.05); color: #fff; border-left: 3px solid var(--blue); padding-left: 17px;
-  }
-  .menu-icon { width: 24px; font-size: 16px; margin-right: 12px; text-align: center; }
-  .menu-item .arrow { margin-left: auto; font-size: 16px; }
-  .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
-  
-  /* LƯỚI CHO MÁY TÍNH VÀ ĐIỆN THOẠI ĐÃ ĐƯỢC TỐI ƯU CHỐNG LAG KHỦNG KHIẾP */
-  @media (min-width: 901px) {
-    /* ĐÃ XÓA dòng transition ở body để máy không phải tính toán lại 1800 sản phẩm */
-    body { padding-left: 260px; }
-    body.sidebar-closed { padding-left: 0 !important; }
-    .app-sidebar.collapsed { transform: translateX(-100%) !important; } 
-  }
-  
-  @media (max-width: 900px) {
-    body { padding-left: 0; }
-    .app-sidebar { transform: translateX(-100%); }
-    .app-sidebar.open { transform: translateX(0); }
-  }
 </style>
 </head>
 <body>
@@ -284,7 +274,7 @@
 
 <aside class="app-sidebar" id="app-sidebar">
   <div class="sidebar-logo-container">
-    <img src="https://sf-static.upanhlaylink.com/img/image_2026040817095c8d61eadae52b76a24f4f3d8078.jpg" id="my-logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Logo" class="sidebar-logo-img">
   </div>
   
   <div class="sidebar-settings">
@@ -504,15 +494,17 @@
 let products = [];
 let catMap = {};
 
-// HÀM MỞ / ĐÓNG MENU DÙNG THUỘC TÍNH LEFT 
 function toggleMenu() {
   const sidebar = document.getElementById('app-sidebar');
   const overlay = document.getElementById('mobile-menu-overlay');
   
   if (window.innerWidth <= 900) {
     sidebar.classList.toggle('open');
-    if(sidebar.classList.contains('open')) overlay.classList.add('show');
-    else overlay.classList.remove('show');
+    if(sidebar.classList.contains('open')) {
+      overlay.classList.add('show');
+    } else {
+      overlay.classList.remove('show');
+    }
   } else {
     sidebar.classList.toggle('collapsed');
     document.body.classList.toggle('sidebar-closed');
@@ -537,6 +529,23 @@ function setActiveMenu(element, view) {
       document.getElementById('mobile-menu-overlay').classList.remove('show');
   }
 }
+
+// HÀM MỚI: TẮT BẬT DROPDOWN USER MENU
+function toggleUserDropdown(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('user-dropdown-menu');
+  if (dropdown) {
+      dropdown.classList.toggle('show');
+  }
+}
+
+// Bấm ra ngoài là tự đóng menu user
+window.addEventListener('click', function(e) {
+  const menu = document.getElementById('user-dropdown-menu');
+  if (menu && menu.classList.contains('show')) {
+    menu.classList.remove('show');
+  }
+});
 
 /* =========================================
    KẾT NỐI FIREBASE & XỬ LÝ AUTH/USER
@@ -588,6 +597,7 @@ function sendTelegramMsg(message) {
   }).catch(err => console.log("Lỗi gửi Tele:", err));
 }
 
+// CẬP NHẬT: THÊM DROPDOWN VÀO HÀM RENDER HEADER KHI ĐÃ LOGGED IN
 function updateHeaderUI() {
   const authSection = document.getElementById("auth-section");
   const walletBtn = document.getElementById("wallet-display");
@@ -597,7 +607,24 @@ function updateHeaderUI() {
     authSection.innerHTML = `
       <div class="theme-toggle"><button class="theme-btn active">☀️</button><button class="theme-btn">🌙</button></div>
       <button class="notif-btn">🔔</button>
-      <div class="user-info"><div class="avatar">🧑</div><span class="username">${currentUser}</span></div>
+      
+      <div class="user-menu-wrapper">
+        <div class="user-info" onclick="toggleUserDropdown(event)">
+          <div class="avatar">🧑</div>
+          <span class="username">${currentUser}</span>
+        </div>
+        
+        <div class="user-dropdown" id="user-dropdown-menu">
+          <button class="dropdown-item"><span class="dropdown-icon">👤</span> Trang cá nhân</button>
+          <button class="dropdown-item"><span class="dropdown-icon">✏️</span> Thay đổi mật khẩu</button>
+          <button class="dropdown-item"><span class="dropdown-icon">📄</span> Nhật ký hoạt động</button>
+          <button class="dropdown-item"><span class="dropdown-icon">💲</span> Biến động số dư</button>
+          <button class="dropdown-item"><span class="dropdown-icon">🛡️</span> Bảo mật</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="submitLogout()"><span class="dropdown-icon">🚪</span> Đăng xuất</button>
+        </div>
+      </div>
+      
       <button class="wallet-btn danger no-icon" onclick="submitLogout()">Thoát</button>
     `;
     walletBtn.style.display = "flex";
