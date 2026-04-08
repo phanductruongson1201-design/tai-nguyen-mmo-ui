@@ -60,13 +60,13 @@
   .theme-btn { background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 14px; font-size: 14px; transition: background 0.2s; }
   .theme-btn.active { background: var(--dark); }
   .notif-btn { background: none; border: none; cursor: pointer; color: var(--text); font-size: 18px; position: relative; padding: 4px; }
+  
+  /* MENU TÀI KHOẢN (USER DROPDOWN) */
+  .user-menu-wrapper { position: relative; }
   .user-info { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 4px 8px; border-radius: 8px; transition: 0.2s; }
   .user-info:hover { background: var(--dark); }
   .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ef4444); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: bold; }
   .username { font-weight: 600; font-size: 13px; }
-
-  /* CSS CHO MENU XỔ XUỐNG KHI BẤM VÀO USER */
-  .user-menu-wrapper { position: relative; }
   .user-dropdown {
     position: absolute; top: 100%; right: 0; margin-top: 10px;
     background: #fff; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.15);
@@ -88,106 +88,9 @@
   .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 101; display: none; opacity: 0; transition: 0.3s; backdrop-filter: blur(2px); }
   .mobile-menu-overlay.show { display: block; opacity: 1; }
   
-  /* BANNERS */
+  /* BANNERS LƯU Ý GỐC */
   .notice-banner { border: 1px solid #3b82f6; border-radius: 8px; margin: 12px 16px; padding: 10px 14px; background: rgba(59,130,246,0.05); color: #e8192c; font-size: 12px; line-height: 1.5; }
   .warning-bar { background: var(--red); padding: 10px 16px; text-align: center; font-weight: 700; font-size: 13px; letter-spacing: 0.3px; color: #fff; text-transform: uppercase; }
-
-  /* CATEGORY GRID */
-  .categories {
-    padding: 20px 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 12px; max-height: 380px; overflow-y: auto; border-bottom: 1px solid var(--border); margin-bottom: 8px;
-  }
-  .categories::-webkit-scrollbar { width: 5px; }
-  .categories::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
-  .cat-btn {
-    background: var(--dark3); border: 1px solid var(--border); border-radius: 8px;
-    padding: 12px 16px; cursor: pointer; font-family: inherit; font-size: 12.5px;
-    font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px;
-    text-align: left; transition: border-color 0.2s, background 0.2s, transform 0.1s;
-    letter-spacing: 0.2px; text-transform: uppercase;
-  }
-  .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
-  .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
-  .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
-
-  /* SEARCH BAR */
-  .search-wrap { padding: 12px 16px; }
-  .search-bar { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
-  .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
-  .search-bar input::placeholder { color: var(--text-muted); }
-
-  /* BẢNG SẢN PHẨM */
-  .products-section { padding: 0 16px 16px; }
-  .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
-  .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
-  .products-title { font-weight: 800; font-size: 16px; text-transform: uppercase; color: var(--text); }
-  .products-count { color: var(--text-muted); font-size: 12px; }
-
-  .table-responsive { width: 100%; overflow-x: auto; margin-bottom: 24px; border: 1px solid var(--border); background: var(--dark2); }
-  .table-responsive::-webkit-scrollbar { height: 6px; }
-  .table-responsive::-webkit-scrollbar-track { background: var(--dark); }
-  .table-responsive::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-  .category-group { min-width: 900px; }
-  .grid-row { display: grid; grid-template-columns: minmax(350px, 1fr) 90px 100px 100px 120px 120px; align-items: center; }
-
-  .cat-header-row { background: var(--blue-dark); color: #fff; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--blue-dark); }
-  .cat-header-row > div { padding: 14px 12px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
-  .cat-header-row > div:last-child { border-right: none; }
-  .cat-header-info { display: flex; align-items: center; gap: 10px; text-align: left !important; text-transform: uppercase; }
-  .cat-header-icon { background: rgba(255,255,255,0.1); width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-
-  .product-row { background: var(--dark2); border-bottom: 1px solid var(--border); transition: background 0.2s; }
-  .product-row:hover { background: #f8fafc; }
-  .product-row:last-child { border-bottom: none; }
-  .product-row > div { padding: 16px 12px; text-align: center; border-right: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-  .product-row > div:last-child { border-right: none; }
-
-  .col-info { flex-direction: row !important; justify-content: flex-start !important; text-align: left !important; gap: 16px; }
-  .prod-icon-wrap { width: 40px; height: 40px; border-radius: 8px; background: #eef2ff; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
-  .prod-details { flex: 1; }
-  .prod-name { color: var(--blue); font-weight: 700; font-size: 13px; margin-bottom: 6px; line-height: 1.4; text-transform: uppercase; cursor: pointer; }
-  .prod-name:hover { text-decoration: underline; }
-  .prod-desc { color: var(--text); font-size: 11.5px; line-height: 1.5; }
-
-  .stat-box { border: 1px solid var(--border); border-radius: 4px; padding: 6px 0; width: 100%; background: #fff; font-size: 12px; line-height: 1.4; }
-  .stat-box.stock { border-color: #0ea5e9; }
-  .stat-box.stock span { color: var(--text-muted); }
-  .stat-box.stock strong { color: var(--text); display: block; font-size: 13px; }
-  .stat-box.sold { border-color: #14b8a6; }
-  .stat-box.sold span { color: var(--text-muted); }
-  .stat-box.sold strong { color: var(--text); display: block; font-size: 13px; }
-  .stat-box.price { border-color: var(--red); color: var(--red); padding: 8px 0; }
-  .stat-box.price strong { display: block; font-size: 14px; font-weight: 800; margin-top: 2px;}
-
-  .btn-buy { background: #4f46e5; color: #fff; border: none; border-radius: 4px; width: 100%; padding: 10px 0; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: opacity 0.2s, background 0.2s; }
-  .btn-buy:hover { background: #4338ca; opacity: 0.9; }
-
-  /* MODALS */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 200; display: none; align-items: center; justify-content: center; }
-  .modal-overlay.open { display: flex; }
-  .modal { background: var(--dark2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; max-width: 400px; width: 90%; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-  .modal-title { font-weight: 800; font-size: 18px; margin-bottom: 16px; color: var(--text); text-align: center; text-transform: uppercase; }
-  .auth-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 12px 14px; border-radius: 8px; width: 100%; margin-bottom: 12px; outline: none; }
-  .auth-input:focus { border-color: var(--blue); }
-  .auth-btn { width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s; margin-top: 8px; }
-  .auth-btn:hover { background: #2563eb; }
-  
-  /* CSS NÚT GOOGLE */
-  .google-btn { background: #fff; color: #475569; border: 1px solid #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; }
-  .google-btn:hover { background: #f8fafc; }
-  .google-btn img { width: 20px; }
-
-  .modal-price { color: var(--accent); font-size: 22px; font-weight: 800; margin-bottom: 12px; }
-  .modal-desc { color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
-  .modal-qty { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; color: var(--text); }
-  .modal-qty label { font-size: 13px; font-weight: 600; }
-  .qty-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 6px 12px; border-radius: 6px; width: 80px; }
-  .modal-buy { width: 100%; padding: 12px; background: var(--red); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: opacity 0.2s; }
-  .modal-buy:hover { opacity: 0.88; }
-  .modal-close { position: absolute; top: 14px; right: 14px; background: var(--dark3); border: 1px solid var(--border); color: var(--text); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
-
-  /* LƯU Ý SECTION */
   .luu-y-section { margin: 12px 16px; border: 2px solid #3b5bdb; border-radius: 10px; padding: 20px; background: rgba(59, 91, 219, 0.04); }
   .luu-y-title { text-align: center; font-size: 22px; font-weight: 800; color: #e8192c; letter-spacing: 2px; margin-bottom: 16px; font-style: italic; }
   .luu-y-boxes { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
@@ -201,49 +104,62 @@
   .luu-y-link { color: #e8192c; font-weight: 700; text-decoration: none; }
   .luu-y-link:hover { text-decoration: underline; }
 
-  .support-float { position: fixed; bottom: 20px; right: 20px; background: #e8192c; color: #fff; border: none; border-radius: 24px; padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(232,25,44,0.4); z-index: 150; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
-  .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
-  .footer a { color: var(--blue); text-decoration: none; }
+  /* CATEGORY GRID GỐC */
+  .categories { padding: 20px 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; max-height: 380px; overflow-y: auto; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+  .categories::-webkit-scrollbar { width: 5px; }
+  .categories::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+  .cat-btn { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px; text-align: left; transition: border-color 0.2s, background 0.2s, transform 0.1s; letter-spacing: 0.2px; text-transform: uppercase; }
+  .cat-btn:hover { border-color: var(--blue); background: #f0f2f5; transform: translateY(-1px); }
+  .cat-btn.active { background: #e7f3ff; border-color: var(--blue); color: var(--blue); }
+  .cat-btn .icon { width: 26px; height: 26px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: #fff; }
 
-  /* CSS SIDEBAR NAV */
-  .app-sidebar {
-    position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: #0b1727; color: #fff;
-    z-index: 105; overflow-y: auto; transform: translateX(0); transition: left 0.3s ease;
-    font-family: var(--sans); box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  }
-  .app-sidebar::-webkit-scrollbar { width: 4px; }
-  .app-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
-  
-  .sidebar-logo-container { background: #fff; margin: 20px auto; border-radius: 8px; display: flex; justify-content: center; align-items: center; width: 220px; height: 220px; overflow: hidden; transform: translateZ(0); }
-  .sidebar-logo-img { width: 150px; height: auto; object-fit: contain; }
-  
-  .sidebar-settings { padding: 0 20px; font-size: 12px; line-height: 2.2; color: #cbd5e1; }
-  .sidebar-settings strong { color: #fff; font-weight: 600; }
-  
-  .sidebar-balance { padding: 15px 20px; font-size: 13px; font-weight: 600; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px; }
-  .text-yellow { color: #facc15; }
-  .text-red { color: #ef4444; }
-  
-  .sidebar-menu { display: flex; flex-direction: column; padding-bottom: 20px; }
-  .menu-item { display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s; }
-  .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.05); color: #fff; border-left: 3px solid var(--blue); padding-left: 17px; }
-  .menu-icon { width: 24px; font-size: 16px; margin-right: 12px; text-align: center; }
-  .menu-item .arrow { margin-left: auto; font-size: 16px; }
-  .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
-  
-  @media (min-width: 901px) {
-    body { padding-left: 260px; transition: padding-left 0.3s ease; }
-    body.sidebar-closed { padding-left: 0 !important; }
-    .app-sidebar.collapsed { left: -260px !important; }
-  }
-  @media (max-width: 900px) {
-    .app-sidebar { left: -260px; }
-    .app-sidebar.open { left: 0; }
-    body { padding-left: 0; }
-  }
+  /* SEARCH BAR GỐC */
+  .search-wrap { padding: 12px 16px; }
+  .search-bar { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; }
+  .search-bar input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 13px; padding: 10px 0; flex: 1; }
+  .search-bar input::placeholder { color: var(--text-muted); }
 
-  /* CSS BẢNG LỊCH SỬ & BIẾN ĐỘNG */
+  /* BẢNG SẢN PHẨM GỐC */
+  .products-section { padding: 0 16px 16px; }
+  .section-title { padding: 20px 16px 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; padding: 0 16px;}
+  .products-title { font-weight: 800; font-size: 16px; text-transform: uppercase; color: var(--text); }
+  .products-count { color: var(--text-muted); font-size: 12px; }
+  .table-responsive { width: 100%; overflow-x: auto; margin-bottom: 24px; border: 1px solid var(--border); background: var(--dark2); }
+  .table-responsive::-webkit-scrollbar { height: 6px; }
+  .table-responsive::-webkit-scrollbar-track { background: var(--dark); }
+  .table-responsive::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .category-group { min-width: 900px; }
+  .grid-row { display: grid; grid-template-columns: minmax(350px, 1fr) 90px 100px 100px 120px 120px; align-items: center; }
+  .cat-header-row { background: var(--blue-dark); color: #fff; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--blue-dark); }
+  .cat-header-row > div { padding: 14px 12px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+  .cat-header-row > div:last-child { border-right: none; }
+  .cat-header-info { display: flex; align-items: center; gap: 10px; text-align: left !important; text-transform: uppercase; }
+  .cat-header-icon { background: rgba(255,255,255,0.1); width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .product-row { background: var(--dark2); border-bottom: 1px solid var(--border); transition: background 0.2s; }
+  .product-row:hover { background: #f8fafc; }
+  .product-row:last-child { border-bottom: none; }
+  .product-row > div { padding: 16px 12px; text-align: center; border-right: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  .product-row > div:last-child { border-right: none; }
+  .col-info { flex-direction: row !important; justify-content: flex-start !important; text-align: left !important; gap: 16px; }
+  .prod-icon-wrap { width: 40px; height: 40px; border-radius: 8px; background: #eef2ff; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .prod-details { flex: 1; }
+  .prod-name { color: var(--blue); font-weight: 700; font-size: 13px; margin-bottom: 6px; line-height: 1.4; text-transform: uppercase; cursor: pointer; }
+  .prod-name:hover { text-decoration: underline; }
+  .prod-desc { color: var(--text); font-size: 11.5px; line-height: 1.5; }
+  .stat-box { border: 1px solid var(--border); border-radius: 4px; padding: 6px 0; width: 100%; background: #fff; font-size: 12px; line-height: 1.4; }
+  .stat-box.stock { border-color: #0ea5e9; }
+  .stat-box.stock span { color: var(--text-muted); }
+  .stat-box.stock strong { color: var(--text); display: block; font-size: 13px; }
+  .stat-box.sold { border-color: #14b8a6; }
+  .stat-box.sold span { color: var(--text-muted); }
+  .stat-box.sold strong { color: var(--text); display: block; font-size: 13px; }
+  .stat-box.price { border-color: var(--red); color: var(--red); padding: 8px 0; }
+  .stat-box.price strong { display: block; font-size: 14px; font-weight: 800; margin-top: 2px;}
+  .btn-buy { background: #4f46e5; color: #fff; border: none; border-radius: 4px; width: 100%; padding: 10px 0; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: opacity 0.2s, background 0.2s; }
+  .btn-buy:hover { background: #4338ca; opacity: 0.9; }
+
+  /* CSS CÁC BẢNG VIEW CÁ NHÂN */
   .history-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin: 20px 16px; }
   .history-card h2 { color: #1e293b; font-size: 24px; font-weight: 700; margin-bottom: 20px; }
   .history-controls { display: flex; justify-content: space-between; margin-bottom: 15px; align-items: center; color: #475569; font-size: 13px; }
@@ -255,17 +171,10 @@
   .hist-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; color: #334155; border-right: 1px solid #e2e8f0; }
   .hist-table td:last-child { border-right: none; }
   .hist-table tbody tr:hover { background: #f1f5f9; }
-  .hist-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; color: #64748b; font-size: 13px; }
-  .hist-btn { padding: 6px 12px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; color: #475569; transition: 0.2s;}
-  .hist-btn:hover { background: #f1f5f9; }
-  .hist-btn.prev { border-radius: 4px 0 0 4px; border-right: none; }
-  .hist-btn.next { border-radius: 0 4px 4px 0; }
-
-  /* CSS TRANG CÁ NHÂN (PROFILE) */
+  
   .profile-wrapper { padding: 20px 16px; max-width: 1000px; margin: 0 auto; }
   .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
   @media (max-width: 900px) { .profile-grid { grid-template-columns: 1fr; } }
-  
   .profile-left { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; height: fit-content; }
   .profile-header-bg { background: var(--blue); padding: 30px 20px; text-align: center; color: #fff; }
   .profile-avatar-large { width: 80px; height: 80px; background: #fff; border-radius: 10px; margin: 0 auto 10px; display: flex; justify-content: center; align-items: center; font-size: 40px; }
@@ -274,8 +183,6 @@
   .profile-left-info { padding: 20px; }
   .pl-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; color: #475569; font-size: 13px; font-weight: 500; background: #f8fafc; padding: 10px; border-radius: 8px; }
   .pl-icon { width: 30px; height: 30px; background: #e0e7ff; color: var(--blue); border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 14px; flex-shrink: 0; }
-  .pl-socials { display: flex; justify-content: center; gap: 15px; margin-top: 20px; font-size: 18px; color: #64748b; }
-  
   .profile-right { display: flex; flex-direction: column; gap: 20px; }
   .pr-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
   @media (max-width: 768px) { .pr-stats { grid-template-columns: 1fr; } }
@@ -285,7 +192,6 @@
   .pr-stat-val.green { color: var(--green); }
   .pr-stat-val.orange { color: #f59e0b; }
   .pr-stat-label { color: #64748b; font-size: 14px; font-weight: 600; }
-  
   .pr-form-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .pr-form-title { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 20px; }
   .pr-form-group { display: flex; margin-bottom: 15px; align-items: center; }
@@ -299,6 +205,65 @@
   .pr-btn.save:hover { background: #2563eb; }
   .pr-btn.close { background: #ef4444; }
   .pr-btn.close:hover { background: #dc2626; }
+
+  /* SIDEBAR MỚI (CHỐNG LAG + KHUNG 220px LOGO VUÔNG TỐI ƯU) */
+  .app-sidebar {
+    position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: #0b1727; color: #fff;
+    z-index: 105; overflow-y: auto; transform: translateX(0); transition: left 0.3s ease;
+    font-family: var(--sans); box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  }
+  .app-sidebar::-webkit-scrollbar { width: 4px; }
+  .app-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+  .sidebar-logo-container { background: #fff; margin: 20px auto; border-radius: 8px; display: flex; justify-content: center; align-items: center; width: 220px; height: 220px; overflow: hidden; transform: translateZ(0); }
+  .sidebar-logo-img { width: 150px; height: auto; object-fit: contain; }
+  .sidebar-settings { padding: 0 20px; font-size: 12px; line-height: 2.2; color: #cbd5e1; }
+  .sidebar-settings strong { color: #fff; font-weight: 600; }
+  .sidebar-balance { padding: 15px 20px; font-size: 13px; font-weight: 600; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px; }
+  .text-yellow { color: #facc15; }
+  .text-red { color: #ef4444; }
+  .sidebar-menu { display: flex; flex-direction: column; padding-bottom: 20px; }
+  .menu-item { display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.05); color: #fff; border-left: 3px solid var(--blue); padding-left: 17px; }
+  .menu-icon { width: 24px; font-size: 16px; margin-right: 12px; text-align: center; }
+  .menu-item .arrow { margin-left: auto; font-size: 16px; }
+  .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+  @media (min-width: 901px) {
+    body { padding-left: 260px; transition: padding-left 0.3s ease; }
+    body.sidebar-closed { padding-left: 0 !important; }
+    .app-sidebar.collapsed { left: -260px !important; }
+  }
+  @media (max-width: 900px) {
+    .app-sidebar { left: -260px; }
+    .app-sidebar.open { left: 0; }
+    body { padding-left: 0; }
+  }
+
+  /* MODALS & GIAO DIỆN NÚT GOOGLE */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 200; display: none; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--dark2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; max-width: 400px; width: 90%; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+  .modal-title { font-weight: 800; font-size: 18px; margin-bottom: 16px; color: var(--text); text-align: center; text-transform: uppercase; }
+  .auth-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 12px 14px; border-radius: 8px; width: 100%; margin-bottom: 12px; outline: none; }
+  .auth-input:focus { border-color: var(--blue); }
+  .auth-btn { width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s; margin-top: 8px; }
+  .auth-btn:hover { background: #2563eb; }
+  .google-btn { background: #fff; color: #475569; border: 1px solid #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; }
+  .google-btn:hover { background: #f8fafc; }
+  .google-btn img { width: 20px; }
+  .modal-price { color: var(--accent); font-size: 22px; font-weight: 800; margin-bottom: 12px; }
+  .modal-desc { color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
+  .modal-qty { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; color: var(--text); }
+  .modal-qty label { font-size: 13px; font-weight: 600; }
+  .qty-input { background: var(--dark3); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 14px; padding: 6px 12px; border-radius: 6px; width: 80px; }
+  .modal-buy { width: 100%; padding: 12px; background: var(--red); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: opacity 0.2s; }
+  .modal-buy:hover { opacity: 0.88; }
+  .modal-close { position: absolute; top: 14px; right: 14px; background: var(--dark3); border: 1px solid var(--border); color: var(--text); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+
+  /* NÚT HỖ TRỢ ZALO GÓC MÀN HÌNH */
+  .support-float { position: fixed; bottom: 20px; right: 20px; background: #e8192c; color: #fff; border: none; border-radius: 24px; padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(232,25,44,0.4); z-index: 150; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
+  .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
+  .footer a { color: var(--blue); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -353,6 +318,25 @@
         <p class="luu-y-item">- DỮ LIỆU ĐƠN HÀNG SHOP TỰ ĐỘNG XÓA SAU 5 - 7 NGÀY ĐỂ NHẸ SERVER.</p>
         <p class="luu-y-item red">- ANH EM VUI LÒNG ĐỔI THÔNG TIN MẬT KHẨU VÀ ĐÁ THIẾT BỊ LẠ RA KHỎI TÀI KHOẢN !</p>
         <p class="luu-y-item red">- KHÁCH SAU KHI MUA PHẢI LƯU VỀ MÁY. SHOP KHÔNG LƯU DỮ LIỆU CỦA KHÁCH.</p>
+        <p class="luu-y-item red">- SHOP CÓ BẬT KẾT NỐI CHO CÁC SHOP ĐẤU API - CÁC SHOP CÓ THỂ KẾT NỐI API - CẦN HỖ TRỢ LIÊN ZALO <strong>0935.748.199</strong> 🌟 🌟</p>
+        <p class="luu-y-item">- Tất cả tài nguyên trên website chỉ phục vụ với mục đích <strong>Quảng cáo, Marketing Facebook</strong>.</p>
+        <p class="luu-y-item">- Tất cả hành vi sử dụng vi phạm nào trái pháp luật Việt Nam, chúng tôi đều <strong class="red-text">không chịu bất cứ trách nhiệm nào</strong>.</p>
+        <p class="luu-y-item">- Khách hàng mua tài khoản về cần thay đổi mật khẩu <strong>tài khoản Facebook, tài khoản email liên kết</strong>. 🌟</p>
+        <p class="luu-y-item red">- Không được đổi mail hoặc lấy lại mật khẩu thông qua email vì sẽ làm mất tính năng checkpoint về mail.</p>
+        <p class="luu-y-item">- Chúng tôi sẽ <strong class="red-text">không chịu trách nhiệm nào</strong> nếu các bạn không thay đổi thông tin tài khoản dẫn tới việc mất tài khoản.</p>
+        <p class="luu-y-item red">- LƯU Ý: KHÁCH LẤY ĐỦ DÙNG HẾT LẤY TIẾP, SHOP NGÂM RỒI NÊN KHÔNG BẢO HÀNH NGÂM CHỈ HỖ TRỢ BẢO HÀNH ĐƠN HÀNG TRONG 24H.</p>
+      </div>
+      <div class="luu-y-check-list">
+        <p class="check-item">✅ Lưu đối với những clone via dưới 1.000đ, hàng VER chỉ thích hợp chạy tool vì chỉ live time ngắn không nên mua dùng hay ngâm.</p>
+        <p class="check-item">✅ Không bảo hành trường hợp acc Facebook dính WhatsApp anh em nên mua loại có 2FA để xác thực khi login.</p>
+        <p class="check-item">✅ NICK FB MỚI KHÔNG CHO BẬT 2FA, CHO NÊN NGÂM SẼ KHÔNG LOGIN BẰNG PASS ĐƯỢC VUI LÒNG DÙNG COOKIE.</p>
+        <p class="check-item">✅ <strong>ĐIỀU KHOẢN:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
+        <p class="check-item">✅ <strong>VIDEO HƯỚNG DẪN ĐĂNG NHẬP NICK CLONE:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
+        <p class="check-item">✅ <strong>VIDEO HƯỚNG DẪN ĐĂNG NHẬP NICK CLONE BẰNG COOKIE:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
+        <p class="check-item">✅ Khi bán ra bạn login <strong>Thành Công</strong> Shop sẽ không chịu trách nhiệm khi bạn sử dụng tài khoản với các mục đích riêng hoặc bị khóa tài khoản.</p>
+        <p class="check-item">✅ <strong>Shop không hỗ trợ hoàn tiền khi đã nạp vào web dưới bất kì hình thức nào</strong> nên anh em vui lòng nạp vừa đủ và test sản phẩm trước khi mua số lượng.</p>
+        <p class="check-item">✅ Không bảo hành mọi trường hợp mua về ngâm dẫn đến die, check live kèm ảnh và thời gian tại thời điểm check live sau khi mua hàng để một thời gian rồi check live die không hỗ trợ.</p>
+        <p class="check-item">✅ Lưu ý: anh em nên tìm hiểu về clone và mua số lượng ít trước khi mua nhiều — 1 thiết bị 1 ip login nhiều acc sẽ bị fb quét, acc mới login về mà đi spam hay thay đổi thông tin quá nhiều cũng sẽ bị quét dẫn đến khóa tài khoản.</p>
       </div>
     </div>
 
@@ -362,7 +346,6 @@
         <input type="text" placeholder="Tìm kiếm sản phẩm...">
       </div>
     </div>
-
     <div class="categories" id="categories"></div>
 
     <div class="section-title">SẢN PHẨM NỔI BẬT</div>
@@ -449,6 +432,7 @@
 </div>
 
 <div class="footer">© 2025 TàiNguyênMMO &nbsp;|&nbsp; <a href="#">Điều khoản</a></div>
+
 <button class="support-float" onclick="window.open('https://zalo.me/0935748199', '_blank')">💬 LIÊN HỆ HỖ TRỢ</button>
 
 <div class="modal-overlay" id="buy-modal">
@@ -581,9 +565,7 @@ window.addEventListener('click', function(e) {
   if (menu && menu.classList.contains('show')) menu.classList.remove('show');
 });
 
-/* =========================================
-   KẾT NỐI FIREBASE & XỬ LÝ AUTH
-   ========================================= */
+/* KẾT NỐI FIREBASE */
 const firebaseConfig = {
   apiKey: "AIzaSyDHvezBBdlUm3dkEClu1dPckBnXJmAK-2E",
   authDomain: "tainguyenmmo-1a233.firebaseapp.com",
@@ -596,7 +578,7 @@ const firebaseConfig = {
 if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 const db = firebase.firestore();
 const auth = firebase.auth();
-const googleProvider = new firebase.auth.GoogleAuthProvider(); // KHỞI TẠO GOOGLE AUTH
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 db.collection("services").onSnapshot((snapshot) => {
     products = [];
@@ -667,34 +649,27 @@ function switchAuthModal(to) {
   openAuthModal(to);
 }
 
-// ----------------------------------------------------
-// ĐĂNG NHẬP / ĐĂNG KÝ BẰNG GOOGLE (MỚI)
-// ----------------------------------------------------
+// ĐĂNG NHẬP / ĐĂNG KÝ BẰNG GOOGLE
 async function loginWithGoogle() {
   try {
     const result = await auth.signInWithPopup(googleProvider);
     const user = result.user;
     
-    // Tạo username tự động từ email (Lấy phần trước dấu @ và bỏ ký tự đặc biệt)
     let autoUsername = user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '');
-    
-    // Kiểm tra xem khách này đã từng đăng nhập Google vào web chưa
     const userRef = db.collection("users").doc(autoUsername);
     const docSnap = await userRef.get();
     
     if (!docSnap.exists) {
-        // Nếu là lần đầu tiên -> Tạo Profile mới vào Database
         await userRef.set({ 
             username: autoUsername, 
             email: user.email, 
-            fullname: user.displayName, // Lấy luôn tên thật trên Google
+            fullname: user.displayName,
             uid: user.uid,
             balance: 0, 
             createdAt: firebase.firestore.FieldValue.serverTimestamp() 
         });
     }
     
-    // Lưu phiên đăng nhập
     localStorage.setItem("currentUser", autoUsername);
     closeAuthModal('login');
     closeAuthModal('register');
@@ -780,7 +755,7 @@ async function sendResetCode() {
     await auth.sendPasswordResetEmail(targetEmail);
     
     btnSend.textContent = "Nhận Link qua Email"; btnSend.disabled = false;
-    alert(`Đã gửi link khôi phục mật khẩu đến email: ${targetEmail}.\nVui lòng kiểm tra hộp thư (kể cả thư rác) và bấm vào link để đặt lại mật khẩu!`);
+    alert(`Đã gửi link khôi phục mật khẩu đến email: ${targetEmail}.\nVui lòng kiểm tra hộp thư và bấm vào link để đặt lại mật khẩu!`);
     closeAuthModal('forgot');
   } catch (error) { 
       alert("Lỗi: " + error.message); 
@@ -807,7 +782,6 @@ function renderProducts(catFilter, searchQuery = "") {
   catsToRender.forEach(catId => {
     const catProducts = sourceProducts.filter(p => p.cat === catId);
     if (catProducts.length === 0) return;
-    
     totalCount += catProducts.length;
     const catInfo = catMap[catId] || { name: catId, icon: "📦" };
 
