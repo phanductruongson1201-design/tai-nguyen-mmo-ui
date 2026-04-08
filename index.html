@@ -172,6 +172,11 @@
   .auth-input:focus { border-color: var(--blue); }
   .auth-btn { width: 100%; padding: 12px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s; margin-top: 8px; }
   .auth-btn:hover { background: #2563eb; }
+  
+  /* CSS NÚT GOOGLE */
+  .google-btn { background: #fff; color: #475569; border: 1px solid #cbd5e1; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; }
+  .google-btn:hover { background: #f8fafc; }
+  .google-btn img { width: 20px; }
 
   .modal-price { color: var(--accent); font-size: 22px; font-weight: 800; margin-bottom: 12px; }
   .modal-desc { color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
@@ -238,7 +243,7 @@
     body { padding-left: 0; }
   }
 
-  /* CSS CHO BẢNG LỊCH SỬ & BIẾN ĐỘNG */
+  /* CSS BẢNG LỊCH SỬ & BIẾN ĐỘNG */
   .history-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin: 20px 16px; }
   .history-card h2 { color: #1e293b; font-size: 24px; font-weight: 700; margin-bottom: 20px; }
   .history-controls { display: flex; justify-content: space-between; margin-bottom: 15px; align-items: center; color: #475569; font-size: 13px; }
@@ -256,7 +261,7 @@
   .hist-btn.prev { border-radius: 4px 0 0 4px; border-right: none; }
   .hist-btn.next { border-radius: 0 4px 4px 0; }
 
-  /* CSS CHO TRANG CÁ NHÂN (PROFILE) */
+  /* CSS TRANG CÁ NHÂN (PROFILE) */
   .profile-wrapper { padding: 20px 16px; max-width: 1000px; margin: 0 auto; }
   .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
   @media (max-width: 900px) { .profile-grid { grid-template-columns: 1fr; } }
@@ -319,7 +324,6 @@
     <a onclick="setActiveMenu(this, 'home')" class="menu-item"><span class="menu-icon">🛒</span> Mua Tài Khoản <span class="arrow">›</span></a>
     <a class="menu-item"><span class="menu-icon">📄</span> Mua Tài Liệu</a>
     <a onclick="setActiveMenu(this, 'history')" class="menu-item"><span class="menu-icon">⏱</span> Lịch Sử Mua Hàng</a>
-    
     <div class="menu-header">NẠP TIỀN</div>
     <a class="menu-item"><span class="menu-icon">🏦</span> Ngân Hàng</a>
     <a class="menu-item"><span class="menu-icon">🧾</span> Hoá Đơn</a>
@@ -349,25 +353,6 @@
         <p class="luu-y-item">- DỮ LIỆU ĐƠN HÀNG SHOP TỰ ĐỘNG XÓA SAU 5 - 7 NGÀY ĐỂ NHẸ SERVER.</p>
         <p class="luu-y-item red">- ANH EM VUI LÒNG ĐỔI THÔNG TIN MẬT KHẨU VÀ ĐÁ THIẾT BỊ LẠ RA KHỎI TÀI KHOẢN !</p>
         <p class="luu-y-item red">- KHÁCH SAU KHI MUA PHẢI LƯU VỀ MÁY. SHOP KHÔNG LƯU DỮ LIỆU CỦA KHÁCH.</p>
-        <p class="luu-y-item red">- SHOP CÓ BẬT KẾT NỐI CHO CÁC SHOP ĐẤU API - CÁC SHOP CÓ THỂ KẾT NỐI API - CẦN HỖ TRỢ LIÊN ZALO <strong>0935.748.199</strong> 🌟 🌟</p>
-        <p class="luu-y-item">- Tất cả tài nguyên trên website chỉ phục vụ với mục đích <strong>Quảng cáo, Marketing Facebook</strong>.</p>
-        <p class="luu-y-item">- Tất cả hành vi sử dụng vi phạm nào trái pháp luật Việt Nam, chúng tôi đều <strong class="red-text">không chịu bất cứ trách nhiệm nào</strong>.</p>
-        <p class="luu-y-item">- Khách hàng mua tài khoản về cần thay đổi mật khẩu <strong>tài khoản Facebook, tài khoản email liên kết</strong>. 🌟</p>
-        <p class="luu-y-item red">- Không được đổi mail hoặc lấy lại mật khẩu thông qua email vì sẽ làm mất tính năng checkpoint về mail.</p>
-        <p class="luu-y-item">- Chúng tôi sẽ <strong class="red-text">không chịu trách nhiệm nào</strong> nếu các bạn không thay đổi thông tin tài khoản dẫn tới việc mất tài khoản.</p>
-        <p class="luu-y-item red">- LƯU Ý: KHÁCH LẤY ĐỦ DÙNG HẾT LẤY TIẾP, SHOP NGÂM RỒI NÊN KHÔNG BẢO HÀNH NGÂM CHỈ HỖ TRỢ BẢO HÀNH ĐƠN HÀNG TRONG 24H.</p>
-      </div>
-      <div class="luu-y-check-list">
-        <p class="check-item">✅ Lưu đối với những clone via dưới 1.000đ, hàng VER chỉ thích hợp chạy tool vì chỉ live time ngắn không nên mua dùng hay ngâm.</p>
-        <p class="check-item">✅ Không bảo hành trường hợp acc Facebook dính WhatsApp anh em nên mua loại có 2FA để xác thực khi login.</p>
-        <p class="check-item">✅ NICK FB MỚI KHÔNG CHO BẬT 2FA, CHO NÊN NGÂM SẼ KHÔNG LOGIN BẰNG PASS ĐƯỢC VUI LÒNG DÙNG COOKIE.</p>
-        <p class="check-item">✅ <strong>ĐIỀU KHOẢN:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
-        <p class="check-item">✅ <strong>VIDEO HƯỚNG DẪN ĐĂNG NHẬP NICK CLONE:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
-        <p class="check-item">✅ <strong>VIDEO HƯỚNG DẪN ĐĂNG NHẬP NICK CLONE BẰNG COOKIE:</strong> <a href="#" class="luu-y-link">XEM NGAY</a></p>
-        <p class="check-item">✅ Khi bán ra bạn login <strong>Thành Công</strong> Shop sẽ không chịu trách nhiệm khi bạn sử dụng tài khoản với các mục đích riêng hoặc bị khóa tài khoản.</p>
-        <p class="check-item">✅ <strong>Shop không hỗ trợ hoàn tiền khi đã nạp vào web dưới bất kì hình thức nào</strong> nên anh em vui lòng nạp vừa đủ và test sản phẩm trước khi mua số lượng.</p>
-        <p class="check-item">✅ Không bảo hành mọi trường hợp mua về ngâm dẫn đến die, check live kèm ảnh và thời gian tại thời điểm check live sau khi mua hàng để một thời gian rồi check live die không hỗ trợ.</p>
-        <p class="check-item">✅ Lưu ý: anh em nên tìm hiểu về clone và mua số lượng ít trước khi mua nhiều — 1 thiết bị 1 ip login nhiều acc sẽ bị fb quét, acc mới login về mà đi spam hay thay đổi thông tin quá nhiều cũng sẽ bị quét dẫn đến khóa tài khoản.</p>
       </div>
     </div>
 
@@ -378,8 +363,7 @@
       </div>
     </div>
 
-    <div class="categories" id="categories">
-      </div>
+    <div class="categories" id="categories"></div>
 
     <div class="section-title">SẢN PHẨM NỔI BẬT</div>
     <div class="products-section">
@@ -387,7 +371,6 @@
         <span class="products-title" id="display-title">Tất cả sản phẩm</span>
         <span class="products-count" id="count">Đang tải dữ liệu từ Đám mây...</span>
       </div>
-      
       <div class="table-responsive">
         <div id="products-grid"></div>
       </div>
@@ -395,51 +378,14 @@
 </div>
 
 <div id="view-history" style="display: none;">
-    <button class="btn btn-red" onclick="showMainView('home')" style="margin: 20px 16px 0 16px; border-radius: 4px; padding: 8px 16px; background: #e8192c; color: white; border: none; cursor: pointer;">
-        ← Quay Lại
-    </button>
-    
+    <button class="btn btn-red" onclick="showMainView('home')" style="margin: 20px 16px 0 16px; border-radius: 4px; padding: 8px 16px; background: #e8192c; color: white; border: none; cursor: pointer;">← Quay Lại</button>
     <div class="history-card">
         <h2>Lịch Sử Mua Hàng</h2>
-        <div class="history-controls">
-            <div>
-                Show 
-                <select>
-                    <option>10</option>
-                    <option>25</option>
-                    <option>50</option>
-                </select> 
-                entries
-            </div>
-            <div>
-                Search: <input type="text">
-            </div>
-        </div>
-        
         <div style="overflow-x: auto;">
             <table class="hist-table">
-                <thead>
-                    <tr>
-                        <th># ↕</th>
-                        <th>Mã giao dịch ↕</th>
-                        <th>Sản phẩm ↕</th>
-                        <th style="text-align:center">Số lượng ↕</th>
-                        <th>Thanh toán ↕</th>
-                        <th>Thời gian ↕</th>
-                        <th style="text-align:center">Thao tác ↕</th>
-                    </tr>
-                </thead>
-                <tbody id="history-tbody">
-                    <tr><td colspan="7" style="text-align: center; padding: 20px; color:#64748b;">Vui lòng đăng nhập để xem lịch sử</td></tr>
-                </tbody>
+                <thead><tr><th># ↕</th><th>Mã giao dịch ↕</th><th>Sản phẩm ↕</th><th style="text-align:center">Số lượng ↕</th><th>Thanh toán ↕</th><th>Thời gian ↕</th><th style="text-align:center">Thao tác ↕</th></tr></thead>
+                <tbody id="history-tbody"><tr><td colspan="7" style="text-align: center; padding: 20px; color:#64748b;">Vui lòng đăng nhập để xem lịch sử</td></tr></tbody>
             </table>
-        </div>
-        
-        <div class="hist-footer">
-            <div id="history-info">Showing 0 to 0 of 0 entries</div>
-            <div>
-                <button class="hist-btn prev">Previous</button><button class="hist-btn next">Next</button>
-            </div>
         </div>
     </div>
 </div>
@@ -456,63 +402,22 @@
         <div class="profile-left-info">
           <div class="pl-item"><div class="pl-icon">✉️</div><span id="prof-side-email">...</span></div>
           <div class="pl-item"><div class="pl-icon">📞</div><span id="prof-side-phone">Chưa cập nhật</span></div>
-          <div class="pl-item"><div class="pl-icon">🛡️</div><span>Đang tắt bảo mật</span></div>
-          <div class="pl-socials">
-            <span style="cursor:pointer">f</span>
-            <span style="cursor:pointer">🐦</span>
-            <span style="cursor:pointer">▶</span>
-            <span style="cursor:pointer">P</span>
-          </div>
         </div>
       </div>
-      
       <div class="profile-right">
         <div class="pr-stats">
-          <div class="pr-stat-card">
-            <div class="pr-stat-val blue">0đ</div>
-            <div class="pr-stat-label">Tổng Tiền Nạp</div>
-          </div>
-          <div class="pr-stat-card">
-            <div class="pr-stat-val green">0đ</div>
-            <div class="pr-stat-label">Số Dư Sử Dụng</div>
-          </div>
-          <div class="pr-stat-card">
-            <div class="pr-stat-val orange" id="prof-stat-bal">0đ</div>
-            <div class="pr-stat-label">Số Dư Hiện Tại</div>
-          </div>
+          <div class="pr-stat-card"><div class="pr-stat-val blue">0đ</div><div class="pr-stat-label">Tổng Tiền Nạp</div></div>
+          <div class="pr-stat-card"><div class="pr-stat-val green">0đ</div><div class="pr-stat-label">Số Dư Sử Dụng</div></div>
+          <div class="pr-stat-card"><div class="pr-stat-val orange" id="prof-stat-bal">0đ</div><div class="pr-stat-label">Số Dư Hiện Tại</div></div>
         </div>
-        
         <div class="pr-form-card">
           <div class="pr-form-title">Thông Tin Cá Nhân</div>
-          <div class="pr-form-group">
-            <div class="pr-form-label">Họ và Tên</div>
-            <input type="text" class="pr-form-input" id="prof-fullname" placeholder="Nhập họ và tên">
-          </div>
-          <div class="pr-form-group">
-            <div class="pr-form-label">Tên đăng nhập</div>
-            <input type="text" class="pr-form-input" id="prof-username" readonly>
-          </div>
-          <div class="pr-form-group">
-            <div class="pr-form-label">Số điện thoại</div>
-            <input type="text" class="pr-form-input" id="prof-phone" placeholder="Nhập số điện thoại">
-          </div>
-          <div class="pr-form-group">
-            <div class="pr-form-label">Địa chỉ Email (*)</div>
-            <input type="text" class="pr-form-input" id="prof-email" readonly>
-          </div>
-          <div class="pr-form-group">
-            <div class="pr-form-label">Thời gian đăng ký</div>
-            <input type="text" class="pr-form-input" id="prof-created" readonly>
-          </div>
-          <div class="pr-form-group">
-            <div class="pr-form-label">Đăng nhập gần đây</div>
-            <input type="text" class="pr-form-input" id="prof-lastlogin" readonly>
-          </div>
-          
-          <div class="pr-form-actions">
-            <button class="pr-btn save" onclick="saveProfileData()">Lưu Thay Đổi</button>
-            <button class="pr-btn close" onclick="showMainView('home')">Đóng</button>
-          </div>
+          <div class="pr-form-group"><div class="pr-form-label">Họ và Tên</div><input type="text" class="pr-form-input" id="prof-fullname" placeholder="Nhập họ và tên"></div>
+          <div class="pr-form-group"><div class="pr-form-label">Tên đăng nhập</div><input type="text" class="pr-form-input" id="prof-username" readonly></div>
+          <div class="pr-form-group"><div class="pr-form-label">Số điện thoại</div><input type="text" class="pr-form-input" id="prof-phone" placeholder="Nhập số điện thoại"></div>
+          <div class="pr-form-group"><div class="pr-form-label">Địa chỉ Email (*)</div><input type="text" class="pr-form-input" id="prof-email" readonly></div>
+          <div class="pr-form-group"><div class="pr-form-label">Thời gian đăng ký</div><input type="text" class="pr-form-input" id="prof-created" readonly></div>
+          <div class="pr-form-actions"><button class="pr-btn save" onclick="saveProfileData()">Lưu Thay Đổi</button><button class="pr-btn close" onclick="showMainView('home')">Đóng</button></div>
         </div>
       </div>
     </div>
@@ -523,23 +428,10 @@
   <div class="profile-wrapper">
     <div class="pr-form-card">
       <div class="pr-form-title">Thay đổi mật khẩu</div>
-      <div class="pr-form-group">
-        <div class="pr-form-label">Mật khẩu hiện tại</div>
-        <input type="password" class="pr-form-input" id="cp-current" placeholder="Vui lòng nhập mật khẩu hiện tại">
-      </div>
-      <div class="pr-form-group">
-        <div class="pr-form-label">Mật khẩu mới</div>
-        <input type="password" class="pr-form-input" id="cp-new" placeholder="Vui lòng nhập mật khẩu mới">
-      </div>
-      <div class="pr-form-group">
-        <div class="pr-form-label">Nhập lại mật khẩu mới</div>
-        <input type="password" class="pr-form-input" id="cp-confirm" placeholder="Vui lòng nhập lại mật khẩu mới">
-      </div>
-      
-      <div class="pr-form-actions">
-        <button class="pr-btn save" onclick="saveNewPassword()">Lưu Thay Đổi</button>
-        <button class="pr-btn close" onclick="showMainView('home')">Đóng</button>
-      </div>
+      <div class="pr-form-group"><div class="pr-form-label">Mật khẩu hiện tại</div><input type="password" class="pr-form-input" id="cp-current" placeholder="Vui lòng nhập mật khẩu hiện tại"></div>
+      <div class="pr-form-group"><div class="pr-form-label">Mật khẩu mới</div><input type="password" class="pr-form-input" id="cp-new" placeholder="Vui lòng nhập mật khẩu mới"></div>
+      <div class="pr-form-group"><div class="pr-form-label">Nhập lại mật khẩu mới</div><input type="password" class="pr-form-input" id="cp-confirm" placeholder="Vui lòng nhập lại mật khẩu mới"></div>
+      <div class="pr-form-actions"><button class="pr-btn save" onclick="saveNewPassword()">Lưu Thay Đổi</button><button class="pr-btn close" onclick="showMainView('home')">Đóng</button></div>
     </div>
   </div>
 </div>
@@ -547,56 +439,17 @@
 <div id="view-transactions" style="display: none;">
   <div class="history-card">
       <h2>Biến động số dư</h2>
-      <div class="history-controls">
-          <div>
-              Show 
-              <select>
-                  <option>10</option>
-                  <option>25</option>
-                  <option>50</option>
-              </select> 
-              entries
-          </div>
-          <div>
-              Search: <input type="text">
-          </div>
-      </div>
-      
       <div style="overflow-x: auto;">
           <table class="hist-table">
-              <thead>
-                  <tr>
-                      <th># ↕</th>
-                      <th>Số tiền trước ↕</th>
-                      <th>Số tiền thay đổi ↕</th>
-                      <th>Số tiền hiện tại ↕</th>
-                      <th>Thời gian ↕</th>
-                      <th>Nội dung ↕</th>
-                  </tr>
-              </thead>
-              <tbody id="trans-tbody">
-                  <tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Vui lòng đăng nhập để xem lịch sử</td></tr>
-              </tbody>
+              <thead><tr><th># ↕</th><th>Số tiền trước ↕</th><th>Số tiền thay đổi ↕</th><th>Số tiền hiện tại ↕</th><th>Thời gian ↕</th><th>Nội dung ↕</th></tr></thead>
+              <tbody id="trans-tbody"><tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Vui lòng đăng nhập để xem lịch sử</td></tr></tbody>
           </table>
-      </div>
-      
-      <div class="hist-footer">
-          <div id="trans-info">Showing 0 to 0 of 0 entries</div>
-          <div>
-              <button class="hist-btn prev">Previous</button><button class="hist-btn next">Next</button>
-          </div>
       </div>
   </div>
 </div>
 
-
-<div class="footer">
-  © 2025 TàiNguyênMMO &nbsp;|&nbsp; <a href="#">Điều khoản</a> &nbsp;|&nbsp; <a href="#">Liên hệ</a> &nbsp;|&nbsp; Hỗ trợ: <a href="#">Telegram</a>
-</div>
-
-<button class="support-float" onclick="window.open('https://zalo.me/0935748199', '_blank')">
-  💬 LIÊN HỆ HỖ TRỢ
-</button>
+<div class="footer">© 2025 TàiNguyênMMO &nbsp;|&nbsp; <a href="#">Điều khoản</a></div>
+<button class="support-float" onclick="window.open('https://zalo.me/0935748199', '_blank')">💬 LIÊN HỆ HỖ TRỢ</button>
 
 <div class="modal-overlay" id="buy-modal">
   <div class="modal">
@@ -604,10 +457,7 @@
     <div class="modal-title" id="modal-name" style="font-size:16px; text-transform:none;"></div>
     <div class="modal-price" id="modal-price"></div>
     <div class="modal-desc" id="modal-desc"></div>
-    <div class="modal-qty">
-      <label>Số lượng:</label>
-      <input class="qty-input" type="number" min="1" value="1" id="modal-qty">
-    </div>
+    <div class="modal-qty"><label>Số lượng:</label><input class="qty-input" type="number" min="1" value="1" id="modal-qty"></div>
     <button class="modal-buy" onclick="handleBuy()">🛒 Xác nhận Mua</button>
   </div>
 </div>
@@ -622,6 +472,15 @@
       <a href="#" onclick="switchAuthModal('forgot')" style="color: var(--blue); text-decoration: none;">Quên mật khẩu?</a>
     </div>
     <button class="auth-btn" onclick="submitLogin()">Đăng nhập</button>
+    
+    <div style="text-align: center; margin: 15px 0; color: #94a3b8; font-size: 12px; position: relative;">
+      <hr style="border: none; border-top: 1px solid #e2e8f0; position: absolute; width: 100%; top: 50%; z-index: 1;">
+      <span style="background: #fff; padding: 0 10px; position: relative; z-index: 2;">HOẶC</span>
+    </div>
+    <button class="auth-btn google-btn" onclick="loginWithGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Đăng nhập bằng Google
+    </button>
+    
     <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
       Chưa có tài khoản? <a href="#" onclick="switchAuthModal('register')" style="color: var(--blue); font-weight: bold;">Đăng ký ngay</a>
     </div>
@@ -637,7 +496,16 @@
     <input type="password" id="reg-pass" class="auth-input" placeholder="Mật khẩu">
     <input type="password" id="reg-pass-confirm" class="auth-input" placeholder="Nhập lại mật khẩu">
     <button class="auth-btn" onclick="submitRegister()">Đăng ký</button>
-    <div style="text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted);">
+
+    <div style="text-align: center; margin: 15px 0; color: #94a3b8; font-size: 12px; position: relative;">
+      <hr style="border: none; border-top: 1px solid #e2e8f0; position: absolute; width: 100%; top: 50%; z-index: 1;">
+      <span style="background: #fff; padding: 0 10px; position: relative; z-index: 2;">HOẶC</span>
+    </div>
+    <button class="auth-btn google-btn" onclick="loginWithGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"> Đăng ký bằng Google
+    </button>
+
+    <div style="text-align: center; margin: 18px 0 0 0; font-size: 13px; color: var(--text-muted);">
       Đã có tài khoản? <a href="#" onclick="switchAuthModal('login')" style="color: var(--blue); font-weight: bold;">Đăng nhập</a>
     </div>
   </div>
@@ -727,7 +595,8 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 const db = firebase.firestore();
-const auth = firebase.auth(); // KHỞI TẠO FIREBASE AUTH
+const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider(); // KHỞI TẠO GOOGLE AUTH
 
 db.collection("services").onSnapshot((snapshot) => {
     products = [];
@@ -745,12 +614,6 @@ db.collection("services").onSnapshot((snapshot) => {
     categoriesDiv.innerHTML = catHtml;
     renderProducts("all", "");
 });
-
-function sendTelegramMsg(message) {
-  const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; 
-  const chatId = "2133642610";
-  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: chatId, text: message }) }).catch(err => console.log("Lỗi:", err));
-}
 
 function updateHeaderUI() {
   const authSection = document.getElementById("auth-section");
@@ -804,7 +667,47 @@ function switchAuthModal(to) {
   openAuthModal(to);
 }
 
-// BẢO MẬT MỚI: ĐĂNG KÝ BẰNG FIREBASE AUTH
+// ----------------------------------------------------
+// ĐĂNG NHẬP / ĐĂNG KÝ BẰNG GOOGLE (MỚI)
+// ----------------------------------------------------
+async function loginWithGoogle() {
+  try {
+    const result = await auth.signInWithPopup(googleProvider);
+    const user = result.user;
+    
+    // Tạo username tự động từ email (Lấy phần trước dấu @ và bỏ ký tự đặc biệt)
+    let autoUsername = user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '');
+    
+    // Kiểm tra xem khách này đã từng đăng nhập Google vào web chưa
+    const userRef = db.collection("users").doc(autoUsername);
+    const docSnap = await userRef.get();
+    
+    if (!docSnap.exists) {
+        // Nếu là lần đầu tiên -> Tạo Profile mới vào Database
+        await userRef.set({ 
+            username: autoUsername, 
+            email: user.email, 
+            fullname: user.displayName, // Lấy luôn tên thật trên Google
+            uid: user.uid,
+            balance: 0, 
+            createdAt: firebase.firestore.FieldValue.serverTimestamp() 
+        });
+    }
+    
+    // Lưu phiên đăng nhập
+    localStorage.setItem("currentUser", autoUsername);
+    closeAuthModal('login');
+    closeAuthModal('register');
+    updateHeaderUI();
+    alert("✅ Đăng nhập bằng Google thành công!");
+    
+  } catch (error) {
+    if(error.code !== 'auth/popup-closed-by-user') {
+       alert("Lỗi đăng nhập Google: " + error.message);
+    }
+  }
+}
+
 async function submitRegister() {
   const user = document.getElementById("reg-user").value.trim();
   const email = document.getElementById("reg-email").value.trim();
@@ -819,20 +722,12 @@ async function submitRegister() {
     const docSnap = await userRef.get();
     if(docSnap.exists) return alert("Tên đăng nhập đã tồn tại trên hệ thống!");
     
-    // TẠO ACCOUNT VÀ MÃ HÓA MẬT KHẨU TỰ ĐỘNG BẰNG FIREBASE AUTH
     const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
-    
-    // LƯU VÀO DB THÔNG TIN CƠ BẢN (KHÔNG CÒN LƯU MẬT KHẨU)
     await userRef.set({ 
-        username: user, 
-        email: email, 
-        uid: userCredential.user.uid,
-        balance: 0, 
-        createdAt: firebase.firestore.FieldValue.serverTimestamp() 
+        username: user, email: email, uid: userCredential.user.uid, balance: 0, createdAt: firebase.firestore.FieldValue.serverTimestamp() 
     });
     
     alert("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
-    sendTelegramMsg(`🔥 CÓ KHÁCH ĐĂNG KÝ MỚI 🔥\n- Tài khoản: ${user}\n- Email: ${email}`);
     switchAuthModal('login');
   } catch (error) { 
       if (error.code === 'auth/email-already-in-use') alert("Email này đã được sử dụng!");
@@ -841,33 +736,27 @@ async function submitRegister() {
   }
 }
 
-// BẢO MẬT MỚI: ĐĂNG NHẬP BẰNG FIREBASE AUTH
 async function submitLogin() {
   const username = document.getElementById("login-user").value.trim();
   const pass = document.getElementById("login-pass").value;
   if(!username || !pass) return alert("Vui lòng điền đầy đủ thông tin!");
 
   try {
-    // Tìm email của user từ Firestore
     const userRef = db.collection("users").doc(username);
     const docSnap = await userRef.get();
     if(!docSnap.exists) return alert("Sai tên đăng nhập hoặc mật khẩu!");
     
     const email = docSnap.data().email;
-
-    // LOGIN BẰNG FIREBASE AUTH ĐỂ XÁC THỰC MẬT KHẨU
     await auth.signInWithEmailAndPassword(email, pass);
     
     localStorage.setItem("currentUser", username);
     closeAuthModal('login');
     updateHeaderUI();
-  } catch (error) { 
-      alert("Sai tên đăng nhập hoặc mật khẩu!"); 
-  }
+  } catch (error) { alert("Sai tên đăng nhập hoặc mật khẩu!"); }
 }
 
 async function submitLogout() {
-  await auth.signOut(); // ĐĂNG XUẤT FIREBASE AUTH
+  await auth.signOut(); 
   localStorage.removeItem("currentUser");
   updateHeaderUI();
   const sbBalance = document.getElementById("sidebar-balance");
@@ -875,7 +764,6 @@ async function submitLogout() {
   showMainView('home'); 
 }
 
-// BẢO MẬT MỚI: QUÊN MẬT KHẨU BẰNG FIREBASE AUTH
 async function sendResetCode() {
   const inputUser = document.getElementById("forgot-user").value.trim();
   if(!inputUser) return alert("Vui lòng nhập tên đăng nhập!");
@@ -889,7 +777,6 @@ async function sendResetCode() {
     const btnSend = document.querySelector("#forgot-step-1 .auth-btn");
     btnSend.textContent = "Đang gửi email..."; btnSend.disabled = true;
 
-    // FIREBASE AUTH TỰ GỬI LINK RESET RẤT CHUYÊN NGHIỆP
     await auth.sendPasswordResetEmail(targetEmail);
     
     btnSend.textContent = "Nhận Link qua Email"; btnSend.disabled = false;
@@ -956,20 +843,16 @@ function handleCategoryClick(e) {
   const btn = e.target.closest('.cat-btn');
   if (!btn) return;
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  
   const cat = btn.dataset.cat;
   document.querySelectorAll(`.cat-btn[data-cat="${cat}"]`).forEach(b => b.classList.add('active'));
   document.querySelector('.search-bar input').value = '';
-  
   showMainView('home');
   document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
   document.querySelector('.menu-item').classList.add('active'); 
-  
   renderProducts(cat, "");
 }
 
 document.getElementById('categories').addEventListener('click', handleCategoryClick);
-
 document.querySelector('.search-bar input').addEventListener('input', function() {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('[data-cat="all"]').forEach(b => b.classList.add('active'));
@@ -980,10 +863,8 @@ let currentProduct = null;
 async function openModal(id) {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) { alert("⚠️ Bạn cần Đăng nhập tài khoản để mua hàng!"); openAuthModal('login'); return; }
-  
   currentProduct = products.find(p => p.id === id);
   let priceNumber = typeof currentProduct.price === 'string' ? parseInt(currentProduct.price.replace(/\D/g, '')) || 0 : currentProduct.price || 0;
-  
   document.getElementById("modal-name").textContent = currentProduct.name;
   document.getElementById("modal-price").textContent = priceNumber.toLocaleString('vi-VN') + "đ";
   document.getElementById("modal-desc").textContent = currentProduct.desc || '';
@@ -1000,64 +881,35 @@ async function handleBuy() {
   try {
     const userRef = db.collection("users").doc(currentUser);
     const docSnap = await userRef.get();
-    
     if (docSnap.exists) {
       const currentBalance = docSnap.data().balance || 0;
       if (currentBalance < totalPrice) {
           alert(`❌ LỖI: Số dư của bạn (${currentBalance.toLocaleString('vi-VN')}đ) không đủ để thanh toán đơn hàng trị giá ${totalPrice.toLocaleString('vi-VN')}đ. Vui lòng nạp thêm tiền!`);
       } else {
           await userRef.update({ balance: currentBalance - totalPrice });
-          
           const orderId = 'ORD' + Math.floor(100000 + Math.random() * 900000);
-          await db.collection("orders").add({
-              id: orderId,
-              username: currentUser,
-              productName: currentProduct.name,
-              qty: qty,
-              total: totalPrice,
-              status: "success",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-
+          await db.collection("orders").add({ id: orderId, username: currentUser, productName: currentProduct.name, qty: qty, total: totalPrice, status: "success", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
           alert(`✅ ĐẶT HÀNG THÀNH CÔNG!\nBạn đã mua ${qty} x "${currentProduct.name}".\nĐã trừ: ${totalPrice.toLocaleString('vi-VN')}đ vào ví.`);
       }
     }
-    sendTelegramMsg(`🛒 KHÁCH BẤM MUA HÀNG 🛒\n- Khách: ${currentUser}\n- Sản phẩm: ${qty} x ${currentProduct.name}\n- Tổng tiền: ${totalPrice.toLocaleString('vi-VN')}đ`);
   } catch(error) { alert("Lỗi khi kết nối: " + error.message); }
-  
   closeAuthModal('buy');
 }
 
 async function loadHistoryData() {
   const currentUser = localStorage.getItem("currentUser");
   const tbody = document.getElementById("history-tbody");
-  
-  if (!currentUser) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color:#64748b;">Vui lòng đăng nhập để xem lịch sử mua hàng</td></tr>';
-    document.getElementById('history-info').innerText = 'Showing 0 to 0 of 0 entries';
-    return;
-  }
-
-  tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color:#64748b;">Đang tải dữ liệu từ máy chủ...</td></tr>';
-
+  if (!currentUser) return;
   try {
     const snap = await db.collection("orders").where("username", "==", currentUser).get();
     let orders = [];
     snap.forEach(doc => orders.push(doc.data()));
-    
     orders.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-
-    if (orders.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color:#64748b;">No data available in table</td></tr>';
-        document.getElementById('history-info').innerText = 'Showing 0 to 0 of 0 entries';
-        return;
-    }
-
+    if (orders.length === 0) { tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color:#64748b;">No data available in table</td></tr>'; return; }
     let html = '';
     orders.forEach((o, index) => {
         const timeStr = o.createdAt ? new Date(o.createdAt.toDate()).toLocaleString('vi-VN') : 'Vừa xong';
-        html += `
-        <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;">
+        html += `<tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;">
             <td style="padding: 12px; border-right: 1px solid #e2e8f0;">${index + 1}</td>
             <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--blue); font-weight:600">${o.id}</td>
             <td style="padding: 12px; border-right: 1px solid #e2e8f0;">${o.productName}</td>
@@ -1068,64 +920,47 @@ async function loadHistoryData() {
         </tr>`;
     });
     tbody.innerHTML = html;
-    document.getElementById('history-info').innerText = `Showing 1 to ${orders.length} of ${orders.length} entries`;
-
-  } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color:red;">Lỗi tải dữ liệu: ${err.message}</td></tr>`;
-  }
+  } catch (err) { tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color:red;">Lỗi tải dữ liệu</td></tr>`; }
 }
 
 async function loadProfileData() {
   const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) { alert("Vui lòng đăng nhập!"); return; }
-  
+  if (!currentUser) return;
   try {
       const docSnap = await db.collection("users").doc(currentUser).get();
       if (docSnap.exists) {
           const data = docSnap.data();
           const balStr = (data.balance || 0).toLocaleString('vi-VN') + 'đ';
-          
           document.getElementById('prof-display-name').textContent = currentUser;
           document.getElementById('prof-display-bal').textContent = balStr;
           document.getElementById('prof-stat-bal').textContent = balStr;
-          
           document.getElementById('prof-side-email').textContent = data.email || 'Chưa cập nhật';
           document.getElementById('prof-side-phone').textContent = data.phone || 'Chưa cập nhật';
-          
           document.getElementById('prof-fullname').value = data.fullname || '';
           document.getElementById('prof-username').value = currentUser;
           document.getElementById('prof-phone').value = data.phone || '';
           document.getElementById('prof-email').value = data.email || '';
-          
-          const createdTime = data.createdAt ? new Date(data.createdAt.toDate()).toLocaleString('vi-VN') : 'Không rõ';
-          document.getElementById('prof-created').value = createdTime;
+          document.getElementById('prof-created').value = data.createdAt ? new Date(data.createdAt.toDate()).toLocaleString('vi-VN') : 'Không rõ';
           document.getElementById('prof-lastlogin').value = new Date().toLocaleString('vi-VN');
       }
-  } catch(e) { console.error(e); }
+  } catch(e) {}
 }
 
 async function saveProfileData() {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) return;
-  
   const fullname = document.getElementById('prof-fullname').value.trim();
   const phone = document.getElementById('prof-phone').value.trim();
-  
   try {
-      await db.collection("users").doc(currentUser).update({
-          fullname: fullname,
-          phone: phone
-      });
+      await db.collection("users").doc(currentUser).update({ fullname: fullname, phone: phone });
       alert("✅ Cập nhật thông tin thành công!");
       loadProfileData(); 
   } catch(e) { alert("Lỗi cập nhật: " + e.message); }
 }
 
-// BẢO MẬT MỚI: ĐỔI MẬT KHẨU THÔNG QUA FIREBASE AUTH
 async function saveNewPassword() {
   const currentUser = localStorage.getItem("currentUser");
   if(!currentUser) return;
-  
   const currentPass = document.getElementById('cp-current').value;
   const newPass = document.getElementById('cp-new').value;
   const confirmPass = document.getElementById('cp-confirm').value;
@@ -1134,92 +969,55 @@ async function saveNewPassword() {
   if(newPass !== confirmPass) return alert("Mật khẩu mới không khớp!");
 
   try {
-      const user = auth.currentUser; // Lấy phiên đăng nhập hiện tại từ Firebase Auth
+      const user = auth.currentUser;
       if (!user) return alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng xuất và đăng nhập lại!");
-
-      // Xác thực lại mật khẩu cũ trực tiếp với Google
       const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPass);
       await user.reauthenticateWithCredential(credential);
-
-      // Cập nhật mật khẩu mới bảo mật
       await user.updatePassword(newPass);
-
       alert("✅ Đổi mật khẩu thành công!");
-      document.getElementById('cp-current').value = '';
-      document.getElementById('cp-new').value = '';
-      document.getElementById('cp-confirm').value = '';
+      document.getElementById('cp-current').value = ''; document.getElementById('cp-new').value = ''; document.getElementById('cp-confirm').value = '';
       showMainView('home');
-      
   } catch(e) {
-      if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
-          alert("❌ Mật khẩu hiện tại không đúng!");
-      } else if (e.code === 'auth/weak-password') {
-          alert("❌ Mật khẩu mới quá yếu (cần ít nhất 6 ký tự)!");
-      } else {
-          alert("Lỗi: " + e.message);
-      }
+      if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') alert("❌ Mật khẩu hiện tại không đúng!");
+      else if (e.code === 'auth/weak-password') alert("❌ Mật khẩu mới quá yếu (cần ít nhất 6 ký tự)!");
+      else alert("Lỗi: " + e.message);
   }
 }
 
 async function loadTransactionsData() {
   const currentUser = localStorage.getItem("currentUser");
   const tbody = document.getElementById("trans-tbody");
-  
-  if(!currentUser) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Vui lòng đăng nhập</td></tr>';
-      document.getElementById('trans-info').innerText = 'Showing 0 to 0 of 0 entries';
-      return;
-  }
-  
-  tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Đang tải dữ liệu...</td></tr>';
-  
+  if(!currentUser) return;
   try {
       const userDoc = await db.collection("users").doc(currentUser).get();
       let currentBal = userDoc.exists ? (userDoc.data().balance || 0) : 0;
-
       const snap = await db.collection("orders").where("username", "==", currentUser).get();
       let trans = [];
       snap.forEach(doc => trans.push(doc.data()));
-      
       trans.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      if(trans.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Không có giao dịch nào</td></tr>'; return; }
 
-      if(trans.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color:#64748b;">Không có giao dịch nào</td></tr>';
-          document.getElementById('trans-info').innerText = 'Showing 0 to 0 of 0 entries';
-          return;
-      }
-
-      let html = '';
-      let runningBal = currentBal; 
-
+      let html = ''; let runningBal = currentBal; 
       trans.forEach((t, i) => {
           const timeStr = t.createdAt ? new Date(t.createdAt.toDate()).toLocaleString('vi-VN') : 'Vừa xong';
           const changeAmount = t.total || 0; 
           const balAfter = runningBal; 
           const balBefore = runningBal + changeAmount; 
           runningBal = balBefore; 
-
-          html += `
-          <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;">
+          html += `<tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;">
               <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:#475569;">${i}</td>
               <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--green); font-weight:700">${balBefore.toLocaleString('vi-VN')}đ</td>
               <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--red); font-weight:700">-${changeAmount.toLocaleString('vi-VN')}đ</td>
               <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--blue); font-weight:700">${balAfter.toLocaleString('vi-VN')}đ</td>
               <td style="padding: 12px; border-right: 1px solid #e2e8f0; color:var(--text-muted)">${timeStr}</td>
               <td style="padding: 12px; font-style: italic; color:#334155;">Thanh toán đơn hàng mua tài khoản ${t.productName} #${t.id}</td>
-          </tr>
-          `;
+          </tr>`;
       });
       tbody.innerHTML = html;
-      document.getElementById('trans-info').innerText = `Showing 1 to ${trans.length} of ${trans.length} entries`;
-
-  } catch(e) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Lỗi tải dữ liệu: ${e.message}</td></tr>`;
-  }
+  } catch(e) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Lỗi tải dữ liệu</td></tr>`; }
 }
 
 updateHeaderUI();
-
 </script>
 </body>
 </html>
