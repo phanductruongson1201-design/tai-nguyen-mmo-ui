@@ -263,17 +263,18 @@
   .menu-item .arrow { margin-left: auto; font-size: 16px; }
   .menu-header { padding: 20px 20px 10px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
   
-  /* LƯỚI CHO MÁY TÍNH VÀ ĐIỆN THOẠI */
+  /* LƯỚI CHO MÁY TÍNH VÀ ĐIỆN THOẠI ĐÃ ĐƯỢC TỐI ƯU CHỐNG LAG KHỦNG KHIẾP */
   @media (min-width: 901px) {
-    body { padding-left: 260px; transition: padding-left 0.3s ease; }
+    /* ĐÃ XÓA dòng transition ở body để máy không phải tính toán lại 1800 sản phẩm */
+    body { padding-left: 260px; }
     body.sidebar-closed { padding-left: 0 !important; }
-    .app-sidebar.collapsed { left: -260px !important; }
+    .app-sidebar.collapsed { transform: translateX(-100%) !important; } 
   }
   
   @media (max-width: 900px) {
     body { padding-left: 0; }
-    .app-sidebar { left: -260px; } /* Mặc định đóng trên mobile */
-    .app-sidebar.open { left: 0; }
+    .app-sidebar { transform: translateX(-100%); }
+    .app-sidebar.open { transform: translateX(0); }
   }
 </style>
 </head>
