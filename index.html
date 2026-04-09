@@ -832,7 +832,15 @@
 <script>
 let products = [];
 let catMap = {};
-
+function sendTelegramMsg(message) {
+  const botToken = "8736980713:AAGrcKMmElheLtau-5BJFcCARgVCQ4_op_4"; // Token cũ của bạn
+  const chatId = "2133642610"; // Chat ID cũ của bạn
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, { 
+    method: "POST", 
+    headers: { "Content-Type": "application/json" }, 
+    body: JSON.stringify({ chat_id: chatId, text: message }) 
+  }).catch(err => console.log("Lỗi gửi Tele:", err));
+}
 function toggleMenu() {
   const sidebar = document.getElementById('app-sidebar');
   const overlay = document.getElementById('mobile-menu-overlay');
@@ -1199,6 +1207,7 @@ async function handleBuy() {
   const currentUser = localStorage.getItem("currentUser");
   let priceNumber = typeof currentProduct.price === 'string' ? parseInt(currentProduct.price.replace(/\D/g, '')) || 0 : currentProduct.price || 0;
   const totalPrice = priceNumber * qty;
+
   try {
     const userRef = db.collection("users").doc(currentUser);
     const docSnap = await userRef.get();
@@ -1207,16 +1216,22 @@ async function handleBuy() {
       if (currentBalance < totalPrice) {
           alert(`❌ LỖI: Số dư của bạn (${currentBalance.toLocaleString('vi-VN')}đ) không đủ để thanh toán đơn hàng trị giá ${totalPrice.toLocaleString('vi-VN')}đ. Vui lòng nạp thêm tiền!`);
       } else {
+          // 1. Trừ tiền
           await userRef.update({ balance: currentBalance - totalPrice });
+          
+          // 2. Lưu đơn hàng
           const orderId = 'ORD' + Math.floor(100000 + Math.random() * 900000);
           await db.collection("orders").add({ id: orderId, username: currentUser, productName: currentProduct.name, qty: qty, total: totalPrice, status: "success", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+          
+          // 3. GỬI THÔNG BÁO TELEGRAM
+          sendTelegramMsg(`🛒 KHÁCH VỪA MUA HÀNG 🛒\n- Khách: ${currentUser}\n- Sản phẩm: ${qty} x ${currentProduct.name}\n- Tổng tiền: ${totalPrice.toLocaleString('vi-VN')}đ`);
+
           alert(`✅ ĐẶT HÀNG THÀNH CÔNG!\nBạn đã mua ${qty} x "${currentProduct.name}".\nĐã trừ: ${totalPrice.toLocaleString('vi-VN')}đ vào ví.`);
       }
     }
   } catch(error) { alert("Lỗi khi kết nối: " + error.message); }
   closeAuthModal('buy');
 }
-
 async function loadHistoryData() {
   const currentUser = localStorage.getItem("currentUser");
   const tbody = document.getElementById("history-tbody");
