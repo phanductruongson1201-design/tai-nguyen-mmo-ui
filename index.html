@@ -389,12 +389,6 @@
   .amount-btn-confirm { background: var(--blue); color: #fff; border: none; flex: 2; padding: 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; letter-spacing: 0.5px; }
   .amount-btn-confirm:hover { background: #2563eb; }
 
-  /* NÚT HỖ TRỢ ZALO GÓC MÀN HÌNH */
-  .support-float { position: fixed; bottom: 20px; right: 20px; background: #e8192c; color: #fff; border: none; border-radius: 24px; padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(232,25,44,0.4); z-index: 150; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
-  .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
-  .footer a { color: var(--blue); text-decoration: none; }
-
   /* CSS THÔNG BÁO MUA THÀNH CÔNG (MỚI THÊM) */
   .success-box {
     background: #fff; border-radius: 16px; padding: 30px 24px; text-align: center;
@@ -415,6 +409,11 @@
   }
   .success-close-btn:hover { background: #2563eb; }
 
+  /* NÚT HỖ TRỢ ZALO GÓC MÀN HÌNH */
+  .support-float { position: fixed; bottom: 20px; right: 20px; background: #e8192c; color: #fff; border: none; border-radius: 24px; padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(232,25,44,0.4); z-index: 150; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(232,25,44,0.4); } 50% { box-shadow: 0 4px 32px rgba(232,25,44,0.7); } }
+  .footer { border-top: 1px solid var(--border); padding: 24px 16px; color: var(--text-muted); font-size: 12px; text-align: center; }
+  .footer a { color: var(--blue); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -812,7 +811,7 @@
     <div class="success-icon">✓</div>
     <div class="success-title">ĐẶT HÀNG THÀNH CÔNG!</div>
     <div class="success-message" id="success-msg-content"></div>
-    <button class="success-close-btn" onclick="closeAuthModal('success')">Hoàn tất</button>
+    <button class="success-close-btn" onclick="closeAuthModal('success'); setActiveMenu(document.querySelectorAll('.menu-item')[3], 'history');">Xem đơn hàng đã mua</button>
   </div>
 </div>
 
