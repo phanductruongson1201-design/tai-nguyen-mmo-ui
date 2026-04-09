@@ -1331,7 +1331,8 @@ async function loadTransactionsData() {
           </tr>`;
       });
       tbody.innerHTML = html;
-  } catch(e) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Lỗi tải dữ liệu</td></tr>`; }
+  } 
+  catch(e) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red;">Lỗi tải dữ liệu</td></tr>`; }
 }
 
 updateHeaderUI();
