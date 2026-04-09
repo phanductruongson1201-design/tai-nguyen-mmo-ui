@@ -599,13 +599,13 @@
         <div>
           <div class="bank-info-item-label">Số tài khoản</div>
           <div class="bank-info-item-val green">
-            0901429699
-            <button class="copy-chip" onclick="navigator.clipboard.writeText('0901429699').then(()=>alert('Đã sao chép số tài khoản!'))">Sao chép</button>
+            96993333333
+            <button class="copy-chip" onclick="navigator.clipboard.writeText('96993333333').then(()=>alert('Đã sao chép số tài khoản!'))">Sao chép</button>
           </div>
         </div>
         <div>
           <div class="bank-info-item-label">Chủ tài khoản</div>
-          <div class="bank-info-item-val">TRAN THU HIEN</div>
+          <div class="bank-info-item-val">PHAN DUC TRUONG SON</div>
         </div>
         <div>
           <div class="bank-info-item-label">Xử lý tự động</div>
@@ -964,8 +964,8 @@ function createInvoice() {
   document.getElementById('inv-amount').innerText = amount.toLocaleString('vi-VN') + 'đ';
   document.getElementById('inv-content').innerText = transferContent;
   const bankId = "MB";
-  const accNo = "0901429699";
-  const accName = "TRAN THU HIEN";
+  const accNo = "96993333333";
+  const accName = "PHAN DUC TRUONG SON";
   const qrUrl = `https://img.vietqr.io/image/${bankId}-${accNo}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(transferContent)}&accountName=${encodeURIComponent(accName)}`;
   document.getElementById('inv-qr').src = qrUrl;
   closeAuthModal('amount');
